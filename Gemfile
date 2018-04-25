@@ -45,3 +45,8 @@ group :development do
   gem 'spring'
 end
 
+  gem 'pry-rails'
+  gem 'devise'
+  gem 'paperclip'
+  gem 'config'
+
