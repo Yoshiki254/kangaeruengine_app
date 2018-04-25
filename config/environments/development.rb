@@ -51,4 +51,5 @@ Rails.application.configure do
     :password => Settings.gmail[:password], #ご自身のgmailアドレスのパスワード
     :authentication => 'login'
   }
+
 end
