@@ -1,1 +1,8 @@
-<%= current_user.name %>さんのページ
+<li><%= current_user.name %>さんのページ<li>
+
+	<div contents>
+		<% @lessons.each do |lesson| %>
+		<li><%= lesson.name %></li>
+		<% end %>
+  </div>
+
