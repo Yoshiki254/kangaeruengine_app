@@ -1,8 +1,14 @@
-<li><%= current_user.name %>さんのページ<li>
+<p><%= current_user.name %>さんのページ
 
 	<div contents>
 		<% @lessons.each do |lesson| %>
-		<li><%= lesson.name %></li>
+		<li>
+			<%= lesson.name %>
+			<% form_for (@users_lessons, root_path) do |f| %>
+			<%= f.date_field :published %>
+		</li>
+
 		<% end %>
   </div>
 
+</p>
