@@ -4,9 +4,8 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :confirmable
 
-  has_many :attended_lessons, through: :users_lessons, source: :lesson
-
-  
+  has_many :lessons, through: :users_lessons
+  has_many :users_lessons
 
 
 end

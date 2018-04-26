@@ -1,5 +1,6 @@
 class Lesson < ActiveRecord::Base
 
-	belongs_to :user
+	has_many :users_lessons
+	has_many :users, through: :users_lessons
 
 end
