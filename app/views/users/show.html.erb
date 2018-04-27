@@ -1,19 +1,78 @@
-<p><%= current_user.name %>さんのページ
-	<div contents>
-		<% @lessons.each do |lesson| %>
-			<li>
-				<%= lesson.name %>
-				<% if lesson.users_lessons.exists?(user_id: current_user.id) %>
-					<%= lesson.user_id %>
-				<% else %>
-					<%= form_for [current_user, @users_lesson] do |f| %>
-		 			  <%= f.date_select :date %>
-		 			  <%= f.check_box :check %>
-		 			  <%= f.hidden_field :lesson_id, :value => lesson.id %>
-					  <%= f.submit "confirm" %>
-					<% end %>
+<p><%= current_user.name %>さんのページ</p>
+
+<p>前回授業|<%= current_user.users_lessons.where(check: 1).order("updated_at DESC").first.lesson.name %></p>
+
+<div contents>
+	<%= "考えるエンジン講座" %>
+	<% @lessons.each do |lesson| %>
+	  <li>
+	  	<%= lesson.name %>
+	  	<% if lesson.users_lessons.exists?(user_id: current_user.id) %>
+	  	  <%= form_for [current_user, @users_lesson] do |f| %>
+			 	  <%= f.date_select :date %>
+			 		<%= f.check_box :check %>
+			 		<%= f.hidden_field :lesson_id, :value => lesson.id %>
+					<%= f.submit "edit" %>
 				<% end %>
-			</li>
-		<% end %>
-  </div>
-</p>
+	  	  <%= lesson.users_lessons.first.date %>
+	  	<% else %>
+	  	  <%= form_for [current_user, @users_lesson] do |f| %>
+			 	  <%= f.date_select :date %>
+			 		<%= f.check_box :check %>
+			 		<%= f.hidden_field :lesson_id, :value => lesson.id %>
+					<%= f.submit "done" %>
+				<% end %>
+			<% end %>
+		</li>
+  <% end %>
+</div>
+<ul></ul>
+<div contents>
+	<%= "10ケースマラソン" %>
+	<% @interviews.each do |interview| %>
+	  <li>
+	  	<%= interview.name %>
+	  	<% if interview.users_interviews.exists?(user_id: current_user.id) %>
+	  	  <%= form_for [current_user, @users_interview] do |f| %>
+			 	  <%= f.date_select :date %>
+			 		<%= f.check_box :check %>
+			 		<%= f.hidden_field :interview_id, :value => interview.id %>
+					<%= f.submit "edit" %>
+				<% end %>
+	  	  <%= interview.users_interviews.first.date %>
+	  	<% else %>
+	  	  <%= form_for [current_user, @users_interview] do |f| %>
+			 	  <%= f.date_select :date %>
+			 		<%= f.check_box :check %>
+			 		<%= f.hidden_field :interview_id, :value => interview.id %>
+					<%= f.submit "done" %>
+				<% end %>
+			<% end %>
+		</li>
+  <% end %>
+</div>
+<ul></ul>
+<div contents>
+	<%= "12示唆マラソン" %>
+	<% @insights.each do |insight| %>
+	  <li>
+	  	<%= insight.name %>
+	  	<% if insight.users_insights.exists?(user_id: current_user.id) %>
+	  	  <%= form_for [current_user, @users_insight] do |f| %>
+			 	  <%= f.date_select :date %>
+			 		<%= f.check_box :check %>
+			 		<%= f.hidden_field :insight_id, :value => insight.id %>
+					<%= f.submit "edit" %>
+				<% end %>
+	  	  <%= insight.users_insights.first.date %>
+	  	<% else %>
+	  	  <%= form_for [current_user, @users_insight] do |f| %>
+			 	  <%= f.date_select :date %>
+			 		<%= f.check_box :check %>
+			 		<%= f.hidden_field :insight_id, :value => insight.id %>
+					<%= f.submit "done" %>
+				<% end %>
+			<% end %>
+		</li>
+  <% end %>
+</div>
