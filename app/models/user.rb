@@ -13,5 +13,4 @@ class User < ActiveRecord::Base
 
   # accepts_nested_attributes_for :users_lessons
 
-
 end

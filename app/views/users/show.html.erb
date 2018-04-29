@@ -2,6 +2,22 @@
 
 <p>前回授業|<%= current_user.users_lessons.where(check: 1).order("updated_at DESC").first.lesson.name %></p>
 
+
+<p>次回授業日時
+	<% unless current_user.next_lesson? %>
+		<%= form_for current_user do |f| %>
+	 	  <%= f.datetime_select :next_lesson, :include_blank => true %>
+			<%= f.submit "confirm" %>
+	  <% end %>
+	<% else %>
+		<%= form_for current_user do |f| %>
+	 	  <%= f.datetime_select :next_lesson, :default => current_user.next_lesson %>
+			<%= f.submit "edit" %>
+	  <% end %>
+	<% end %>
+
+</p>
+
 <div contents>
 	<%= "考えるエンジン講座" %>
 	<% @lessons.each do |lesson| %>
@@ -9,15 +25,14 @@
 	  	<%= lesson.name %>
 	  	<% if lesson.users_lessons.exists?(user_id: current_user.id) %>
 	  	  <%= form_for [current_user, @users_lesson] do |f| %>
-			 	  <%= f.date_select :date %>
+			 	  <%= f.date_select :date, :default => lesson.users_lessons.first.date %>
 			 		<%= f.check_box :check %>
 			 		<%= f.hidden_field :lesson_id, :value => lesson.id %>
 					<%= f.submit "edit" %>
 				<% end %>
-	  	  <%= lesson.users_lessons.first.date %>
 	  	<% else %>
 	  	  <%= form_for [current_user, @users_lesson] do |f| %>
-			 	  <%= f.date_select :date %>
+			 	  <%= f.date_select :date, :include_blank => true %>
 			 		<%= f.check_box :check %>
 			 		<%= f.hidden_field :lesson_id, :value => lesson.id %>
 					<%= f.submit "done" %>
@@ -34,15 +49,14 @@
 	  	<%= interview.name %>
 	  	<% if interview.users_interviews.exists?(user_id: current_user.id) %>
 	  	  <%= form_for [current_user, @users_interview] do |f| %>
-			 	  <%= f.date_select :date %>
+			 	  <%= f.date_select :date, :default => interview.users_interviews.first.date %>
 			 		<%= f.check_box :check %>
 			 		<%= f.hidden_field :interview_id, :value => interview.id %>
 					<%= f.submit "edit" %>
 				<% end %>
-	  	  <%= interview.users_interviews.first.date %>
 	  	<% else %>
 	  	  <%= form_for [current_user, @users_interview] do |f| %>
-			 	  <%= f.date_select :date %>
+			 	  <%= f.date_select :date, :include_blank => true %>
 			 		<%= f.check_box :check %>
 			 		<%= f.hidden_field :interview_id, :value => interview.id %>
 					<%= f.submit "done" %>
@@ -59,15 +73,14 @@
 	  	<%= insight.name %>
 	  	<% if insight.users_insights.exists?(user_id: current_user.id) %>
 	  	  <%= form_for [current_user, @users_insight] do |f| %>
-			 	  <%= f.date_select :date %>
+			 	  <%= f.date_select :date, :default => insight.users_insights.first.date %>
 			 		<%= f.check_box :check %>
 			 		<%= f.hidden_field :insight_id, :value => insight.id %>
 					<%= f.submit "edit" %>
 				<% end %>
-	  	  <%= insight.users_insights.first.date %>
 	  	<% else %>
 	  	  <%= form_for [current_user, @users_insight] do |f| %>
-			 	  <%= f.date_select :date %>
+			 	  <%= f.date_select :date, :include_blank => true %>
 			 		<%= f.check_box :check %>
 			 		<%= f.hidden_field :insight_id, :value => insight.id %>
 					<%= f.submit "done" %>

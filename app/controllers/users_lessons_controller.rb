@@ -6,15 +6,13 @@ class UsersLessonsController < ApplicationController
 	end
 
 	def edit
-
 		@users_lesson = UsersLesson.find(params[:id])
-
+		redirect_to :root
 	end
 
 	def update
 		UsersLesson.update(update_params)
 		redirect_to :root
-
 	end
 
 	private
