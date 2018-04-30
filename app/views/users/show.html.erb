@@ -1,7 +1,8 @@
 <p><%= current_user.name %>さんのページ</p>
 
+<% if current_user.users_lessons.present? %>
 <p>前回授業|<%= current_user.users_lessons.where(check: 1).order("updated_at DESC").first.lesson.name %></p>
-
+<% end %>
 
 <p>次回授業日時
 	<% unless current_user.next_lesson? %>
