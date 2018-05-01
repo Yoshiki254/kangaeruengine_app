@@ -4,7 +4,7 @@ class AdminsController < ApplicationController
 
 	def show
 		@admin = Admin.find(params[:id])
-		@users = User.all
+		@users = User.includes([:lessons, :users_lessons, :interviews, :users_interviews, :insights, :users_insights])
 	end
 
 	def search

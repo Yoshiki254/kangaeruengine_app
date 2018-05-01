@@ -36,7 +36,7 @@ Rails.application.routes.draw do
     end
   end
 
-	resources :users, only: [:show, :update] do
+	resources :users, only: [:show, :create, :edit, :update,] do
 	  resources :users_lessons, only: [:create, :edit, :update]
 	  resources :users_interviews, only: [:create]
 	  resources :users_insights, only: [:create]

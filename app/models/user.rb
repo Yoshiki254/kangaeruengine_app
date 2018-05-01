@@ -11,6 +11,5 @@ class User < ActiveRecord::Base
   has_many :insights, through: :users_insights
   has_many :users_insights
 
-  # accepts_nested_attributes_for :users_lessons
 
 end

@@ -26,8 +26,8 @@
 	  	<%= lesson.name %>
 	  	<% if lesson.users_lessons.exists?(user_id: current_user.id) %>
 	  	  <%= form_for [current_user, @users_lesson] do |f| %>
-			 	  <%= f.date_select :date, :default => lesson.users_lessons.first.date %>
-			 		<%= f.check_box :check %>
+			 	  <%= f.date_select :date, :default => lesson.users_lessons.where(user_id: current_user).first.date %>
+			 		<%= f.check_box :check, { checked: true }  %>
 			 		<%= f.hidden_field :lesson_id, :value => lesson.id %>
 					<%= f.submit "edit" %>
 				<% end %>
@@ -50,8 +50,8 @@
 	  	<%= interview.name %>
 	  	<% if interview.users_interviews.exists?(user_id: current_user.id) %>
 	  	  <%= form_for [current_user, @users_interview] do |f| %>
-			 	  <%= f.date_select :date, :default => interview.users_interviews.first.date %>
-			 		<%= f.check_box :check %>
+			 	  <%= f.date_select :date, :default => interview.users_interviews.where(user_id: current_user).first.date %>
+			 		<%= f.check_box :check, { checked: true }  %>
 			 		<%= f.hidden_field :interview_id, :value => interview.id %>
 					<%= f.submit "edit" %>
 				<% end %>
@@ -74,8 +74,8 @@
 	  	<%= insight.name %>
 	  	<% if insight.users_insights.exists?(user_id: current_user.id) %>
 	  	  <%= form_for [current_user, @users_insight] do |f| %>
-			 	  <%= f.date_select :date, :default => insight.users_insights.first.date %>
-			 		<%= f.check_box :check %>
+			 	  <%= f.date_select :date, :default => insight.users_insights.where(user_id: current_user).first.date %>
+			 		<%= f.check_box :check, { checked: true } %>
 			 		<%= f.hidden_field :insight_id, :value => insight.id %>
 					<%= f.submit "edit" %>
 				<% end %>
