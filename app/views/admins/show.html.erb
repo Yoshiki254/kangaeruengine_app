@@ -1,5 +1,3 @@
-<%= link_to 'Sign Out', destroy_admin_session_path, method: :delete %>
-
 <p>
 <div>
 	<%= form_tag('/admins/search', method: :get) do %>
@@ -10,38 +8,55 @@
 </div>
 </p>
 
-<div>
+<div class='user'>
 	<% @users.each do |user| %>
-	<p>
-	  <li><%= user.name %></li>
-	  電話番号：<%= user.tel %><br/>
-		次回授業時間：
-	  <% if user.next_lesson.present? %>
-	    <%= user.next_lesson %><br/>
-		<% else %>
-		  未決定<br/>
-		<% end %>
+	<ul>
+	  <h4><%= user.name %></h4>
 
-		前回授業：
-	  <% if user.users_lessons.present? %>
-	  	<%= user.users_lessons.where(check: 1).order("updated_at DESC").first.lesson.name %><br/>
-	  <% else %>
-	  	未受講<br/>
-	  <% end %>
+		<li>プロフィール写真</li>
+	  <%= image_tag user.avatar.url(:medium) %>
 
-		10ケースマラソン：
-		<% if user.users_interviews.present? %>
-			<%= user.users_interviews.where(check: 1).order("updated_at DESC").first.interview.name %><br/>
-		<% else %>
-		  未開始<br/>
-		<% end %>
+	  <li>電話番号：<%= user.tel %></li><br>
 
-	  12示唆マラソン：
-	  <% if user.users_insights.present? %>
-	    <%= user.users_insights.where(check: 1).order("updated_at DESC").first.insight.name %><br/>
-	  <% else %>
-	    未開始<br/>
-	  <% end %>
-	</p>
+		<li>次回授業時間：
+		  <% if user.next_lesson.present? %>
+		    <%= user.next_lesson.date_time %>
+			<% else %>
+			  未決定
+			<% end %>
+	  </li><br>
+
+		<li>前回授業：
+		  <% if user.users_lessons.present? %>
+		  	<%= user.users_lessons.where(check: 1).order("updated_at DESC").first.lesson.name %>
+		  <% else %>
+		  	未受講
+		  <% end %>
+	  </li><br>
+
+		<li>10ケースマラソン：
+			<% if user.users_interviews.present? %>
+				<%= user.users_interviews.where(check: 1).order("updated_at DESC").first.interview.name %>
+			<% else %>
+			  未開始
+			<% end %>
+	  </li><br>
+
+	  <li>12示唆マラソン：
+		  <% if user.users_insights.present? %>
+		    <%= user.users_insights.where(check: 1).order("updated_at DESC").first.insight.name %>
+		  <% else %>
+		    未開始
+		  <% end %>
+	  </li><br>
+
+	  <li>考えるエンジン検定：
+		  <% if user.users_exams.present? %>
+		    <%= user.users_exams.where(check: 1).order("updated_at DESC").first.exam.name %>
+		  <% else %>
+		    未受験
+		  <% end %>
+		</li><br>
+	</ul>
   <% end %>
 </div>

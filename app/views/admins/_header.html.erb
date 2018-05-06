@@ -1,0 +1,14 @@
+<% if admin_signed_in? %>
+  <div class= 'header navbar main_header navbar-fixed-top'>
+    <div class='container'>
+      <div class='hidden-xs hidden-sm'>
+        <h2>考えるエンジン講座</h2>
+      </div>
+      <div class='navbar-collapse collapse navbar-responsive-collapse navbar-right'>
+        <ul class='nav navbar-nav'>
+          <li><%= link_to "Sign Out", destroy_admin_session_path, method: :delete %></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+<% end %>

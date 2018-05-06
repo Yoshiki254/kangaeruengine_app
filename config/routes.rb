@@ -23,12 +23,24 @@ Rails.application.routes.draw do
 
   devise_scope :admin do
     authenticated :admin do
-      root :to => 'admins#show', as: :authenticated_admin_root
+      root :to => 'admins/users#index', as: :authenticated_admin_root
     end
     unauthenticated :admin do
       root :to => 'admins/sessions#new', as: :unauthenticated_admin_root
     end
   end
+
+  # namespace :admins do
+  #   constraints subdomain: 'admins' do
+  #     resources :users, only: [:index, :destroy] do
+  #       collection do
+  #         get 'search'
+  #       end
+  #     end
+  #   end
+  # end
+
+
 
   resources :admins, only: [:show] do
     collection do
@@ -36,12 +48,12 @@ Rails.application.routes.draw do
     end
   end
 
-	resources :users, only: [:show, :create, :edit, :update,] do
+	resources :users, only: [:show, :edit, :update,] do
+    resources :next_lessons, only: [:create, :edit, :update]
 	  resources :users_lessons, only: [:create, :edit, :update]
 	  resources :users_interviews, only: [:create]
 	  resources :users_insights, only: [:create]
+    resources :users_exams, only: [:create]
   end
-
-  root to: 'users#show'
 
 end

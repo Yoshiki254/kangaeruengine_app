@@ -1,92 +1,161 @@
-<p><%= current_user.name %>さんのページ</p>
+<h3><%= current_user.name %>さんのページ</h3>
 
-<% if current_user.users_lessons.present? %>
-<p>前回授業|<%= current_user.users_lessons.where(check: 1).order("updated_at DESC").first.lesson.name %></p>
-<% end %>
+<div class='progress_layout-bg'>
+	<h3>前回授業</h3>
+	<% if current_user.users_lessons.present? %>
+	  <p><%= current_user.users_lessons.where(check: 1).order("updated_at DESC").first.lesson.name %><p>
+  <% end %>
 
-<p>次回授業日時
-	<% unless current_user.next_lesson? %>
-		<%= form_for current_user do |f| %>
-	 	  <%= f.datetime_select :next_lesson, :include_blank => true %>
-			<%= f.submit "confirm" %>
+  <h3>次回授業日時</h3>
+	<% unless current_user.next_lesson.present? %>
+		<div><%= form_for [current_user, @next_lesson] do |f| %>
+	 	  <%= f.datetime_select :date_time, :include_blank => true %>
+			<%= f.submit "confirm" %></div>
 	  <% end %>
 	<% else %>
-		<%= form_for current_user do |f| %>
-	 	  <%= f.datetime_select :next_lesson, :default => current_user.next_lesson %>
-			<%= f.submit "edit" %>
+		<%= form_for [current_user, current_user.next_lesson] do |f| %>
+	 	  <%= f.datetime_select :date_time, :default => current_user.next_lesson.date_time %>
+			<%= f.submit "update" %>
 	  <% end %>
 	<% end %>
-
-</p>
-
-<div contents>
-	<%= "考えるエンジン講座" %>
-	<% @lessons.each do |lesson| %>
-	  <li>
-	  	<%= lesson.name %>
-	  	<% if lesson.users_lessons.exists?(user_id: current_user.id) %>
-	  	  <%= form_for [current_user, @users_lesson] do |f| %>
-			 	  <%= f.date_select :date, :default => lesson.users_lessons.where(user_id: current_user).first.date %>
-			 		<%= f.check_box :check, { checked: true }  %>
-			 		<%= f.hidden_field :lesson_id, :value => lesson.id %>
-					<%= f.submit "edit" %>
-				<% end %>
-	  	<% else %>
-	  	  <%= form_for [current_user, @users_lesson] do |f| %>
-			 	  <%= f.date_select :date, :include_blank => true %>
-			 		<%= f.check_box :check %>
-			 		<%= f.hidden_field :lesson_id, :value => lesson.id %>
-					<%= f.submit "done" %>
-				<% end %>
-			<% end %>
-		</li>
-  <% end %>
 </div>
-<ul></ul>
+
 <div contents>
-	<%= "10ケースマラソン" %>
-	<% @interviews.each do |interview| %>
-	  <li>
-	  	<%= interview.name %>
-	  	<% if interview.users_interviews.exists?(user_id: current_user.id) %>
-	  	  <%= form_for [current_user, @users_interview] do |f| %>
-			 	  <%= f.date_select :date, :default => interview.users_interviews.where(user_id: current_user).first.date %>
-			 		<%= f.check_box :check, { checked: true }  %>
-			 		<%= f.hidden_field :interview_id, :value => interview.id %>
-					<%= f.submit "edit" %>
-				<% end %>
-	  	<% else %>
-	  	  <%= form_for [current_user, @users_interview] do |f| %>
-			 	  <%= f.date_select :date, :include_blank => true %>
-			 		<%= f.check_box :check %>
-			 		<%= f.hidden_field :interview_id, :value => interview.id %>
-					<%= f.submit "done" %>
-				<% end %>
-			<% end %>
-		</li>
-  <% end %>
-</div>
-<ul></ul>
-<div contents>
-	<%= "12示唆マラソン" %>
+	<div class='lessons'>
+	<h3>考えるエンジン講座</h3>
+	  <% @lessons.each do |lesson| %>
+	    <ul>
+		  	<div class='weapon'>
+		  		<% if lesson.id == 5 %>
+		  		  <h4>4. 論点ロード</h4>
+			  		<h4><%= lesson.name %></h4>
+				  	<% if lesson.users_lessons.exists?(user_id: current_user.id) %>
+						 	<p><%= lesson.users_lessons.where(user_id: current_user).first.date %></p>
+				  	<% else %>
+				  	  <%= form_for [current_user, @users_lesson] do |f| %>
+						 	  <%= f.date_field :date %>
+						 		<%= f.check_box :check %>
+						 		<%= f.hidden_field :lesson_id, :value => lesson.id %>
+								<%= f.submit "done", data: {confirm: "登録して良いですか？"} %>
+							<% end %>
+							<ul>
+					  	  <%= render partial: "message", locals: {lesson: lesson} %>
+					    </ul>
+					  <% end %>
+
+
+
+					<% else %>
+			  		<h4><%= lesson.name %></h4>
+				  	<% if lesson.users_lessons.exists?(user_id: current_user.id) %>
+						 	<p><%= lesson.users_lessons.where(user_id: current_user).first.date %></p>
+				  	<% else %>
+				  	  <%= form_for [current_user, @users_lesson] do |f| %>
+						 	  <%= f.date_field :date %>
+						 		<%= f.check_box :check %>
+						 		<%= f.hidden_field :lesson_id, :value => lesson.id %>
+								<%= f.submit "done" %>
+							<% end %>
+							<ul>
+					  	  <%= render partial: "message", locals: {lesson: lesson} %>
+					    </ul>
+					  <% end %>
+					<% end %>
+				</div>
+		  </ul>
+    <% end %>
+  </div>
+
+  <div class='interviews'>
+	<h3>10ケースマラソン</h3>
+		<% @interviews.each do |interview| %>
+		  <ul>
+			  <li>
+			  	<h4><%= interview.name %></h4>
+			  	<% if interview.users_interviews.exists?(user_id: current_user.id) %>
+			  	  <%= form_for [current_user, @users_interview] do |f| %>
+					 	  <%= f.date_field :date, value: interview.users_interviews.where(user_id: current_user).first.date %>
+					 		<%= f.check_box :check, { checked: true }  %>
+					 		<%= f.hidden_field :interview_id, :value => interview.id %>
+							<%= f.submit "update" %>
+						<% end %>
+			  	<% else %>
+			  	  <%= form_for [current_user, @users_interview] do |f| %>
+					 	  <%= f.date_field :date %>
+					 		<%= f.check_box :check %>
+					 		<%= f.hidden_field :interview_id, :value => interview.id %>
+							<%= f.submit "done" %>
+						<% end %>
+					<% end %>
+				</li>
+			</ul>
+	  <% end %>
+  </div>
+
+  <div class='insights'>
+	<h3>12示唆マラソン</h3>
 	<% @insights.each do |insight| %>
-	  <li>
-	  	<%= insight.name %>
-	  	<% if insight.users_insights.exists?(user_id: current_user.id) %>
-	  	  <%= form_for [current_user, @users_insight] do |f| %>
-			 	  <%= f.date_select :date, :default => insight.users_insights.where(user_id: current_user).first.date %>
-			 		<%= f.check_box :check, { checked: true } %>
-			 		<%= f.hidden_field :insight_id, :value => insight.id %>
-					<%= f.submit "edit" %>
+	  <ul>
+		  <li>
+		  	<h4><%= insight.name %></h4>
+		  	<% if insight.users_insights.exists?(user_id: current_user.id) %>
+		  	  <%= form_for [current_user, @users_insight] do |f| %>
+				 	  <%= f.date_field :date, value: insight.users_insights.where(user_id: current_user).first.date %>
+				 		<%= f.check_box :check, { checked: true } %>
+				 		<%= f.hidden_field :insight_id, :value => insight.id %>
+						<%= f.submit "update" %>
+					<% end %>
+		  	<% else %>
+		  	  <%= form_for [current_user, @users_insight] do |f| %>
+				 	  <%= f.date_field :date %>
+				 		<%= f.check_box :check %>
+				 		<%= f.hidden_field :insight_id, :value => insight.id %>
+						<%= f.submit "done" %>
+					<% end %>
 				<% end %>
-	  	<% else %>
-	  	  <%= form_for [current_user, @users_insight] do |f| %>
-			 	  <%= f.date_select :date, :include_blank => true %>
-			 		<%= f.check_box :check %>
-			 		<%= f.hidden_field :insight_id, :value => insight.id %>
-					<%= f.submit "done" %>
-				<% end %>
-			<% end %>
-		</li>
-  <% end %>
+			</li>
+		</ul>
+	<% end %>
+  </div>
+
+  <div class='exams'>
+		<h3>考えるエンジン検定</h3>
+		<% @exams.each do |exam| %>
+		  <ul>
+			  <li>
+			  	<h4><%= exam.name %></h4>
+			  	<% if exam.users_exams.exists?(user_id: current_user.id) %>
+			  	  <%= form_for [current_user, @users_exam] do |f| %>
+					 	  <%= f.date_field :date, value: exam.users_exams.where(user_id: current_user).first.date %>
+					 		<%= f.check_box :check, { checked: true } %>
+					 		<%= f.hidden_field :exam_id, :value => exam.id %>
+							<%= f.submit "update" %>
+						<% end %>
+			  	<% else %>
+			  	  <%= form_for [current_user, @users_exam] do |f| %>
+					 	  <%= f.date_field :date %>
+					 		<%= f.check_box :check %>
+					 		<%= f.hidden_field :exam_id, :value => exam.id %>
+							<%= f.submit "done" %>
+						<% end %>
+					<% end %>
+				</li>
+			</ul>
+	  <% end %>
+  </div>
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

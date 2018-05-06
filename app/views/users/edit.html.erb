@@ -1,0 +1,18 @@
+<%= form_for current_user do |f| %>
+
+  <h3>プロフィール画像</h3>
+    <%= image_tag @user.avatar.url(:medium) %>
+    <div class="form-group file">
+      <%= f.file_field :avatar, class: "form-control floating-label", placeholder: "画像アップロード" %>
+    </div>
+  <h3>登録情報</h3>
+  <div class="form-group">
+		<%= f.text_field :name, placeholder: "お名前（漢字）" %><br>
+		<%= f.text_field :name_kana, placeholder: "お名前（フリガナ）" %><br>
+		<%= f.date_field :birthday, placeholder: "生年月日"  %><br>
+		<%= f.text_field :tel, placeholder: "電話番号"  %><br>
+		<%= f.text_field :job, placeholder: "ご職業"  %><br>
+	  <%= f.submit "登録" %>
+	</div>
+
+<% end %>

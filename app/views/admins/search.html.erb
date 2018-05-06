@@ -10,7 +10,7 @@
 
   	次回授業時間：
 	  <% if user.next_lesson.present? %>
-	    <%= user.next_lesson %><br/>
+	    <%= user.next_lesson.date_time %><br/>
 		<% else %>
 		  未決定<br/>
 		<% end %>
