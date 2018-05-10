@@ -1,0 +1,37 @@
+<%# Conditionally set remote: true. Also, passing model name as data attribute %>
+<% modal ||= false %>
+<% remote = modal ? true : false %>
+<div class="modal fade" id="new_users_lesson_modal" >
+	<div class="modal-dialog">
+    <div class="modal-header">
+    	<button type="button" class="close" id="modal-close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel"><%= lesson.name %></h4>
+    </div>
+		<div class="modal-body">
+			<%= form_for [current_user, @users_lesson], remote: remote, html: {role: :form, 'data-model' => 'users_lesson'} do |f| %>
+
+			  <% if @users_lesson.errors.any? %>
+			    <div id="error_explanation">
+			      <ul>
+				      <% @users_lesson.errors.full_messages.each do |msg| %>
+				        <li><%= msg %></li>
+				      <% end %>
+			      </ul>
+			    </div>
+			  <% end %>
+
+			  <div class="form-group">
+			    <%= f.label :受講日, class: 'control-label' %>
+			    <strong><%= f.date_field :date, class: 'form-control' %></strong>
+			    <span class="help-block"></span>
+			    <%= f.hidden_field :lesson_id, :value => lesson.id %>
+			  </div>
+
+			  <div class="actions">
+			    <%= f.submit 'Submit', id: "btn btn-submit" %>
+			  </div>
+			<% end %>
+    </div>
+	</div>
+</div>
+

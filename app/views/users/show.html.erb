@@ -1,9 +1,11 @@
+<% if @user.id == current_user.id %>
+
 <h3><%= current_user.name %>さんのページ</h3>
 
 <div class='progress_layout-bg'>
 	<h3>前回授業</h3>
 	<% if current_user.users_lessons.present? %>
-	  <p><%= current_user.users_lessons.where(check: 1).order("updated_at DESC").first.lesson.name %><p>
+	  <p><%= current_user.users_lessons.order("updated_at DESC").first.lesson.name %><p>
   <% end %>
 
   <h3>次回授業日時</h3>
@@ -21,129 +23,133 @@
 </div>
 
 <div contents>
-	<div class='lessons'>
+  <div class='lessons'>
 	<h3>考えるエンジン講座</h3>
-	  <% @lessons.each do |lesson| %>
+	  <% @lessons.each_with_index do |lesson, i| %>
 	    <ul>
-		  	<div class='weapon'>
-		  		<% if lesson.id == 5 %>
-		  		  <h4>4. 論点ロード</h4>
-			  		<h4><%= lesson.name %></h4>
+		  	<% if lesson.id == 5 %>
+		  		<h4>4. 論点ロード</h4>
+					<h4><%= lesson.name %></h4>
 				  	<% if lesson.users_lessons.exists?(user_id: current_user.id) %>
 						 	<p><%= lesson.users_lessons.where(user_id: current_user).first.date %></p>
 				  	<% else %>
-				  	  <%= form_for [current_user, @users_lesson] do |f| %>
-						 	  <%= f.date_field :date %>
-						 		<%= f.check_box :check %>
-						 		<%= f.hidden_field :lesson_id, :value => lesson.id %>
-								<%= f.submit "done", data: {confirm: "登録して良いですか？"} %>
-							<% end %>
-							<ul>
-					  	  <%= render partial: "message", locals: {lesson: lesson} %>
-					    </ul>
+				  		<div id="modal-content" class="content<%= i %>" data-index=<%= i %>>
+				  			<%= render partial: "lessonform", locals: { lesson: lesson } %>
+				  		</div>
+				  		<button id="modal-open">受講日登録</button>
 					  <% end %>
 
-
-
-					<% else %>
-			  		<h4><%= lesson.name %></h4>
+				<% else %>
+					<h4><%= lesson.name %></h4>
 				  	<% if lesson.users_lessons.exists?(user_id: current_user.id) %>
-						 	<p><%= lesson.users_lessons.where(user_id: current_user).first.date %></p>
+				  	  <div id='attended-lesson'>
+						 	  <p><%= lesson.users_lessons.where(user_id: current_user).first.date %></p>
+						  </div>
 				  	<% else %>
-				  	  <%= form_for [current_user, @users_lesson] do |f| %>
-						 	  <%= f.date_field :date %>
-						 		<%= f.check_box :check %>
-						 		<%= f.hidden_field :lesson_id, :value => lesson.id %>
-								<%= f.submit "done" %>
-							<% end %>
-							<ul>
-					  	  <%= render partial: "message", locals: {lesson: lesson} %>
-					    </ul>
+				  		<div id="modal-content" class="content<%= i %>" data-index=<%= i %>>
+				  			<%= render partial: "lessonform", locals: { lesson: lesson } %>
+				  		</div>
+			 	  	  <button id="modal-open">受講日登録</button>
 					  <% end %>
-					<% end %>
-				</div>
+				<% end %>
 		  </ul>
     <% end %>
   </div>
 
-  <div class='interviews'>
+	<div class='interviews'>
 	<h3>10ケースマラソン</h3>
-		<% @interviews.each do |interview| %>
+		<% @interviews.each_with_index do |interview, i| %>
 		  <ul>
-			  <li>
-			  	<h4><%= interview.name %></h4>
+			  <h4><%= interview.name %></h4>
 			  	<% if interview.users_interviews.exists?(user_id: current_user.id) %>
-			  	  <%= form_for [current_user, @users_interview] do |f| %>
-					 	  <%= f.date_field :date, value: interview.users_interviews.where(user_id: current_user).first.date %>
-					 		<%= f.check_box :check, { checked: true }  %>
-					 		<%= f.hidden_field :interview_id, :value => interview.id %>
-							<%= f.submit "update" %>
-						<% end %>
+					 	<p><%= interview.users_interviews.where(user_id: current_user).first.date %></p>
 			  	<% else %>
-			  	  <%= form_for [current_user, @users_interview] do |f| %>
-					 	  <%= f.date_field :date %>
-					 		<%= f.check_box :check %>
-					 		<%= f.hidden_field :interview_id, :value => interview.id %>
-							<%= f.submit "done" %>
-						<% end %>
+			  	  <div id="modal-content-01" class="content-01<%= i %>" data-index-01=<%= i %>>
+			  	  	<%= render partial: "interviewform", locals: { interview: interview } %>
+				  	</div>
+				  	<button id="modal-open-01">実施日登録</button>
 					<% end %>
-				</li>
 			</ul>
 	  <% end %>
-  </div>
+	</div>
+
 
   <div class='insights'>
 	<h3>12示唆マラソン</h3>
-	<% @insights.each do |insight| %>
-	  <ul>
-		  <li>
-		  	<h4><%= insight.name %></h4>
-		  	<% if insight.users_insights.exists?(user_id: current_user.id) %>
-		  	  <%= form_for [current_user, @users_insight] do |f| %>
-				 	  <%= f.date_field :date, value: insight.users_insights.where(user_id: current_user).first.date %>
-				 		<%= f.check_box :check, { checked: true } %>
-				 		<%= f.hidden_field :insight_id, :value => insight.id %>
-						<%= f.submit "update" %>
+	  <% @insights.each_with_index do |insight, i| %>
+	    <ul>
+		    <h4><%= insight.name %></h4>
+			  	<% if insight.users_insights.exists?(user_id: current_user.id) %>
+			  	  <p><%= insight.users_insights.where(user_id: current_user).first.date %></p>
+			  	<% else %>
+				  	<div id="modal-content-02" class="content-02<%= i %>" data-index-02=<%= i %>>
+				  	  <%= render partial: "insightform", locals: { insight: insight } %>
+					  </div>
+					  <button id="modal-open-02">実施日登録</button>
 					<% end %>
-		  	<% else %>
-		  	  <%= form_for [current_user, @users_insight] do |f| %>
-				 	  <%= f.date_field :date %>
-				 		<%= f.check_box :check %>
-				 		<%= f.hidden_field :insight_id, :value => insight.id %>
-						<%= f.submit "done" %>
-					<% end %>
-				<% end %>
-			</li>
-		</ul>
-	<% end %>
+		  </ul>
+	  <% end %>
   </div>
 
   <div class='exams'>
 		<h3>考えるエンジン検定</h3>
-		<% @exams.each do |exam| %>
+		<% @exams.each_with_index do |exam, i| %>
 		  <ul>
-			  <li>
-			  	<h4><%= exam.name %></h4>
+			  <h4><%= exam.name %></h4>
 			  	<% if exam.users_exams.exists?(user_id: current_user.id) %>
-			  	  <%= form_for [current_user, @users_exam] do |f| %>
-					 	  <%= f.date_field :date, value: exam.users_exams.where(user_id: current_user).first.date %>
-					 		<%= f.check_box :check, { checked: true } %>
-					 		<%= f.hidden_field :exam_id, :value => exam.id %>
-							<%= f.submit "update" %>
-						<% end %>
+					 	<p><%= exam.users_exams.where(user_id: current_user).first.date %></p>
 			  	<% else %>
-			  	  <%= form_for [current_user, @users_exam] do |f| %>
-					 	  <%= f.date_field :date %>
-					 		<%= f.check_box :check %>
-					 		<%= f.hidden_field :exam_id, :value => exam.id %>
-							<%= f.submit "done" %>
-						<% end %>
+				  	<div id="modal-content-03" class="content-03<%= i %>" data-index-03=<%= i %>>
+				  	  <%= render partial: "examform", locals: { exam: exam } %>
+					  </div>
+					  <button id="modal-open-03">受検日登録</button>
 					<% end %>
-				</li>
 			</ul>
 	  <% end %>
   </div>
+
+	<div class='practices'>
+		<h3>実践講義</h3>
+		<% @practices.each_with_index do |practice, i| %>
+		  <ul>
+			  <h4><%= practice.name %></h4>
+			  	<% if practice.users_practices.exists?(user_id: current_user.id) %>
+					 	<p><%= practice.users_practices.where(user_id: current_user).first.date %></p>
+			  	<% else %>
+				  	<div id="modal-content-04" class="content-04<%= i %>" data-index-04=<%= i %>>
+				  	  <%= render partial: "practiceform", locals: { practice: practice } %>
+					  </div>
+					  <button id="modal-open-04">受検日登録</button>
+					<% end %>
+			</ul>
+	  <% end %>
+  </div>
+
+	<div class='expeditions'>
+		<h3>続・考えるエンジン講座</h3>
+		<% @expeditions.each_with_index do |expedition, i| %>
+		  <ul>
+			  <h4><%= expedition.name %></h4>
+			  	<% if expedition.users_expeditions.exists?(user_id: current_user.id) %>
+					 	<p><%= expedition.users_expeditions.where(user_id: current_user).first.date %></p>
+			  	<% else %>
+				  	<div id="modal-content-05" class="content-05<%= i %>" data-index-05=<%= i %>>
+				  	  <%= render partial: "expeditionform", locals: { expedition: expedition } %>
+					  </div>
+					  <button id="modal-open-05">受講日登録</button>
+					<% end %>
+			</ul>
+	  <% end %>
+  </div>
+
+
 </div>
+
+
+
+<% else %>
+
+<% end %>
 
 
 

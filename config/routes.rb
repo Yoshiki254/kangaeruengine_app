@@ -30,30 +30,32 @@ Rails.application.routes.draw do
     end
   end
 
-  # namespace :admins do
-  #   constraints subdomain: 'admins' do
-  #     resources :users, only: [:index, :destroy] do
-  #       collection do
-  #         get 'search'
-  #       end
-  #     end
-  #   end
-  # end
-
-
-
-  resources :admins, only: [:show] do
-    collection do
-      get 'search'
+  namespace :admins do
+    constraints subdomain: 'admins' do
+      resources :users, only: [:index, :destroy] do
+        collection do
+          get 'search'
+        end
+      end
     end
   end
 
+
+
+  # resources :admins, only: [:show] do
+  #   collection do
+  #     get 'search'
+  #   end
+  # end
+
 	resources :users, only: [:show, :edit, :update,] do
     resources :next_lessons, only: [:create, :edit, :update]
-	  resources :users_lessons, only: [:create, :edit, :update]
+	  resources :users_lessons, only: [:create]
 	  resources :users_interviews, only: [:create]
 	  resources :users_insights, only: [:create]
     resources :users_exams, only: [:create]
+    resources :users_practices, only: [:create]
+    resources :users_expeditions, only: [:create]
   end
 
 end
