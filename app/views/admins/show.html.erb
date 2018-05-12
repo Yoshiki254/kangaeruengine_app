@@ -1,7 +1,7 @@
 <p>
-<div>
+<div class='search'>
 	<%= form_tag('/admins/search', method: :get) do %>
-	  <input class="search__query" name="keyword" placeholder="生徒名で検索" type="string" value="">
+	  <input class="search_query" name="keyword" placeholder="生徒名で検索" type="string" value="">
 	  	<button class="btn-search" title="検索" type="submit"></button>
 	  </input>
 	<% end %>
@@ -20,7 +20,7 @@
 
 		<li>次回授業時間：
 		  <% if user.next_lesson.present? %>
-		    <%= user.next_lesson.date_time %>
+		    <%= user.next_lesson.date_time.strftime("%Y-%m-%d %H:%M:%S") %>
 			<% else %>
 			  未決定
 			<% end %>
@@ -28,7 +28,7 @@
 
 		<li>前回授業：
 		  <% if user.users_lessons.present? %>
-		  	<%= user.users_lessons.where(check: 1).order("updated_at DESC").first.lesson.name %>
+		  	<%= user.users_lessons.order("updated_at DESC").first.lesson.name %>
 		  <% else %>
 		  	未受講
 		  <% end %>
@@ -36,7 +36,7 @@
 
 		<li>10ケースマラソン：
 			<% if user.users_interviews.present? %>
-				<%= user.users_interviews.where(check: 1).order("updated_at DESC").first.interview.name %>
+				<%= user.users_interviews.order("updated_at DESC").first.interview.name %>
 			<% else %>
 			  未開始
 			<% end %>
@@ -44,7 +44,7 @@
 
 	  <li>12示唆マラソン：
 		  <% if user.users_insights.present? %>
-		    <%= user.users_insights.where(check: 1).order("updated_at DESC").first.insight.name %>
+		    <%= user.users_insights.order("updated_at DESC").first.insight.name %>
 		  <% else %>
 		    未開始
 		  <% end %>
@@ -52,7 +52,7 @@
 
 	  <li>考えるエンジン検定：
 		  <% if user.users_exams.present? %>
-		    <%= user.users_exams.where(check: 1).order("updated_at DESC").first.exam.name %>
+		    <%= user.users_exams.order("updated_at DESC").first.exam.name %>
 		  <% else %>
 		    未受験
 		  <% end %>

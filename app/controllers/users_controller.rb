@@ -2,6 +2,15 @@ class UsersController < ApplicationController
 	before_action :authenticate_user!
 
 	def show
+
+		unless current_user.full_profile?
+			redirect_to edit_user_path(current_user)
+		else
+			user_path(current_user)
+		end
+
+		@progress = ProgressBar.table_records(current_user)
+
 		@user = User.find(params[:id])
 
 		@lessons = Lesson.includes(:users_lessons)
@@ -23,7 +32,6 @@ class UsersController < ApplicationController
 
 		@expeditions = Expedition.includes(:users_expeditions)
 		@users_expedition = UsersExpedition.new
-
 	end
 
   def edit
@@ -31,9 +39,13 @@ class UsersController < ApplicationController
   end
 
   def update
-  	@user = User.find(params[:id])
-  	@user.update(update_params)
-  	redirect_to edit_user_path(current_user.id)
+  	respond_to do |format|
+      if current_user.update(update_params)
+        format.html { redirect_to user_path(current_user), notice: 'ユーザー情報が正しく登録されました' }
+      else
+        format.html { redirect_to edit_user_path(current_user) }
+      end
+    end
   end
 
   private

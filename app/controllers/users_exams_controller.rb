@@ -4,7 +4,7 @@ class UsersExamsController < ApplicationController
 		@users_exam = UsersExam.new(create_params)
     respond_to do |format|
       if @users_exam.save
-        format.html { redirect_to user_path(current_user), notice: 'Date was successfully created.' }
+        format.html { redirect_to user_path(current_user), notice: 'Date was successfully registered.' }
         format.json { render action: 'create', status: :created, location: @users_exam }
       	format.js   { render action: 'create', status: :created, location: @users_exam }
       else

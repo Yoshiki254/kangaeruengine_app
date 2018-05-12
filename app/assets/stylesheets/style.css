@@ -1,0 +1,146 @@
+body, html {
+  height: 100%;
+  background-color: white;
+}
+
+h1, h2, h3, h4, h5, h6, p, body {
+  line-height: 1.77;
+  font-size: 18px;
+  color: #4a4a4a;
+  font-family: sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.progress_layout-bg {
+  padding: 50px 0;
+  background-color: #fffff;
+  width: 940px;
+  margin: auto;
+  background: url() no-repeat center center;
+  height: 400px;
+}
+
+.progress_layout-bg h4 {
+  margin: auto;
+  color: black;
+}
+
+.progress_layout-bg p {
+  margin: auto;
+  padding: 10px;
+  color: black;
+}
+
+
+.contents {
+  height: 150%;
+  padding: 20px;
+}
+
+.basics {
+   width: 940px;
+   height: 1100px;
+   margin: auto;
+ }
+
+.milestones {
+  width: 940px;
+  height: 300px;
+  margin: auto;
+}
+
+.lessons {
+  background-color: #fffff;
+  width: 480px;
+  height: 250px;
+  float: left;
+  margin: auto;
+}
+
+.interviews {
+  background-color: #fffff;
+  width: 200px;
+  height: 400px;
+  float: left;
+  margin: auto;
+}
+
+.insights {
+  background-color: #fffff;
+  width: 200px;
+  height: 450px;
+  float: right;
+  margin: auto;
+}
+
+.exams {
+  background-color: #fffff;
+  width: 450px;
+  height: 300px;
+  float: right;
+  margin: auto;
+}
+
+.practices {
+  background-color: #fffff;
+  width: 450px;
+  height: 300px;
+  float: left;
+  margin: auto;
+}
+
+.advanced {
+  background-color: #fffff;
+  width: 400px;
+  height: 600px;
+  margin: auto;
+}
+
+.clearfix::after{
+  content: "";
+  display: block;
+  clear: both;
+}
+
+.profile {
+  background-color: #fffff;
+  width: 480px;
+  height: 600px;
+  margin: auto;
+}
+
+.profile_photo {
+  background-color: #fffff;
+  width: 450px;
+  height: 300px;
+  margin: auto;
+}
+
+.profile_info {
+  background-color: #fffff;
+  width: 450px;
+  height: 300px;
+  margin: auto;
+
+}
+
+.user {
+  background-color: #fffff;
+  width: 450px;
+  height: 300px;
+  margin: 0px;
+}
+
+.search {
+  background-color: #fffff;
+  width: 450px;
+  height: 100px;
+  margin: auto;
+}
+
+.footer {
+  margin: auto;
+}
+
+

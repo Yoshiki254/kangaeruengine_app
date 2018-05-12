@@ -3,7 +3,8 @@ Rails.application.routes.draw do
   devise_for :users, path: 'users', controllers: {
   sessions:      'users/sessions',
   passwords:     'users/passwords',
-  registrations: 'users/registrations'
+  registrations: 'users/registrations',
+  omniauth_callbacks: 'users/omniauth_callbacks'
 }
 
   devise_for :admins, path: 'admins', controllers: {
@@ -30,23 +31,23 @@ Rails.application.routes.draw do
     end
   end
 
-  namespace :admins do
-    constraints subdomain: 'admins' do
-      resources :users, only: [:index, :destroy] do
-        collection do
-          get 'search'
-        end
-      end
-    end
-  end
-
-
-
-  # resources :admins, only: [:show] do
-  #   collection do
-  #     get 'search'
+  # namespace :admins do
+  #   constraints subdomain: 'admins' do
+  #     resources :users, only: [:index, :destroy] do
+  #       collection do
+  #         get 'search'
+  #       end
+  #     end
   #   end
   # end
+
+
+
+  resources :admins, only: [:show] do
+    collection do
+      get 'search'
+    end
+  end
 
 	resources :users, only: [:show, :edit, :update,] do
     resources :next_lessons, only: [:create, :edit, :update]
@@ -57,5 +58,6 @@ Rails.application.routes.draw do
     resources :users_practices, only: [:create]
     resources :users_expeditions, only: [:create]
   end
+
 
 end
