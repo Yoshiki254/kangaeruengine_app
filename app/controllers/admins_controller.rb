@@ -8,7 +8,7 @@ class AdminsController < ApplicationController
 	end
 
 	def search
-	 	@users = User.where('name LIKE(?)', "%#{params[:keyword]}%").limit(20)
+	 	@users = User.where('name_kana LIKE(?)', "%#{params[:keyword]}%").limit(20)
 	end
 
 end

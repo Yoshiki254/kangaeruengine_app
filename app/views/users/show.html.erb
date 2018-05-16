@@ -1,165 +1,186 @@
 
 <% if @user.id == current_user.id %>
 
-<div class='name'>
-	<h3><%= current_user.name %>さんのページ</h3>
-</div>
-
-<div class='progress_layout-bg'>
-
-	<h4>前回授業</h4>
-	<% if current_user.users_lessons.present? %>
-	  <p><%= current_user.users_lessons.order("updated_at DESC").first.lesson.name %></p>
-  <% end %>
-
-  <h4>Your achievements</h4>
-  <div id="progressbar" data-progress="<%= @progress %>">
-    <div class='progressbar'>
-	  	<div class="progress"></div>
-	  	<div class='percentCount'><%= @progress %></div>
-  	</div>
-  </div>
-
-  <h4>次回授業日時</h4>
-	<% unless current_user.next_lesson.present? %>
-		<div><%= form_for [current_user, @next_lesson] do |f| %>
-	 	  <%= f.datetime_select :date_time, :include_blank => true %>
-			<%= f.submit "confirm" %></div>
-	  <% end %>
-	<% else %>
-		<%= form_for [current_user, current_user.next_lesson] do |f| %>
-	 	  <%= f.datetime_select :date_time, :default => current_user.next_lesson.date_time %>
-			<%= f.submit "update" %>
-	  <% end %>
-	<% end %>
-</div>
-
-<div class='contents'>
-	<div class='basics clearfix'>
-	  <div class='lessons'>
-		<h3>考えるエンジン講座</h3>
-		  <% @lessons.each_with_index do |lesson, i| %>
-		    <ul>
-			  	<% if lesson.id == 5 %>
-			  		<h4>4. 論点ロード</h4>
-						<h4><%= lesson.name %></h4>
-					  	<% if lesson.users_lessons.exists?(user_id: current_user.id) %>
-							 	<p><%= lesson.users_lessons.where(user_id: current_user).first.date %></p>
-					  	<% else %>
-					  		<div id="modal-content" class="content<%= i %>" data-index=<%= i %>>
-					  			<%= render partial: "lessonform", locals: { lesson: lesson } %>
-					  		</div>
-					  		<button id="modal-open">受講日登録</button>
-						  <% end %>
-
-					<% else %>
-						<h4><%= lesson.name %></h4>
-					  	<% if lesson.users_lessons.exists?(user_id: current_user.id) %>
-					  	  <div id='attended-lesson'>
-							 	  <p><%= lesson.users_lessons.where(user_id: current_user).first.date %></p>
-							  </div>
-					  	<% else %>
-					  		<div id="modal-content" class="content<%= i %>" data-index=<%= i %>>
-					  			<%= render partial: "lessonform", locals: { lesson: lesson } %>
-					  		</div>
-				 	  	  <button id="modal-open">受講日登録</button>
-						  <% end %>
+<section class="hero is-medium has-bg-img is-black">
+	<img class='is-bg-img' src='/assets/images/thomas.jpg'></img>
+	  <div class="hero-body">
+		  <div class="container has-text-centered">
+		    <h2 class='subtitle has-text-white'>前回授業</h2><br>
+					<% if current_user.users_lessons.present? %>
+						<h3 class='subtitle has-text-white-bis'><%= current_user.users_lessons.order("updated_at DESC").first.lesson.name %></h3><br>
 					<% end %>
-			  </ul>
-	    <% end %>
-	  </div>
 
-		<div class='interviews'>
-		<h3>10ケースマラソン</h3>
+				<h2 class='subtitle has-text-white'>Your achievements</h2><br>
+					<progress class="progress is-danger" value="<%= @progress %>" max="100">
+					</progress>
+
+				<h2 class='subtitle has-text-white'>次回授業日時</h2><br>
+						<% unless current_user.next_lesson.present? %>
+							<div><%= form_for [current_user, @next_lesson] do |f| %>
+						 	  <%= f.datetime_select :date_time, :include_blank => true %>
+								<%= f.submit "次回予約" %></div>
+						  <% end %>
+						<% else %>
+							<h3 class='subtitle has-text-white-bis'><%= current_user.next_lesson.date_time.strftime("%Y-%m-%d %H:%M:%S") %></h3>
+							<%= form_for [current_user, current_user.next_lesson] do |f| %>
+						 	  <%= f.datetime_select :date_time, :default => current_user.next_lesson.date_time %>
+								<%= f.submit "次回予約", :class => 'button is-danger'%>
+						  <% end %>
+						<% end %>
+			  </div>
+			</div>
+</section>
+
+<section class="section is-clearfix">
+<div class='container'>
+  <div class='columns'>
+		<div class="column is-fullwidth-mobile is-one-thirds-tablet is-3-desktop is-offset-1-desktop">
+			<div class='title is-size-5-mobile is-size-4-desktop'>考えるエンジン講座</div>
+			  <% @lessons.each_with_index do |lesson, i| %>
+			    <ul>
+				  	<% if lesson.id == 5 %>
+				  		<p class='subtitle is-size-6'>4. 論点ロード</p>
+							  <p class='subtitle is-size-6'><%= lesson.name %></p>
+						  	<% if lesson.users_lessons.exists?(user_id: current_user.id) %>
+								 	<p class='subtitle is-size-6 has-text-danger has-text-centered'><%= lesson.users_lessons.where(user_id: current_user).first.date %></p>
+								    <p class='block'></p>
+						  	<% else %>
+						  		<div id="m-content" class="m-content<%= i %>" data-index=<%= i %>>
+						  			<%= render partial: "lessonform", locals: { lesson: lesson } %>
+						  		</div>
+						  		 <a class='buttons is-centered' id="m-open">受講日登録</a>
+						  		<p class='block'></p>
+							  <% end %>
+
+						<% else %>
+							<div class='subtitle is-size-6'><%= lesson.name %></div>
+						  	<% if lesson.users_lessons.exists?(user_id: current_user.id) %>
+								 	  <div class='subtitle is-size-6 has-text-danger has-text-centered'><%= lesson.users_lessons.where(user_id: current_user).first.date %></div>
+								 	  <div class='block'></div>
+						  	<% else %>
+						  		<div id="m-content" class="m-content<%= i %>" data-index=<%= i %>>
+						  			<%= render partial: "lessonform", locals: { lesson: lesson } %>
+						  		</div>
+					 	  	  <a class='buttons is-centered' id="m-open">受講日登録</a>
+					 	  	  <p class='block'></p>
+							  <% end %>
+						<% end %>
+				  </ul>
+		    <% end %>
+		  </div>
+
+		<div class='column is-2-desktop is-offset-2-desktop is-half-mobile is-narrow'>
+			<div class='title is-size-5-mobile is-size-4-desktop'>10ケースマラソン</div>
 			<% @interviews.each_with_index do |interview, i| %>
 			  <ul>
-				  <h4><%= interview.name %></h4>
+				  <div class='subtitle is-size-6'><%= interview.name %></div>
 				  	<% if interview.users_interviews.exists?(user_id: current_user.id) %>
-						 	<p><%= interview.users_interviews.where(user_id: current_user).first.date %></p>
-				  	<% else %>
-				  	  <div id="modal-content-01" class="content-01<%= i %>" data-index-01=<%= i %>>
-				  	  	<%= render partial: "interviewform", locals: { interview: interview } %>
-					  	</div>
-					  	<button id="modal-open-01">実施日登録</button>
+						 	<div class='subtitle is-size-6 has-text-danger has-text-centered'><%= interview.users_interviews.where(user_id: current_user).first.date %></div>
+						 	<div class='block'></div>
+					  <% else %>
+					    <div id="m-content-01" class="m-content-01<%= i %>" data-index-01=<%= i %>>
+					  	  	<%= render partial: "interviewform", locals: { interview: interview } %>
+						  </div>
+						  <a class='buttons is-centered' id="m-open-01">実施日登録</a>
+						  <div class='block'></div>
 						<% end %>
 				</ul>
-		  <% end %>
+			<% end %>
 		</div>
 
 
-	  <div class='insights'>
-		<h3>12示唆マラソン</h3>
+	  <div class='column is-2-desktop is-offset-1-desktop is-half-mobile is-narrow'>
+		  <div class='title is-size-5-mobile is-size-4-desktop'>12示唆マラソン</div>
 		  <% @insights.each_with_index do |insight, i| %>
 		    <ul>
-			    <h4><%= insight.name %></h4>
+			    <div class='subtitle is-size-6'><%= insight.name %></div>
 				  	<% if insight.users_insights.exists?(user_id: current_user.id) %>
-				  	  <p><%= insight.users_insights.where(user_id: current_user).first.date %></p>
+				  	  <div class='subtitle is-size-6 has-text-danger has-text-centered'><%= insight.users_insights.where(user_id: current_user).first.date %></div>
+				  	  <div class='block'></div>
 				  	<% else %>
-					  	<div id="modal-content-02" class="content-02<%= i %>" data-index-02=<%= i %>>
+					  	<div id="m-content-02" class="m-content-02<%= i %>" data-index-02=<%= i %>>
 					  	  <%= render partial: "insightform", locals: { insight: insight } %>
 						  </div>
-						  <button id="modal-open-02">実施日登録</button>
+						  <a class='buttons is-centered' id="m-open-02">実施日登録</a>
+						  <div class='block'></div>
 						<% end %>
 			  </ul>
 		  <% end %>
 	  </div>
 	</div>
+</div>
 
-	<div class='milestones clearfix'>
-	  <div class='exams'>
-			<h3>考えるエンジン検定</h3>
-			<% @exams.each_with_index do |exam, i| %>
-			  <ul>
-				  <h4><%= exam.name %></h4>
-				  	<% if exam.users_exams.exists?(user_id: current_user.id) %>
-						 	<p><%= exam.users_exams.where(user_id: current_user).first.date %></p>
-				  	<% else %>
-					  	<div id="modal-content-03" class="content-03<%= i %>" data-index-03=<%= i %>>
-					  	  <%= render partial: "examform", locals: { exam: exam } %>
-						  </div>
-						  <button id="modal-open-03">受検日登録</button>
-						<% end %>
-				</ul>
-		  <% end %>
-	  </div>
+</section>
 
-		<div class='practices'>
-			<h3>実践講義</h3>
+<section class="section is-clearfix has-background-white-bis">
+<div class='container'>
+	<div class='columns'>
+		<div class='column is-fullwidth-mobile is-4-desktop is-offset-1-desktop'>
+			<div class='title is-size-5-mobile is-size-4-desktop'>考えるエンジン検定</div>
+				<% @exams.each_with_index do |exam, i| %>
+				  <ul>
+					  <div class='subtitle is-size-6'><%= exam.name %></div>
+					  	<% if exam.users_exams.exists?(user_id: current_user.id) %>
+							 	<div class='subtitle is-size-6 has-text-danger has-text-centered'><%= exam.users_exams.where(user_id: current_user).first.date %></div>
+							 	<div class='block'></div>
+					  	<% else %>
+						  	<div id="m-content-03" class="m-content-03<%= i %>" data-index-03=<%= i %>>
+						  	  <%= render partial: "examform", locals: { exam: exam } %>
+							  </div>
+							  <a class='buttons is-centered' id="m-open-03">受検日登録</a>
+							  <div class='block'></div>
+							<% end %>
+					</ul>
+			  <% end %>
+		</div>
+
+	  <div class='column is-fullwidth-mobile is-4-desktop is-offset-1-desktop'>
+			<div class='title is-size-5-mobile is-size-4-desktop'>実践講義</div>
 			<% @practices.each_with_index do |practice, i| %>
 			  <ul>
-				  <h4><%= practice.name %></h4>
+				  <div class='subtitle is-size-6'><%= practice.name %></div>
 				  	<% if practice.users_practices.exists?(user_id: current_user.id) %>
-						 	<p><%= practice.users_practices.where(user_id: current_user).first.date %></p>
+						 	<div class='subtitle is-size-6 has-text-danger has-text-centered'><%= practice.users_practices.where(user_id: current_user).first.date %></div>
+						 	<div class='block'></div>
 				  	<% else %>
-					  	<div id="modal-content-04" class="content-04<%= i %>" data-index-04=<%= i %>>
+					  	<div id="m-content-04" class="m-content-04<%= i %>" data-index-04=<%= i %>>
 					  	  <%= render partial: "practiceform", locals: { practice: practice } %>
 						  </div>
-						  <button id="modal-open-04">受講日登録</button>
-						<% end %>
-				</ul>
-		  <% end %>
-	  </div>
-  </div>
-
-  <div class='advanced clearfix'>
-		<div class='expeditions'>
-			<h3>続・考えるエンジン講座</h3>
-			<% @expeditions.each_with_index do |expedition, i| %>
-			  <ul>
-				  <h4><%= expedition.name %></h4>
-				  	<% if expedition.users_expeditions.exists?(user_id: current_user.id) %>
-						 	<p><%= expedition.users_expeditions.where(user_id: current_user).first.date %></p>
-				  	<% else %>
-					  	<div id="modal-content-05" class="content-05<%= i %>" data-index-05=<%= i %>>
-					  	  <%= render partial: "expeditionform", locals: { expedition: expedition } %>
-						  </div>
-						  <button id="modal-open-05">受講日登録</button>
+						  <a class='buttons is-centered' id="m-open-04">受講日登録</a>
+						  <div class='block'></div>
 						<% end %>
 				</ul>
 		  <% end %>
 	  </div>
 	</div>
 </div>
+</section>
+
+<section class="section is-clearfix has-background-white-ter">
+<div class='container'>
+	<div class='columns'>
+		<div class="column is-fullwidth-mobile is-one-thirds-tablet is-3-desktop is-offset-1-desktop">
+			<div class='title is-size-5-mobile is-size-4-desktop'>続・考えるエンジン講座</div>
+			<% @expeditions.each_with_index do |expedition, i| %>
+			  <ul>
+				  <div class='subtitle is-size-6'><%= expedition.name %></div>
+				  	<% if expedition.users_expeditions.exists?(user_id: current_user.id) %>
+						 	<div class='subtitle is-size-6 has-text-danger has-text-centered'><%= expedition.users_expeditions.where(user_id: current_user).first.date %></div>
+						 	<div class='block'></div>
+				  	<% else %>
+					  	<div id="m-content-05" class="m-content-05<%= i %>" data-index-05=<%= i %>>
+					  	  <%= render partial: "expeditionform", locals: { expedition: expedition } %>
+						  </div>
+						  <a class='buttons is-centered' id="m-open-05">受講日登録</a>
+						  <div class='block'></div>
+						<% end %>
+				</ul>
+		  <% end %>
+	  </div>
+	</div>
+</div>
+</section>
+
 
 <% else %>
 

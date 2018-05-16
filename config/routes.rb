@@ -43,7 +43,7 @@ Rails.application.routes.draw do
 
 
 
-  resources :admins, only: [:show] do
+  resources :admins, only: [:show, :create, :edit] do
     collection do
       get 'search'
     end

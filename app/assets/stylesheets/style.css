@@ -3,35 +3,36 @@ body, html {
   background-color: white;
 }
 
-h1, h2, h3, h4, h5, h6, p, body {
-  line-height: 1.77;
-  font-size: 18px;
-  color: #4a4a4a;
-  font-family: sans-serif;
-  margin: 0;
-  padding: 0;
-}
 
 .progress_layout-bg {
-  padding: 50px 0;
+  background: url("thomas_edison.png"), no-repeat center;
+  background-size: cover;
+  position: relative;
+  z-index: 0;
+  overflow: hidden;/*ブラー効果でボヤけた部分を非表示*/
   background-color: #fffff;
-  width: 940px;
-  margin: auto;
-  background: url() no-repeat center center;
-  height: 400px;
+  left: 0;
+  right: 0;
+  height: 600px;
 }
 
-.progress_layout-bg h4 {
-  margin: auto;
-  color: black;
+/*:beforeにぼかし効果を設定する*/
+.progress_layout-bg:before{
+  content: '';
+  background: inherit;/*.bgImageで設定した背景画像を継承する*/
+  -webkit-filter: blur(5px);
+  -moz-filter: blur(5px);
+  -o-filter: blur(5px);
+  -ms-filter: blur(5px);
+  filter: blur(5px);
+  position: absolute;
+  /*ブラー効果で画像の端がボヤけた分だけ位置を調整*/
+  top: -5px;
+  left: -5px;
+  right: -5px;
+  bottom: -5px;
+  z-index: -1;/*重なり順序を一番下にしておく*/
 }
-
-.progress_layout-bg p {
-  margin: auto;
-  padding: 10px;
-  color: black;
-}
-
 
 .contents {
   height: 150%;
@@ -40,22 +41,26 @@ h1, h2, h3, h4, h5, h6, p, body {
 
 .basics {
    width: 940px;
-   height: 1100px;
+   height: 700px;
    margin: auto;
  }
-
-.milestones {
-  width: 940px;
-  height: 300px;
-  margin: auto;
-}
 
 .lessons {
   background-color: #fffff;
   width: 480px;
-  height: 250px;
+  height: 700px;
   float: left;
   margin: auto;
+}
+.lesson-contents {
+  background-color: #fffff;
+  width: 450px;
+  height: 650px;
+}
+
+.lesson-contents h3 {
+  color: black;
+  text-align: center;
 }
 
 .interviews {
@@ -71,6 +76,12 @@ h1, h2, h3, h4, h5, h6, p, body {
   width: 200px;
   height: 450px;
   float: right;
+  margin: auto;
+}
+
+.milestones {
+  width: 940px;
+  height: 300px;
   margin: auto;
 }
 
@@ -132,12 +143,46 @@ h1, h2, h3, h4, h5, h6, p, body {
   margin: 0px;
 }
 
-.search {
+.search_results {
   background-color: #fffff;
   width: 450px;
-  height: 100px;
+  height: 300px;
   margin: auto;
 }
+
+.user-signin {
+  padding: 150px 0;
+  background-color: #fffff;
+  width: 500px;
+  margin: auto;
+  height: 400px;
+}
+
+.admin-signin {
+  padding: 150px 0;
+  background-color: #fffff;
+  width: 500px;
+  margin: auto;
+  height: 400px;
+}
+
+.user-signup {
+  padding: 150px 0;
+  background-color: #fffff;
+  width: 500px;
+  margin: auto;
+  height: 400px;
+}
+
+.admin-signup {
+  padding: 150px 0;
+  background-color: #fffff;
+  width: 500px;
+  margin: auto;
+  height: 400px;
+}
+
+
 
 .footer {
   margin: auto;

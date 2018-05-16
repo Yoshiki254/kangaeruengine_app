@@ -1,14 +1,14 @@
 
 <% modal ||= false %>
 <% remote = modal ? true : false %>
-<div class="modal fade" id="new_users_interview_modal" >
-	<div class="modal-dialog">
-    <div class="modal-header">
-    	<button type="button" class="close" id="modal-close" data-dismiss="modal" aria-hidden="true">&times;</button>
+<div class="m0dal" id="new_users_interview_modal" >
+	<div class="m-dialog">
+    <div class="m-header">
+    	<button type="button" class="close" id="m-close" data-dismiss="modal" aria-hidden="true">&times;</button>
     	<p>10ケースマラソン</p>
-        <h4 class="modal-title" id="myModalLabel"><%= interview.name %></h4>
+        <h4 class="m-title" id="myModalLabel"><%= interview.name %></h4>
     </div>
-		<div class="modal-body">
+		<div class="m-body">
 			<%= form_for [current_user, @users_interview], remote: remote, html: {role: :form, 'data-model' => 'users_interview'} do |f| %>
 
 			  <% if @users_interview.errors.any? %>

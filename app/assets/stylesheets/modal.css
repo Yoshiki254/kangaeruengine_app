@@ -1,5 +1,5 @@
 
-#modal-content {
+#m-content {
 	width: 50% ;
 	margin: 0 ;
 	padding: 10px 20px ;
@@ -10,7 +10,7 @@
 	z-index: 2 ;
 }
 
-#modal-content-01 {
+#m-content-01 {
 	width: 50% ;
 	margin: 0 ;
 	padding: 10px 20px ;
@@ -21,7 +21,7 @@
 	z-index: 2 ;
 }
 
-#modal-content-02 {
+#m-content-02 {
 	width: 50% ;
 	margin: 0 ;
 	padding: 10px 20px ;
@@ -32,7 +32,7 @@
 	z-index: 2 ;
 }
 
-#modal-content-03 {
+#m-content-03 {
 	width: 50% ;
 	margin: 0 ;
 	padding: 10px 20px ;
@@ -43,7 +43,7 @@
 	z-index: 2 ;
 }
 
-#modal-content-04 {
+#m-content-04 {
 	width: 50% ;
 	margin: 0 ;
 	padding: 10px 20px ;
@@ -54,7 +54,7 @@
 	z-index: 2 ;
 }
 
-#modal-content-05 {
+#m-content-05 {
 	width: 50% ;
 	margin: 0 ;
 	padding: 10px 20px ;
@@ -66,7 +66,7 @@
 }
 
 
-#modal-overlay {
+#m-overlay {
 	z-index: 1 ;
 	display: none ;
 	position: fixed ;

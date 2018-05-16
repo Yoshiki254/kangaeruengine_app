@@ -3,32 +3,32 @@ $(function(){
 
 
 //モーダルウィンドウを出現させるクリックイベント
-$("[id=modal-open]").click( function(){
+$("[id=m-open]").click( function(){
 
   var index = this.previousElementSibling.getAttribute('data-index');
   //キーボード操作などにより、オーバーレイが多重起動するのを防止する
   $( this ).blur() ;  //ボタンからフォーカスを外す
-  if( $( "#modal-overlay" )[0] ) return false ;   //新しくモーダルウィンドウを起動しない (防止策1)
+  if( $( "#m-overlay" )[0] ) return false ;   //新しくモーダルウィンドウを起動しない (防止策1)
   //if($("#modal-overlay")[0]) $("#modal-overlay").remove() ;   //現在のモーダルウィンドウを削除して新しく起動する (防止策2)
 
   //オーバーレイを出現させる
-  $( "body" ).append( '<div id="modal-overlay"></div>' ) ;
-  $( "#modal-overlay" ).fadeIn( "slow" ) ;
+  $( "body" ).append( '<div id="m-overlay"></div>' ) ;
+  $( "#m-overlay" ).fadeIn( "slow" ) ;
 
   //コンテンツをセンタリングする
   centeringModalSyncer() ;
 
   //コンテンツをフェードインする
-  $( ".content" + index ).fadeIn( "slow" ) ;
+  $( ".m-content" + index ).fadeIn( "slow" ) ;
 
   //[#modal-overlay]、または[#modal-close]をクリックしたら…
-  $( "#modal-overlay,[id=modal-close]" ).unbind().click( function(){
+  $( "#m-overlay,[id=m-close]" ).unbind().click( function(){
 
     //[#modal-content]と[#modal-overlay]をフェードアウトした後に…
-    $( "[id=modal-content],#modal-overlay" ).fadeOut( "fast" , function(){
+    $( "[id=m-content],#m-overlay" ).fadeOut( "fast" , function(){
 
       //[#modal-overlay]を削除する
-      $('#modal-overlay').remove() ;
+      $('#m-overlay').remove() ;
 
     });
 
@@ -51,11 +51,11 @@ $( window ).resize( centeringModalSyncer ) ;
     // jQueryのバージョンによっては、引数[{margin:true}]を指定した時、不具合を起こします。
 //    var cw = $( "#modal-content" ).outerWidth( {margin:true} );
 //    var ch = $( "#modal-content" ).outerHeight( {margin:true} );
-    var cw = $( "[id=modal-content]" ).outerWidth();
-    var ch = $( "[id=modal-content]" ).outerHeight();
+    var cw = $( "[id=m-content]" ).outerWidth();
+    var ch = $( "[id=m-content]" ).outerHeight();
 
     //センタリングを実行する
-    $( "[id=modal-content]" ).css( {"left": ((w - cw)/2) + "px","top": ((h - ch)/2) + "px"} ) ;
+    $( "[id=m-content]" ).css( {"left": ((w - cw)/2) + "px","top": ((h - ch)/2) + "px"} ) ;
 
   }
 });
@@ -68,33 +68,33 @@ $(function(){
 
 
 //モーダルウィンドウを出現させるクリックイベント
-$("[id=modal-open-01]").click( function(){
+$("[id=m-open-01]").click( function(){
 
   var index = this.previousElementSibling.getAttribute('data-index-01');
 
   //キーボード操作などにより、オーバーレイが多重起動するのを防止する
   $( this ).blur() ;  //ボタンからフォーカスを外す
-  if( $( "#modal-overlay" )[0] ) return false ;   //新しくモーダルウィンドウを起動しない (防止策1)
+  if( $( "#m-overlay" )[0] ) return false ;   //新しくモーダルウィンドウを起動しない (防止策1)
   //if($("#modal-overlay")[0]) $("#modal-overlay").remove() ;   //現在のモーダルウィンドウを削除して新しく起動する (防止策2)
 
   //オーバーレイを出現させる
-  $( "body" ).append( '<div id="modal-overlay"></div>' ) ;
-  $( "#modal-overlay" ).fadeIn( "slow" ) ;
+  $( "body" ).append( '<div id="m-overlay"></div>' ) ;
+  $( "#m-overlay" ).fadeIn( "slow" ) ;
 
   //コンテンツをセンタリングする
   centeringModalResize() ;
 
   //コンテンツをフェードインする
-  $( ".content-01" + index ).fadeIn( "slow" ) ;
+  $( ".m-content-01" + index ).fadeIn( "slow" ) ;
 
   //[#modal-overlay]、または[#modal-close]をクリックしたら…
-  $( "#modal-overlay,[id=modal-close]" ).unbind().click( function(){
+  $( "#m-overlay,[id=m-close]" ).unbind().click( function(){
 
     //[#modal-content]と[#modal-overlay]をフェードアウトした後に…
-    $( "[id=modal-content-01],#modal-overlay" ).fadeOut( "fast" , function(){
+    $( "[id=m-content-01],#m-overlay" ).fadeOut( "fast" , function(){
 
       //[#modal-overlay]を削除する
-      $('#modal-overlay').remove() ;
+      $('#m-overlay').remove() ;
 
     });
 
@@ -115,11 +115,11 @@ $( window ).resize( centeringModalResize ) ;
     // jQueryのバージョンによっては、引数[{margin:true}]を指定した時、不具合を起こします。
 //    var cw = $( "#modal-content" ).outerWidth( {margin:true} );
 //    var ch = $( "#modal-content" ).outerHeight( {margin:true} );
-    var cw = $( "[id=modal-content-01]" ).outerWidth();
-    var ch = $( "[id=modal-content-01]" ).outerHeight();
+    var cw = $( "[id=m-content-01]" ).outerWidth();
+    var ch = $( "[id=m-content-01]" ).outerHeight();
 
     //センタリングを実行する
-    $( "[id=modal-content-01]" ).css( {"left": ((w - cw)/2) + "px","top": ((h - ch)/2) + "px"} ) ;
+    $( "[id=m-content-01]" ).css( {"left": ((w - cw)/2) + "px","top": ((h - ch)/2) + "px"} ) ;
 
   }
 });
@@ -133,33 +133,33 @@ $(function(){
 
 
 //モーダルウィンドウを出現させるクリックイベント
-$("[id=modal-open-02]").click( function(){
+$("[id=m-open-02]").click( function(){
 
   var index = this.previousElementSibling.getAttribute('data-index-02');
 
   //キーボード操作などにより、オーバーレイが多重起動するのを防止する
   $( this ).blur() ;  //ボタンからフォーカスを外す
-  if( $( "#modal-overlay" )[0] ) return false ;   //新しくモーダルウィンドウを起動しない (防止策1)
+  if( $( "#m-overlay" )[0] ) return false ;   //新しくモーダルウィンドウを起動しない (防止策1)
   //if($("#modal-overlay")[0]) $("#modal-overlay").remove() ;   //現在のモーダルウィンドウを削除して新しく起動する (防止策2)
 
   //オーバーレイを出現させる
-  $( "body" ).append( '<div id="modal-overlay"></div>' ) ;
-  $( "#modal-overlay" ).fadeIn( "slow" ) ;
+  $( "body" ).append( '<div id="m-overlay"></div>' ) ;
+  $( "#m-overlay" ).fadeIn( "slow" ) ;
 
   //コンテンツをセンタリングする
   centeringModalResize() ;
 
   //コンテンツをフェードインする
-  $( ".content-02" + index ).fadeIn( "slow" ) ;
+  $( ".m-content-02" + index ).fadeIn( "slow" ) ;
 
   //[#modal-overlay]、または[#modal-close]をクリックしたら…
-  $( "#modal-overlay,[id=modal-close]" ).unbind().click( function(){
+  $( "#m-overlay,[id=m-close]" ).unbind().click( function(){
 
     //[#modal-content]と[#modal-overlay]をフェードアウトした後に…
-    $( "[id=modal-content-02],#modal-overlay" ).fadeOut( "fast" , function(){
+    $( "[id=m-content-02],#m-overlay" ).fadeOut( "fast" , function(){
 
       //[#modal-overlay]を削除する
-      $('#modal-overlay').remove() ;
+      $('#m-overlay').remove() ;
 
     });
 
@@ -180,11 +180,11 @@ $( window ).resize( centeringModalResize ) ;
     // jQueryのバージョンによっては、引数[{margin:true}]を指定した時、不具合を起こします。
 //    var cw = $( "#modal-content" ).outerWidth( {margin:true} );
 //    var ch = $( "#modal-content" ).outerHeight( {margin:true} );
-    var cw = $( "[id=modal-content-02]" ).outerWidth();
-    var ch = $( "[id=modal-content-02]" ).outerHeight();
+    var cw = $( "[id=m-content-02]" ).outerWidth();
+    var ch = $( "[id=m-content-02]" ).outerHeight();
 
     //センタリングを実行する
-    $( "[id=modal-content-02]" ).css( {"left": ((w - cw)/2) + "px","top": ((h - ch)/2) + "px"} ) ;
+    $( "[id=m-content-02]" ).css( {"left": ((w - cw)/2) + "px","top": ((h - ch)/2) + "px"} ) ;
 
   }
 });
@@ -196,33 +196,33 @@ $(function(){
 
 
 //モーダルウィンドウを出現させるクリックイベント
-$("[id=modal-open-03]").click( function(){
+$("[id=m-open-03]").click( function(){
 
   var index = this.previousElementSibling.getAttribute('data-index-03');
 
   //キーボード操作などにより、オーバーレイが多重起動するのを防止する
   $( this ).blur() ;  //ボタンからフォーカスを外す
-  if( $( "#modal-overlay" )[0] ) return false ;   //新しくモーダルウィンドウを起動しない (防止策1)
+  if( $( "#m-overlay" )[0] ) return false ;   //新しくモーダルウィンドウを起動しない (防止策1)
   //if($("#modal-overlay")[0]) $("#modal-overlay").remove() ;   //現在のモーダルウィンドウを削除して新しく起動する (防止策2)
 
   //オーバーレイを出現させる
-  $( "body" ).append( '<div id="modal-overlay"></div>' ) ;
-  $( "#modal-overlay" ).fadeIn( "slow" ) ;
+  $( "body" ).append( '<div id="m-overlay"></div>' ) ;
+  $( "#m-overlay" ).fadeIn( "slow" ) ;
 
   //コンテンツをセンタリングする
   centeringModalResize() ;
 
   //コンテンツをフェードインする
-  $( ".content-03" + index ).fadeIn( "slow" ) ;
+  $( ".m-content-03" + index ).fadeIn( "slow" ) ;
 
   //[#modal-overlay]、または[#modal-close]をクリックしたら…
-  $( "#modal-overlay,[id=modal-close]" ).unbind().click( function(){
+  $( "#m-overlay,[id=m-close]" ).unbind().click( function(){
 
     //[#modal-content]と[#modal-overlay]をフェードアウトした後に…
-    $( "[id=modal-content-03],#modal-overlay" ).fadeOut( "fast" , function(){
+    $( "[id=m-content-03],#m-overlay" ).fadeOut( "fast" , function(){
 
       //[#modal-overlay]を削除する
-      $('#modal-overlay').remove() ;
+      $('#m-overlay').remove() ;
 
     });
 
@@ -243,11 +243,11 @@ $( window ).resize( centeringModalResize ) ;
     // jQueryのバージョンによっては、引数[{margin:true}]を指定した時、不具合を起こします。
 //    var cw = $( "#modal-content" ).outerWidth( {margin:true} );
 //    var ch = $( "#modal-content" ).outerHeight( {margin:true} );
-    var cw = $( "[id=modal-content-03]" ).outerWidth();
-    var ch = $( "[id=modal-content-03]" ).outerHeight();
+    var cw = $( "[id=m-content-03]" ).outerWidth();
+    var ch = $( "[id=m-content-03]" ).outerHeight();
 
     //センタリングを実行する
-    $( "[id=modal-content-03]" ).css( {"left": ((w - cw)/2) + "px","top": ((h - ch)/2) + "px"} ) ;
+    $( "[id=m-content-03]" ).css( {"left": ((w - cw)/2) + "px","top": ((h - ch)/2) + "px"} ) ;
 
   }
 });
@@ -258,33 +258,33 @@ $(function(){
 
 
 //モーダルウィンドウを出現させるクリックイベント
-$("[id=modal-open-04]").click( function(){
+$("[id=m-open-04]").click( function(){
 
   var index = this.previousElementSibling.getAttribute('data-index-04');
 
   //キーボード操作などにより、オーバーレイが多重起動するのを防止する
   $( this ).blur() ;  //ボタンからフォーカスを外す
-  if( $( "#modal-overlay" )[0] ) return false ;   //新しくモーダルウィンドウを起動しない (防止策1)
+  if( $( "#m-overlay" )[0] ) return false ;   //新しくモーダルウィンドウを起動しない (防止策1)
   //if($("#modal-overlay")[0]) $("#modal-overlay").remove() ;   //現在のモーダルウィンドウを削除して新しく起動する (防止策2)
 
   //オーバーレイを出現させる
-  $( "body" ).append( '<div id="modal-overlay"></div>' ) ;
-  $( "#modal-overlay" ).fadeIn( "slow" ) ;
+  $( "body" ).append( '<div id="m-overlay"></div>' ) ;
+  $( "#m-overlay" ).fadeIn( "slow" ) ;
 
   //コンテンツをセンタリングする
   centeringModalResize() ;
 
   //コンテンツをフェードインする
-  $( ".content-04" + index ).fadeIn( "slow" ) ;
+  $( ".m-content-04" + index ).fadeIn( "slow" ) ;
 
   //[#modal-overlay]、または[#modal-close]をクリックしたら…
-  $( "#modal-overlay,[id=modal-close]" ).unbind().click( function(){
+  $( "#m-overlay,[id=m-close]" ).unbind().click( function(){
 
     //[#modal-content]と[#modal-overlay]をフェードアウトした後に…
-    $( "[id=modal-content-04],#modal-overlay" ).fadeOut( "fast" , function(){
+    $( "[id=m-content-04],#m-overlay" ).fadeOut( "fast" , function(){
 
       //[#modal-overlay]を削除する
-      $('#modal-overlay').remove() ;
+      $('#m-overlay').remove() ;
 
     });
 
@@ -305,11 +305,11 @@ $( window ).resize( centeringModalResize ) ;
     // jQueryのバージョンによっては、引数[{margin:true}]を指定した時、不具合を起こします。
 //    var cw = $( "#modal-content" ).outerWidth( {margin:true} );
 //    var ch = $( "#modal-content" ).outerHeight( {margin:true} );
-    var cw = $( "[id=modal-content-04]" ).outerWidth();
-    var ch = $( "[id=modal-content-04]" ).outerHeight();
+    var cw = $( "[id=m-content-04]" ).outerWidth();
+    var ch = $( "[id=m-content-04]" ).outerHeight();
 
     //センタリングを実行する
-    $( "[id=modal-content-04]" ).css( {"left": ((w - cw)/2) + "px","top": ((h - ch)/2) + "px"} ) ;
+    $( "[id=m-content-04]" ).css( {"left": ((w - cw)/2) + "px","top": ((h - ch)/2) + "px"} ) ;
 
   }
 });
@@ -321,33 +321,33 @@ $(function(){
 
 
 //モーダルウィンドウを出現させるクリックイベント
-$("[id=modal-open-05]").click( function(){
+$("[id=m-open-05]").click( function(){
 
   var index = this.previousElementSibling.getAttribute('data-index-05');
 
   //キーボード操作などにより、オーバーレイが多重起動するのを防止する
   $( this ).blur() ;  //ボタンからフォーカスを外す
-  if( $( "#modal-overlay" )[0] ) return false ;   //新しくモーダルウィンドウを起動しない (防止策1)
+  if( $( "#m-overlay" )[0] ) return false ;   //新しくモーダルウィンドウを起動しない (防止策1)
   //if($("#modal-overlay")[0]) $("#modal-overlay").remove() ;   //現在のモーダルウィンドウを削除して新しく起動する (防止策2)
 
   //オーバーレイを出現させる
-  $( "body" ).append( '<div id="modal-overlay"></div>' ) ;
-  $( "#modal-overlay" ).fadeIn( "slow" ) ;
+  $( "body" ).append( '<div id="m-overlay"></div>' ) ;
+  $( "#m-overlay" ).fadeIn( "slow" ) ;
 
   //コンテンツをセンタリングする
   centeringModalResize() ;
 
   //コンテンツをフェードインする
-  $( ".content-05" + index ).fadeIn( "slow" ) ;
+  $( ".m-content-05" + index ).fadeIn( "slow" ) ;
 
   //[#modal-overlay]、または[#modal-close]をクリックしたら…
-  $( "#modal-overlay,[id=modal-close]" ).unbind().click( function(){
+  $( "#m-overlay,[id=m-close]" ).unbind().click( function(){
 
     //[#modal-content]と[#modal-overlay]をフェードアウトした後に…
-    $( "[id=modal-content-05],#modal-overlay" ).fadeOut( "fast" , function(){
+    $( "[id=m-content-05],#m-overlay" ).fadeOut( "fast" , function(){
 
       //[#modal-overlay]を削除する
-      $('#modal-overlay').remove() ;
+      $('#m-overlay').remove() ;
 
     });
 
@@ -368,11 +368,11 @@ $( window ).resize( centeringModalResize ) ;
     // jQueryのバージョンによっては、引数[{margin:true}]を指定した時、不具合を起こします。
 //    var cw = $( "#modal-content" ).outerWidth( {margin:true} );
 //    var ch = $( "#modal-content" ).outerHeight( {margin:true} );
-    var cw = $( "[id=modal-content-05]" ).outerWidth();
-    var ch = $( "[id=modal-content-05]" ).outerHeight();
+    var cw = $( "[id=m-content-05]" ).outerWidth();
+    var ch = $( "[id=m-content-05]" ).outerHeight();
 
     //センタリングを実行する
-    $( "[id=modal-content-05]" ).css( {"left": ((w - cw)/2) + "px","top": ((h - ch)/2) + "px"} ) ;
+    $( "[id=m-content-05]" ).css( {"left": ((w - cw)/2) + "px","top": ((h - ch)/2) + "px"} ) ;
 
   }
 });

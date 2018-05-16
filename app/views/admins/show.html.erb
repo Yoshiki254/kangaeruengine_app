@@ -1,7 +1,7 @@
 <p>
 <div class='search'>
 	<%= form_tag('/admins/search', method: :get) do %>
-	  <input class="search_query" name="keyword" placeholder="生徒名で検索" type="string" value="">
+	  <input class="search_query" name="keyword" placeholder="生徒名（フリガナ）で検索" type="string" value="">
 	  	<button class="btn-search" title="検索" type="submit"></button>
 	  </input>
 	<% end %>
@@ -11,7 +11,7 @@
 <div class='user'>
 	<% @users.each do |user| %>
 	<ul>
-	  <h4><%= user.name %></h4>
+	  <h4><%=link_to "#{user.name}", user_path(user) %></h4>
 
 		<li>プロフィール写真</li>
 	  <%= image_tag user.avatar.url(:medium) %>
