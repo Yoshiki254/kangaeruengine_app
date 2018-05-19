@@ -1,14 +1,18 @@
-<% if admin_signed_in? %>
-  <div class= 'header navbar main_header navbar-fixed-top'>
-    <div class='container'>
-      <div class='hidden-xs hidden-sm'>
-        <h2>考えるエンジン講座</h2>
-      </div>
-      <div class='navbar-collapse collapse navbar-responsive-collapse navbar-right'>
-        <ul class='nav navbar-nav'>
-          <li><%= link_to "Sign Out", destroy_admin_session_path, method: :delete %></li>
-        </ul>
+<nav class='navbar is-black' role="navigation" aria-label="main navigation">
+  <div class='container'>
+    <div class='navber-brand'>
+      <a class="navbar-item" href="http://www.251media.jp/?utm_source=kanataw&utm_medium=banner">
+        <%= image_tag("251_logo.jpeg", size: "", alt: "251 media") %>
+      </a>
+    </div>
+      <span class='navbar-burger burger' data-target="navbarMenu">
+      </span>
+    <div class="navbar-menu is-active">
+      <div class="navbar-end">
+        <a><%= link_to 'Admin Home', admin_path(current_admin), class: "navbar-item is-active"%></a>
+        <a><%= link_to "Sign Out", destroy_admin_session_path, method: :delete, class: "navbar-item is-active"%></a>
       </div>
     </div>
   </div>
-<% end %>
+</nav>
+

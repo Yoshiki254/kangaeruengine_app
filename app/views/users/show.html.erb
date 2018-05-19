@@ -5,26 +5,31 @@
 	<img class='is-bg-img' src='/assets/images/thomas.jpg'></img>
 	  <div class="hero-body">
 		  <div class="container has-text-centered">
-		    <h2 class='subtitle has-text-white'>前回授業</h2><br>
+		    <h2 class='subtitle has-text-white'>前回授業</h2>
 					<% if current_user.users_lessons.present? %>
-						<h3 class='subtitle has-text-white-bis'><%= current_user.users_lessons.order("updated_at DESC").first.lesson.name %></h3><br>
+						<h3 class='subtitle has-text-white-bis is-italic'><%= current_user.users_lessons.order("updated_at DESC").first.lesson.name %></h3>
 					<% end %>
 
-				<h2 class='subtitle has-text-white'>Your achievements</h2><br>
-					<progress class="progress is-danger" value="<%= @progress %>" max="100">
-					</progress>
+				<h2 class='subtitle has-text-white'>Your achievements</h2>
+				<progress class="progress is-danger" value="<%= @progress %>" max="100">
+				</progress>
 
-				<h2 class='subtitle has-text-white'>次回授業日時</h2><br>
+				<div class='block'></div>
+				<div class='block'></div>
+
+				<h2 class='subtitle has-text-white'>次回授業日時</h2>
 						<% unless current_user.next_lesson.present? %>
-							<div><%= form_for [current_user, @next_lesson] do |f| %>
-						 	  <%= f.datetime_select :date_time, :include_blank => true %>
-								<%= f.submit "次回予約" %></div>
+							<%= form_for [@user, @next_lesson] do |f| %>
+						 	  <%= f.datetime_select :date_time, default: Time.now %><br>
+						 	  <div class='block'></div>
+								<%= f.submit "次回予約", :class => 'button is-danger' %>
 						  <% end %>
 						<% else %>
-							<h3 class='subtitle has-text-white-bis'><%= current_user.next_lesson.date_time.strftime("%Y-%m-%d %H:%M:%S") %></h3>
-							<%= form_for [current_user, current_user.next_lesson] do |f| %>
-						 	  <%= f.datetime_select :date_time, :default => current_user.next_lesson.date_time %>
-								<%= f.submit "次回予約", :class => 'button is-danger'%>
+							<h3 class='subtitle has-text-white is-italic'><%= current_user.next_lesson.date_time.strftime("%Y-%m-%d %H:%M") %></h3>
+							<%= form_for [@user, current_user.next_lesson] do |f| %>
+						 	  <%= f.datetime_select :date_time, :default => current_user.next_lesson.date_time, :class => "input is-success" %><br>
+						 	  <div class='block'></div>
+								<%= f.submit "次回予約", :class => 'button is-danger' %>
 						  <% end %>
 						<% end %>
 			  </div>
@@ -34,105 +39,18 @@
 <section class="section is-clearfix">
 <div class='container'>
   <div class='columns'>
-		<div class="column is-fullwidth-mobile is-one-thirds-tablet is-3-desktop is-offset-1-desktop">
-			<div class='title is-size-5-mobile is-size-4-desktop'>考えるエンジン講座</div>
-			  <% @lessons.each_with_index do |lesson, i| %>
-			    <ul>
-				  	<% if lesson.id == 5 %>
-				  		<p class='subtitle is-size-6'>4. 論点ロード</p>
-							  <p class='subtitle is-size-6'><%= lesson.name %></p>
-						  	<% if lesson.users_lessons.exists?(user_id: current_user.id) %>
-								 	<p class='subtitle is-size-6 has-text-danger has-text-centered'><%= lesson.users_lessons.where(user_id: current_user).first.date %></p>
-								    <p class='block'></p>
-						  	<% else %>
-						  		<div id="m-content" class="m-content<%= i %>" data-index=<%= i %>>
-						  			<%= render partial: "lessonform", locals: { lesson: lesson } %>
-						  		</div>
-						  		 <a class='buttons is-centered' id="m-open">受講日登録</a>
-						  		<p class='block'></p>
-							  <% end %>
-
-						<% else %>
-							<div class='subtitle is-size-6'><%= lesson.name %></div>
-						  	<% if lesson.users_lessons.exists?(user_id: current_user.id) %>
-								 	  <div class='subtitle is-size-6 has-text-danger has-text-centered'><%= lesson.users_lessons.where(user_id: current_user).first.date %></div>
-								 	  <div class='block'></div>
-						  	<% else %>
-						  		<div id="m-content" class="m-content<%= i %>" data-index=<%= i %>>
-						  			<%= render partial: "lessonform", locals: { lesson: lesson } %>
-						  		</div>
-					 	  	  <a class='buttons is-centered' id="m-open">受講日登録</a>
-					 	  	  <p class='block'></p>
-							  <% end %>
-						<% end %>
-				  </ul>
-		    <% end %>
-		  </div>
-
-		<div class='column is-2-desktop is-offset-2-desktop is-half-mobile is-narrow'>
-			<div class='title is-size-5-mobile is-size-4-desktop'>10ケースマラソン</div>
-			<% @interviews.each_with_index do |interview, i| %>
-			  <ul>
-				  <div class='subtitle is-size-6'><%= interview.name %></div>
-				  	<% if interview.users_interviews.exists?(user_id: current_user.id) %>
-						 	<div class='subtitle is-size-6 has-text-danger has-text-centered'><%= interview.users_interviews.where(user_id: current_user).first.date %></div>
-						 	<div class='block'></div>
-					  <% else %>
-					    <div id="m-content-01" class="m-content-01<%= i %>" data-index-01=<%= i %>>
-					  	  	<%= render partial: "interviewform", locals: { interview: interview } %>
-						  </div>
-						  <a class='buttons is-centered' id="m-open-01">実施日登録</a>
-						  <div class='block'></div>
-						<% end %>
-				</ul>
-			<% end %>
-		</div>
-
-
-	  <div class='column is-2-desktop is-offset-1-desktop is-half-mobile is-narrow'>
-		  <div class='title is-size-5-mobile is-size-4-desktop'>12示唆マラソン</div>
-		  <% @insights.each_with_index do |insight, i| %>
-		    <ul>
-			    <div class='subtitle is-size-6'><%= insight.name %></div>
-				  	<% if insight.users_insights.exists?(user_id: current_user.id) %>
-				  	  <div class='subtitle is-size-6 has-text-danger has-text-centered'><%= insight.users_insights.where(user_id: current_user).first.date %></div>
-				  	  <div class='block'></div>
-				  	<% else %>
-					  	<div id="m-content-02" class="m-content-02<%= i %>" data-index-02=<%= i %>>
-					  	  <%= render partial: "insightform", locals: { insight: insight } %>
-						  </div>
-						  <a class='buttons is-centered' id="m-open-02">実施日登録</a>
-						  <div class='block'></div>
-						<% end %>
-			  </ul>
-		  <% end %>
-	  </div>
+  	<%= render :partial => "lesson" %>
+  	<%= render :partial => "interview" %>
+  	<%= render :partial => "insight" %>
 	</div>
 </div>
-
 </section>
 
 <section class="section is-clearfix has-background-white-bis">
 <div class='container'>
 	<div class='columns'>
-		<div class='column is-fullwidth-mobile is-4-desktop is-offset-1-desktop'>
-			<div class='title is-size-5-mobile is-size-4-desktop'>考えるエンジン検定</div>
-				<% @exams.each_with_index do |exam, i| %>
-				  <ul>
-					  <div class='subtitle is-size-6'><%= exam.name %></div>
-					  	<% if exam.users_exams.exists?(user_id: current_user.id) %>
-							 	<div class='subtitle is-size-6 has-text-danger has-text-centered'><%= exam.users_exams.where(user_id: current_user).first.date %></div>
-							 	<div class='block'></div>
-					  	<% else %>
-						  	<div id="m-content-03" class="m-content-03<%= i %>" data-index-03=<%= i %>>
-						  	  <%= render partial: "examform", locals: { exam: exam } %>
-							  </div>
-							  <a class='buttons is-centered' id="m-open-03">受検日登録</a>
-							  <div class='block'></div>
-							<% end %>
-					</ul>
-			  <% end %>
-		</div>
+		<%= render :partial => "exam" %>
+
 
 	  <div class='column is-fullwidth-mobile is-4-desktop is-offset-1-desktop'>
 			<div class='title is-size-5-mobile is-size-4-desktop'>実践講義</div>
@@ -140,14 +58,40 @@
 			  <ul>
 				  <div class='subtitle is-size-6'><%= practice.name %></div>
 				  	<% if practice.users_practices.exists?(user_id: current_user.id) %>
-						 	<div class='subtitle is-size-6 has-text-danger has-text-centered'><%= practice.users_practices.where(user_id: current_user).first.date %></div>
+						 	<div class='subtitle is-size-6 has-text-link has-text-centered'><%= practice.users_practices.where(user_id: current_user).first.date %></div>
 						 	<div class='block'></div>
 				  	<% else %>
-					  	<div id="m-content-04" class="m-content-04<%= i %>" data-index-04=<%= i %>>
-					  	  <%= render partial: "practiceform", locals: { practice: practice } %>
-						  </div>
-						  <a class='buttons is-centered' id="m-open-04">受講日登録</a>
-						  <div class='block'></div>
+							<p class='has-text-centered'>
+		 					  <a class="button is-danger modal-button 05" id="modal-btn<%= i %>" data-index=<%= i %>>実施日登録</a>
+		          </p>
+								  <div id="users-practice-modal<%= i %>" class="modal">
+		  						  <div class="modal-background"></div>
+		  							<div class="modal-content box">
+      							  <p class="subtitle">実践講義：<%= practice.name %></p>
+										  	<%= form_for [@user, @users_practice], remote: true do |f| %>
+													<% if @users_practice.errors.any? %>
+								    				<div id="error_explanation">
+								      				<ul>
+									      				<% @users_practice.errors.full_messages.each do |msg| %>
+									        				<li><%= msg %></li>
+									      				<% end %>
+								      				</ul>
+								    				</div>
+								  				<% end %>
+								  					<div class="field has-addons">
+														  <div class="control">
+										    		    <%= f.date_field :date, :class => "input is-success"%>
+										    	    </div>
+										          <span class="help-block"></span>
+										          <%= f.hidden_field :practice_id, :value => practice.id %>
+										          <div class="control">
+										            <%= f.submit '受講日登録', :class => 'button is-link'%>
+										          </div>
+										        </div>
+								          <% end %>
+							 			</div>
+							 			<button class="modal-close is-large" aria-label="close" data-dismiss="modal"></button>
+					 			    </div>
 						<% end %>
 				</ul>
 		  <% end %>
@@ -169,7 +113,7 @@
 						 	<div class='block'></div>
 				  	<% else %>
 					  	<div id="m-content-05" class="m-content-05<%= i %>" data-index-05=<%= i %>>
-					  	  <%= render partial: "expeditionform", locals: { expedition: expedition } %>
+					  
 						  </div>
 						  <a class='buttons is-centered' id="m-open-05">受講日登録</a>
 						  <div class='block'></div>

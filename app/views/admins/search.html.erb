@@ -1,8 +1,6 @@
+<section class='section'>
+	<div class='container'>
 
-<div class='admin_home'>
-	<%= link_to 'Admin Home', admin_path(current_admin) %>
-</div>
-<div class='search_results'>
 	<h4>検索結果</h4>
   <P>
   <% @users.each do |user| %>
@@ -42,5 +40,6 @@
 	  <% end %>
   <% end %>
   </P>
-</div>
 
+</div>
+</section>

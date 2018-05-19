@@ -41,23 +41,22 @@ Rails.application.routes.draw do
   #   end
   # end
 
+  resources :admins_users, only: [:show]
 
-
-  resources :admins, only: [:show, :create, :edit] do
+  resources :admins, only: [:show] do
     collection do
       get 'search'
     end
   end
 
-	resources :users, only: [:show, :edit, :update,] do
+ 	resources :users, only: [:show, :edit, :update,] do
     resources :next_lessons, only: [:create, :edit, :update]
 	  resources :users_lessons, only: [:create]
 	  resources :users_interviews, only: [:create]
-	  resources :users_insights, only: [:create]
+ 	  resources :users_insights, only: [:create]
     resources :users_exams, only: [:create]
     resources :users_practices, only: [:create]
     resources :users_expeditions, only: [:create]
   end
-
 
 end

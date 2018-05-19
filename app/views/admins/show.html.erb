@@ -1,62 +1,88 @@
-<p>
-<div class='search'>
-	<%= form_tag('/admins/search', method: :get) do %>
-	  <input class="search_query" name="keyword" placeholder="生徒名（フリガナ）で検索" type="string" value="">
-	  	<button class="btn-search" title="検索" type="submit"></button>
-	  </input>
-	<% end %>
-</div>
-</p>
+<section class="hero is-medium">
+	<div class='container'>
+		<div class='block'>
+		</div>
+		<div class="field is-grouped">
+		  <div class='control is-expanded'>
+		  	<%= form_tag('/admins/search', method: :get) do %>
+		    <%= text_field_tag :search, params[:search], :class => 'input is-clearfix', placeholder: "フリガナで生徒検索" %>
+		    <%= submit_tag "Search", :name => nil, :class => 'button is-invisible' %>
+		    <% end %>
+			</div>
+		</div>
+	</div>
+</section>
 
-<div class='user'>
-	<% @users.each do |user| %>
-	<ul>
-	  <h4><%=link_to "#{user.name}", user_path(user) %></h4>
+<section class="section is-clearfix">
+  <div class='container'>
+  		<div class='tile is-ancestor has-text-centered'>
+			<% @users.each do |user| %>
+			  <div class="tile is-3 is-parent box">
+				<ul>
+					<div class='tile is-child'>
+				  <p class='subtitle'><%=link_to "#{user.name}", admins_user_path(user.id) %></p>
+					</div>
+					<div class='block'></div>
+					<div class='tile is-child'>
+					  <p>プロフィール写真</p>
+					  <figure class="image is-256x256">
+				      <%= image_tag user.avatar.url(:medium) %>
+				    </figure>
+				  </div>
+				  <div class='block'></div>
+				  <div class='tile is-child'>
+				    <p>電話番号：<%= user.tel %></p><br>
+				    <p>Emailアドレス
+				    <p><%= user.email%></p><br>
+	 				  <p>次回授業時間</p>
+						<% if user.next_lesson.present? %>
+						  <p><%= user.next_lesson.date_time.strftime("%Y-%m-%d %H:%M:%S") %></p>
+						<% else %>
+						  <p>未決定</p>
+						<% end %>
+				    <br>
 
-		<li>プロフィール写真</li>
-	  <%= image_tag user.avatar.url(:medium) %>
+				    <p>前回授業</p>
+					  <% if user.users_lessons.present? %>
+					  	<p><%= user.users_lessons.order("updated_at DESC").first.lesson.name %></p>
+					  <% else %>
+					  	<p>未受講</p>
+					  <% end %>
+				    <br>
 
-	  <li>電話番号：<%= user.tel %></li><br>
+					<p>10ケースマラソン</p>
+						<% if user.users_interviews.present? %>
+							<p><%= user.users_interviews.order("updated_at DESC").first.interview.name %></p>
+						<% else %>
+						  <p>未開始</p>
+						<% end %>
+				    <br>
 
-		<li>次回授業時間：
-		  <% if user.next_lesson.present? %>
-		    <%= user.next_lesson.date_time.strftime("%Y-%m-%d %H:%M:%S") %>
-			<% else %>
-			  未決定
-			<% end %>
-	  </li><br>
+				  <p>12示唆マラソン</p>
+					  <% if user.users_insights.present? %>
+					    <p><%= user.users_insights.order("updated_at DESC").first.insight.name %></p>
+					  <% else %>
+					    <p>未開始</p>
+					  <% end %>
+				  <br>
 
-		<li>前回授業：
-		  <% if user.users_lessons.present? %>
-		  	<%= user.users_lessons.order("updated_at DESC").first.lesson.name %>
-		  <% else %>
-		  	未受講
+				  <p>考えるエンジン検定</p>
+					  <% if user.users_exams.present? %>
+					  <p><%= user.users_exams.order("updated_at DESC").first.exam.name %></p>
+					  <% else %>
+					  <p>未受験</p>
+					  <% end %>
+					  <br>
+					</p>
+				</ul>
+		    </div>
 		  <% end %>
-	  </li><br>
+		  </div>
+		<%= paginate(@users) %>
+  </div>
+</section>
 
-		<li>10ケースマラソン：
-			<% if user.users_interviews.present? %>
-				<%= user.users_interviews.order("updated_at DESC").first.interview.name %>
-			<% else %>
-			  未開始
-			<% end %>
-	  </li><br>
 
-	  <li>12示唆マラソン：
-		  <% if user.users_insights.present? %>
-		    <%= user.users_insights.order("updated_at DESC").first.insight.name %>
-		  <% else %>
-		    未開始
-		  <% end %>
-	  </li><br>
 
-	  <li>考えるエンジン検定：
-		  <% if user.users_exams.present? %>
-		    <%= user.users_exams.order("updated_at DESC").first.exam.name %>
-		  <% else %>
-		    未受験
-		  <% end %>
-		</li><br>
-	</ul>
-  <% end %>
-</div>
+
+

@@ -1,0 +1,44 @@
+		<div class='column is-fullwidth-mobile is-4-desktop is-offset-1-desktop'>
+			<div class='title is-size-5-mobile is-size-4-desktop'>考えるエンジン検定</div>
+				<% @exams.each_with_index do |exam, i| %>
+				  <ul>
+					  <div class='subtitle is-size-6'><%= exam.name %></div>
+					  	<% if exam.users_exams.exists?(user_id: current_user.id) %>
+							 	<div class='subtitle is-size-6 has-text-link has-text-centered'><%= exam.users_exams.where(user_id: current_user).first.date %></div>
+							 	<div class='block'></div>
+					  	<% else %>
+					  		<p class='has-text-centered'>
+		 					    <a class="button is-danger modal-button 04" id="modal-btn<%= i %>" data-index=<%= i %>>実施日登録</a>
+		            </p>
+								  <div id="users-exam-modal<%= i %>" class="modal">
+		  						  <div class="modal-background"></div>
+		  							<div class="modal-content box">
+      							  <p class="subtitle">考えるエンジン検定：<%= exam.name %></p>
+										  	<%= form_for [@user, @users_exam], remote: true do |f| %>
+													<% if @users_practice.errors.any? %>
+								    				<div id="error_explanation">
+								      				<ul>
+									      				<% @users_exam.errors.full_messages.each do |msg| %>
+									        				<li><%= msg %></li>
+									      				<% end %>
+								      				</ul>
+								    				</div>
+								  				<% end %>
+								  				<div class="field has-addons">
+														<div class="control">
+										    		<%= f.date_field :date, :class => "input is-success"%>
+										    	  </div>
+										        <span class="help-block"></span>
+										        <%= f.hidden_field :exam_id, :value => exam.id %>
+										        <div class="control">
+										        <%= f.submit '受検日登録', :class => 'button is-link' %>
+										        </div>
+										      </div>
+								          <% end %>
+							 			</div>
+							 			<button class="modal-close is-large" aria-label="close" data-dismiss="modal"></button>
+					 			    </div>
+					 		<% end %>
+					</ul>
+			  <% end %>
+		</div>

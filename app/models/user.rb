@@ -52,4 +52,12 @@ class User < ActiveRecord::Base
     avatar? && name? && name_kana? && tel?
   end
 
+  def self.search(search) #self.でクラスメソッドとしている
+    if search # Controllerから渡されたパラメータが!= nilの場合は、titleカラムを部分一致検索
+      User.where(['name_kana LIKE ?', "%#{search}%"])
+    else
+      User.all #全て表示。
+    end
+  end
+
 end

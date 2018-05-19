@@ -1,0 +1,41 @@
+		<div class='column is-2-desktop is-offset-2-desktop is-fullwidth-mobile is-narrow'>
+			<div class='title is-size-5-mobile is-size-4-desktop'>10ケースマラソン</div>
+			<% @interviews.each_with_index do |interview, i| %>
+			  <ul>
+				  <div class='subtitle is-size-6'><%= interview.name %></div>
+				  	<% if interview.users_interviews.exists?(user_id: @user.id) %>
+						 	<div class='subtitle is-size-6 has-text-link has-text-centered'><%= interview.users_interviews.where(user_id: @user.id).first.date %></div>
+						 	<div class='block'></div>
+					  <% else %>
+							<p class='has-text-centered'>
+		 					  <a class="button is-danger modal-button 02" id="modal-btn<%= i %>" data-index=<%= i %>>実施日登録</a>
+		          </p>
+								  <div id="users-interview-modal<%= i %>" class="modal">
+		  						  <div class="modal-background"></div>
+		  							<div class="modal-content box">
+      							  <p class="subtitle">10ケースマラソン：<%= interview.name %></p>
+										  	<%= form_for [@user, @users_interview], remote: true, html: {role: :form, 'data-model' => 'users_lesson'} do |f| %>
+													<% if @users_interview.errors.any? %>
+								    				<div id="error_explanation">
+								      				<ul>
+									      				<% @users_interview.errors.full_messages.each do |msg| %>
+									        				<li><%= msg %></li>
+									      				<% end %>
+								      				</ul>
+								    				</div>
+								  				<% end %>
+								  				<div class="form-group">
+														<%= f.label :受講日 %>
+										    		<%= f.date_field :date %>
+										        <span class="help-block"></span>
+										        <%= f.hidden_field :interview_id, :value => interview.id %>
+										        <%= f.submit 'Submit', :class => 'button is-link'%>
+										      </div>
+								          <% end %>
+							 			</div>
+							 			<button class="modal-close is-large" aria-label="close" data-dismiss="modal"></button>
+					 			    </div>
+						<% end %>
+				</ul>
+			<% end %>
+		</div>

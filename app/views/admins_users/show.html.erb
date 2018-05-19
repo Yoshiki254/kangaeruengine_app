@@ -1,0 +1,58 @@
+
+<section class="hero is-medium has-bg-img is-black">
+	<img class='is-bg-img' src='/assets/images/thomas.jpg'></img>
+	  <div class="hero-body">
+		  <div class="container has-text-centered">
+		    <h2 class='subtitle has-text-white'>前回授業</h2><br>
+					<% if @user.users_lessons.present? %>
+						<h3 class='subtitle has-text-white-bis'><%= @user.users_lessons.order("updated_at DESC").first.lesson.name %></h3><br>
+					<% end %>
+
+				<h2 class='subtitle has-text-white'>Your achievements</h2><br>
+					<progress class="progress is-danger" value="<%= @progress %>" max="100">
+					</progress>
+
+				<h2 class='subtitle has-text-white'>次回授業日時</h2><br>
+						<% unless @user.next_lesson.present? %>
+							<%= form_for [@user, @next_lesson] do |f| %>
+						 	  <%= f.datetime_select :date_time %><br>
+						 	  <div class='block'></div>
+								<%= f.submit "次回予約",  :class => 'button is-danger' %>
+						  <% end %>
+						<% else %>
+							<h3 class='subtitle has-text-white-bis'><%= @user.next_lesson.date_time.strftime("%Y-%m-%d %H:%M:%S") %></h3>
+							<%= form_for [@user, @user.next_lesson] do |f| %>
+						 	  <%= f.datetime_select :date_time, :default => @user.next_lesson.date_time %>
+								<%= f.submit "次回予約", :class => 'button is-danger'%>
+						  <% end %>
+						<% end %>
+			  </div>
+			</div>
+</section>
+
+<section class="section is-clearfix">
+<div class='container'>
+  <div class='columns'>
+  	<%= render :partial => "users/userslesson" %>
+  	<%= render :partial => "users/usersinterview" %>
+  	<%= render :partial => "users/usersinsight" %>
+  </div>
+</div>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

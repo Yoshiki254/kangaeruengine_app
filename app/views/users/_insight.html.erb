@@ -1,0 +1,46 @@
+
+	  <div class='column is-2-desktop is-offset-1-desktop is-fullwidth-mobile is-narrow'>
+		  <div class='title is-size-5-mobile is-size-4-desktop'>12示唆マラソン</div>
+		  <% @insights.each_with_index do |insight, i| %>
+		    <ul>
+			    <div class='subtitle is-size-6'><%= insight.name %></div>
+				  	<% if insight.users_insights.exists?(user_id: @user.id) %>
+				  	  <div class='subtitle is-size-6 has-text-link has-text-centered'><%= insight.users_insights.where(user_id: @user.id).first.date %></div>
+				  	  <div class='block'></div>
+				  	<% else %>
+							<p class='has-text-centered'>
+		 					  <a class="button is-danger modal-button 03" id="modal-btn<%= i %>" data-index=<%= i %>>実施日登録</a>
+		 					  <div class='block'></div>
+		          </p>
+								  <div id="users-insight-modal<%= i %>" class="modal">
+		  						  <div class="modal-background"></div>
+		  							<div class="modal-content box">
+      							  <p class="subtitle">12示唆マラソン：<%= insight.name %></p>
+										  	<%= form_for [@user, @users_insight], remote: true do |f| %>
+													<% if @users_insight.errors.any? %>
+								    				<div id="error_explanation">
+								      				<ul>
+									      				<% @users_insight.errors.full_messages.each do |msg| %>
+									        				<li><%= msg %></li>
+									      				<% end %>
+								      				</ul>
+								    				</div>
+								  				<% end %>
+								  				<div class="field has-addons">
+														<div class="control">
+										    		<%= f.date_field :date, :class => "input is-success"%>
+										    	  </div>
+										        <span class="help-block"></span>
+										        <%= f.hidden_field :insight_id, :value => insight.id %>
+										        <div class="control">
+										        <%= f.submit 'Submit', :class => 'button is-link'%>
+										        </div>
+										      </div>
+								          <% end %>
+							 			</div>
+							 			<button class="modal-close is-large" aria-label="close" data-dismiss="modal"></button>
+					 			    </div>
+					  <% end %>
+			  </ul>
+		  <% end %>
+	  </div>

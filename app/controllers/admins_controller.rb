@@ -4,11 +4,15 @@ class AdminsController < ApplicationController
 
 	def show
 		@admin = Admin.find(params[:id])
-		@users = User.includes([:lessons, :users_lessons, :interviews, :users_interviews, :insights, :users_insights, :exams, :users_exams])
+		@users = User.includes([:next_lesson, :lessons, :users_lessons, :interviews, :users_interviews, :insights, :users_insights, :exams, :users_exams]).order("next_lessons.updated_at ASC").page(params[:page]).per(6)
+		@no_nextlessons = NextLesson.neglected
+	  @neglected_users = User.find[@no_nextlessons.user_id]
 	end
 
 	def search
-	 	@users = User.where('name_kana LIKE(?)', "%#{params[:keyword]}%").limit(20)
+	  @users = User.search(params[:search])
 	end
 
 end
+
+

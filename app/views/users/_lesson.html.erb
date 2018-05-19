@@ -1,0 +1,90 @@
+		<div class="column is-fullwidth-mobile is-one-thirds-tablet is-3-desktop is-offset-1-desktop">
+			<div class='title is-size-5-mobile is-size-4-desktop'>考えるエンジン講座</div>
+			  <% @lessons.each_with_index do |lesson, i| %>
+			    <ul>
+				  	<% if lesson.id == 5 %>
+				  		<p class='subtitle is-size-6'>4. 論点ロード</p>
+							  <p class='subtitle is-size-6'><%= lesson.name %></p>
+						  	<% if lesson.users_lessons.exists?(user_id: @user.id) %>
+								 	<p class='subtitle is-size-6 has-text-link has-text-centered'><%= lesson.users_lessons.where(user_id: @user.id).first.date %></p>
+								  <p class='block'></p>
+						  	<% else %>
+						  	  <p class='has-text-centered'>
+		 								<a class="button is-danger modal-button 01" id="modal-btn<%= i %>" data-index=<%= i %>>受講日登録</a>
+		 								<div class='block'></div>
+		              </p>
+
+								  	<div id="users-lesson-modal<%= i %>" class="modal">
+		  								<div class="modal-background"></div>
+		  								<div class="modal-content box" data-index=<%= i %>>
+      									<p class="subtitle">論点10ヶ条</p>
+										  		<%= form_for [@user, @users_lesson], remote: true, html: {role: :form, 'data-model' => 'users_lesson'} do |f| %>
+														<% if @users_lesson.errors.any? %>
+								    					<div id="error_explanation">
+								      					<ul>
+									      					<% @users_lesson.errors.full_messages.each do |msg| %>
+									        				  <li><%= msg %></li>
+									      					<% end %>
+								      					</ul>
+								    					</div>
+								  					<% end %>
+								  				<div class="field has-addons">
+														<div class="control">
+										    		<%= f.date_field :date, :class => "input is-success"%>
+										        <span class="help-block"></span>
+										        </div>
+										        <%= f.hidden_field :lesson_id, :value => lesson.id %>
+										        <div class="control">
+										        <%= f.submit '受講日登録', :class => 'button is-link'%>
+										        </div>
+										      </div>
+								          <% end %>
+							 			  </div>
+							 			  <button class="modal-close is-large" aria-label="close"></button>
+					 			    </div>
+
+							  <% end %>
+
+						<% else %>
+							<div class='subtitle is-size-6'><%= lesson.name %></div>
+						  	<% if lesson.users_lessons.exists?(user_id: @user.id) %>
+								 	  <div class='subtitle is-size-6 has-text-link has-text-centered'><%= lesson.users_lessons.where(user_id: @user.id).first.date %></div>
+								 	  <div class='block'></div>
+						  	<% else %>
+								  	<p class="has-text-centered">
+		 								  <a class="button is-danger modal-button 01" id="modal-btn<%= i %>" data-index=<%= i %>>受講日登録</a>
+		 								  <div class='block'></div>
+		                </p>
+								  	<div id="users-lesson-modal<%= i %>" class="modal">
+		  								<div class="modal-background"></div>
+		  								<div class="modal-content box">
+      									<p class="subtitle"><%= lesson.name %></p>
+										  		<%= form_for [@user, @users_lesson], remote: true, html: {role: :form, 'data-model' => 'users_lesson'} do |f| %>
+														<% if @users_lesson.errors.any? %>
+								    					<div id="error_explanation">
+								      					<ul>
+									      					<% @users_lesson.errors.full_messages.each do |msg| %>
+									        				  <li><%= msg %></li>
+									      					<% end %>
+								      					</ul>
+								    					</div>
+								  					<% end %>
+								  				<div class="field has-addons">
+														<div class="control">
+										    		<%= f.date_field :date, :class => "input is-success"%>
+										        <span class="help-block"></span>
+										        </div>
+										        <%= f.hidden_field :lesson_id, :value => lesson.id %>
+										        <div class="control">
+										        <%= f.submit '受講日登録', :class => 'button is-link'%>
+										        </div>
+										      </div>
+								          <% end %>
+							 			  </div>
+							 			  <button class="modal-close is-large" aria-label="close" data-dismiss="modal"></button>
+					 			    </div>
+							  <% end %>
+						<% end %>
+				  </ul>
+		    <% end %>
+		</div>

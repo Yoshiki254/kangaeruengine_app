@@ -22,9 +22,13 @@
     <% elsif current_admin %>
       <%= render partial: 'admins/header' %>
     <% end %>
-  <%= yield %>
-  <footer class='row text-center'>
-    <p></p>
+    <%= yield %>
+  <footer class="footer">
+    <div class="content has-text-centered is-black">
+      <p class='subtitle is-size-6 is-white has-text-white'>
+        考えるエンジン講座 by <a href="http://kanata-win.jp/">株式会社 KANATA</a>
+      </p>
+    </div>
   </footer>
 </body>
 </html>

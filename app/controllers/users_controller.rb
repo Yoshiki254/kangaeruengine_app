@@ -2,7 +2,6 @@ class UsersController < ApplicationController
 	before_action :authenticate_user!
 
 	def show
-
 		unless current_user.full_profile?
 			redirect_to edit_user_path(current_user)
 		else
