@@ -3,20 +3,32 @@ class NextLesson < ActiveRecord::Base
 	belongs_to :user
 	validates_presence_of :user_id, :date_time
 
-  # def neglected
-  # 	require "date"
+  def datetime
+    self.date_time.strftime("%Y-%m-%d %H:%M")
+  end
 
-  #     d1 = Date.today #今日の日付
-  #     d2 = Date.parse(appointed_date) #引数で持ってくる
+  def self.students(next_lessons)
+    no_appointments = []
+    
+    next_lessons.each do |next_lesson|
+      require "date"
+      if next_lesson.date_time < Date.yesterday && next_lesson.updated_at > Date.today.months_ago(2)
+        no_appointments << next_lesson.user_id
+      end
+    end
+    return no_appointments
+  end
 
-  # 	if d1 - d2 > 0
-  	  
-  # 	else
-  # 	end
-  # end
+  def self.coming(next_lessons)
+    comingstudents_ids = []
 
-  # def appointed_dates
-  # 	appointed_dates = self.select.date_time
-  # end
+    next_lessons.each do |next_lesson|
+      require "date"
+      if next_lesson.date_time < Date.today + 7.day && next_lesson.date_time > Date.yesterday
+        comingstudents_ids << next_lesson.user_id
+      end
+    end
+    return comingstudents_ids
+  end
 
 end

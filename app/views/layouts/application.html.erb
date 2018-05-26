@@ -7,28 +7,34 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css">
   <script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
-
-  <title>Kangaeruengine</title>
+  
+  <title>考えるエンジン講座</title>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
 
 <body>
-  <p class="notice"><%= notice %></p>
-  <p class="alert"><%= alert %></p>
     <% if current_user %>
       <%= render partial: 'users/header' %>
+      <p class="notice"><%= notice %></p>
+      <p class="alert"><%= alert %></p>
     <% elsif current_admin %>
       <%= render partial: 'admins/header' %>
+      <p class="notice"><%= notice %></p>
+      <p class="alert"><%= alert %></p>
     <% end %>
     <%= yield %>
-  <footer class="footer">
-    <div class="content has-text-centered is-black">
-      <p class='subtitle is-size-6 is-white has-text-white'>
-        考えるエンジン講座 by <a href="http://kanata-win.jp/">株式会社 KANATA</a>
-      </p>
-    </div>
-  </footer>
+
+    <footer class="footer">
+      <div class="container">
+        <div class="content has-text-centered">
+        <p>
+          <strong>考えるエンジン講座</strong> by <a href="http://kanata-win.jp/">株式会社 KANATA</a>
+        </p>
+        </div>
+      </div>
+    </footer>
 </body>
 </html>
+

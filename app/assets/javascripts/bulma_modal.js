@@ -1,3 +1,4 @@
+
 $(document).on("ready turbolinks:load", function(){
 
 	$(".button.is-danger.modal-button.01").on("click", function(){
@@ -81,6 +82,25 @@ $(document).on("ready turbolinks:load", function(){
     var index = $(this).data("index");
 
     $("#users-practice-modal" + index).addClass("is-active");
+  });
+
+    $(".modal-background").on("click", function(){
+      $(".modal.is-active").removeClass("is-active");
+  });
+
+    $(".modal-close").on("click", function(){
+      $(".modal.is-active").removeClass("is-active");
+  });
+
+});
+
+$(document).on("ready turbolinks:load", function(){
+
+  $(".button.is-danger.modal-button.06").on("click", function(){
+
+    var index = $(this).data("index");
+
+    $("#users-expedition-modal" + index).addClass("is-active");
   });
 
     $(".modal-background").on("click", function(){

@@ -1,47 +1,22 @@
 
-<% if @user.id == current_user.id %>
-
-<section class="hero is-medium has-bg-img is-black">
-	<img class='is-bg-img' src='/assets/images/thomas.jpg'></img>
-	  <div class="hero-body">
-		  <div class="container has-text-centered">
-		    <h2 class='subtitle has-text-white'>前回授業</h2>
-					<% if current_user.users_lessons.present? %>
-						<h3 class='subtitle has-text-white-bis is-italic'><%= current_user.users_lessons.order("updated_at DESC").first.lesson.name %></h3>
-					<% end %>
-
-				<h2 class='subtitle has-text-white'>Your achievements</h2>
-				<progress class="progress is-danger" value="<%= @progress %>" max="100">
-				</progress>
-
-				<div class='block'></div>
-				<div class='block'></div>
-
-				<h2 class='subtitle has-text-white'>次回授業日時</h2>
-						<% unless current_user.next_lesson.present? %>
-							<%= form_for [@user, @next_lesson] do |f| %>
-						 	  <%= f.datetime_select :date_time, default: Time.now %><br>
-						 	  <div class='block'></div>
-								<%= f.submit "次回予約", :class => 'button is-danger' %>
-						  <% end %>
-						<% else %>
-							<h3 class='subtitle has-text-white is-italic'><%= current_user.next_lesson.date_time.strftime("%Y-%m-%d %H:%M") %></h3>
-							<%= form_for [@user, current_user.next_lesson] do |f| %>
-						 	  <%= f.datetime_select :date_time, :default => current_user.next_lesson.date_time, :class => "input is-success" %><br>
-						 	  <div class='block'></div>
-								<%= f.submit "次回予約", :class => 'button is-danger' %>
-						  <% end %>
-						<% end %>
-			  </div>
-			</div>
+<section class="hero is-medium has-bg-image">
+	<div class="hero-body">
+	  <div class="container has-text-centered">
+	    <%= render :partial => "lastLesson", locals: { user: @user } %>
+			<%= render :partial => "progressbar", locals: { progress: @progress } %>
+			<%= render :partial => "nextLesson", locals: { user: @user, next_lesson: @next_lesson } %>
+		</div>
+	</div>
 </section>
 
 <section class="section is-clearfix">
 <div class='container'>
   <div class='columns'>
-  	<%= render :partial => "lesson" %>
-  	<%= render :partial => "interview" %>
-  	<%= render :partial => "insight" %>
+  	<%= render :partial => "lesson", locals: {lessons: @lessons, user: @user} %>
+  	<%= render :partial => "interview", locals: {interviews: @interviews, user: @user} %>
+  	<%= render :partial => "insight", locals: {insights: @insights, user: @user} %>
+  	<div class='column'>
+		</div>
 	</div>
 </div>
 </section>
@@ -49,53 +24,10 @@
 <section class="section is-clearfix has-background-white-bis">
 <div class='container'>
 	<div class='columns'>
-		<%= render :partial => "exam" %>
-
-
-	  <div class='column is-fullwidth-mobile is-4-desktop is-offset-1-desktop'>
-			<div class='title is-size-5-mobile is-size-4-desktop'>実践講義</div>
-			<% @practices.each_with_index do |practice, i| %>
-			  <ul>
-				  <div class='subtitle is-size-6'><%= practice.name %></div>
-				  	<% if practice.users_practices.exists?(user_id: current_user.id) %>
-						 	<div class='subtitle is-size-6 has-text-link has-text-centered'><%= practice.users_practices.where(user_id: current_user).first.date %></div>
-						 	<div class='block'></div>
-				  	<% else %>
-							<p class='has-text-centered'>
-		 					  <a class="button is-danger modal-button 05" id="modal-btn<%= i %>" data-index=<%= i %>>実施日登録</a>
-		          </p>
-								  <div id="users-practice-modal<%= i %>" class="modal">
-		  						  <div class="modal-background"></div>
-		  							<div class="modal-content box">
-      							  <p class="subtitle">実践講義：<%= practice.name %></p>
-										  	<%= form_for [@user, @users_practice], remote: true do |f| %>
-													<% if @users_practice.errors.any? %>
-								    				<div id="error_explanation">
-								      				<ul>
-									      				<% @users_practice.errors.full_messages.each do |msg| %>
-									        				<li><%= msg %></li>
-									      				<% end %>
-								      				</ul>
-								    				</div>
-								  				<% end %>
-								  					<div class="field has-addons">
-														  <div class="control">
-										    		    <%= f.date_field :date, :class => "input is-success"%>
-										    	    </div>
-										          <span class="help-block"></span>
-										          <%= f.hidden_field :practice_id, :value => practice.id %>
-										          <div class="control">
-										            <%= f.submit '受講日登録', :class => 'button is-link'%>
-										          </div>
-										        </div>
-								          <% end %>
-							 			</div>
-							 			<button class="modal-close is-large" aria-label="close" data-dismiss="modal"></button>
-					 			    </div>
-						<% end %>
-				</ul>
-		  <% end %>
-	  </div>
+		<%= render :partial => "exam", locals: {exams: @exams, user: @user} %>
+		<%= render :partial => "practice", locals: {practices: @practices, user: @user} %>
+		<div class='column'>
+		</div>
 	</div>
 </div>
 </section>
@@ -103,44 +35,8 @@
 <section class="section is-clearfix has-background-white-ter">
 <div class='container'>
 	<div class='columns'>
-		<div class="column is-fullwidth-mobile is-one-thirds-tablet is-3-desktop is-offset-1-desktop">
-			<div class='title is-size-5-mobile is-size-4-desktop'>続・考えるエンジン講座</div>
-			<% @expeditions.each_with_index do |expedition, i| %>
-			  <ul>
-				  <div class='subtitle is-size-6'><%= expedition.name %></div>
-				  	<% if expedition.users_expeditions.exists?(user_id: current_user.id) %>
-						 	<div class='subtitle is-size-6 has-text-danger has-text-centered'><%= expedition.users_expeditions.where(user_id: current_user).first.date %></div>
-						 	<div class='block'></div>
-				  	<% else %>
-					  	<div id="m-content-05" class="m-content-05<%= i %>" data-index-05=<%= i %>>
-					  
-						  </div>
-						  <a class='buttons is-centered' id="m-open-05">受講日登録</a>
-						  <div class='block'></div>
-						<% end %>
-				</ul>
-		  <% end %>
-	  </div>
+	<%= render :partial => "expedition", locals: {expeditions: @expeditions, user: @user} %>
 	</div>
 </div>
 </section>
-
-
-<% else %>
-
-<% end %>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

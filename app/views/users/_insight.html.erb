@@ -1,11 +1,11 @@
 
-	  <div class='column is-2-desktop is-offset-1-desktop is-fullwidth-mobile is-narrow'>
-		  <div class='title is-size-5-mobile is-size-4-desktop'>12示唆マラソン</div>
-		  <% @insights.each_with_index do |insight, i| %>
+	  <div class='column is-2-desktop is-offset-1-desktop is-fullwidth-mobile box'>
+		  <div class='title is-size-5-mobile is-size-4-desktop has-text-centered'>12示唆マラソン</div>
+		  <% insights.each_with_index do |insight, i| %>
 		    <ul>
-			    <div class='subtitle is-size-6'><%= insight.name %></div>
-				  	<% if insight.users_insights.exists?(user_id: @user.id) %>
-				  	  <div class='subtitle is-size-6 has-text-link has-text-centered'><%= insight.users_insights.where(user_id: @user.id).first.date %></div>
+			    <div class='subtitle is-size-5 has-text-centered'><%= insight.name %></div>
+				  	<% if insight.done?(user) %>
+				  	  <div class='subtitle is-size-5 has-text-link has-text-centered'><%= insight.date(user) %></div>
 				  	  <div class='block'></div>
 				  	<% else %>
 							<p class='has-text-centered'>
@@ -14,7 +14,7 @@
 		          </p>
 								  <div id="users-insight-modal<%= i %>" class="modal">
 		  						  <div class="modal-background"></div>
-		  							<div class="modal-content box">
+		  							<div class="modal-content box has-text-centered">
       							  <p class="subtitle">12示唆マラソン：<%= insight.name %></p>
 										  	<%= form_for [@user, @users_insight], remote: true do |f| %>
 													<% if @users_insight.errors.any? %>
@@ -27,8 +27,8 @@
 								    				</div>
 								  				<% end %>
 								  				<div class="field has-addons">
-														<div class="control">
-										    		<%= f.date_field :date, :class => "input is-success"%>
+														<div class="control is-expanded">
+										    		<%= f.date_field :date, :class => "input is-success", value: Time.now.strftime("%Y-%m-%d") %>
 										    	  </div>
 										        <span class="help-block"></span>
 										        <%= f.hidden_field :insight_id, :value => insight.id %>

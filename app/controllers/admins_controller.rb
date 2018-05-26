@@ -4,9 +4,13 @@ class AdminsController < ApplicationController
 
 	def show
 		@admin = Admin.find(params[:id])
-		@users = User.includes([:next_lesson, :lessons, :users_lessons, :interviews, :users_interviews, :insights, :users_insights, :exams, :users_exams]).order("next_lessons.updated_at ASC").page(params[:page]).per(6)
-		@no_nextlessons = NextLesson.neglected
-	  @neglected_users = User.find[@no_nextlessons.user_id]
+		@next_lessons = NextLesson.all
+		no_appointments = NextLesson.students(@next_lessons)
+		@forgotten_users = User.where(id: no_appointments).page(params[:forgotten_page]).per(8)		
+		comingstudents_ids = NextLesson.coming(@next_lessons)
+		@coming_users = User.includes([:next_lesson, :users_lessons, :users_interviews, :users_insights, :users_exams]).where(id: comingstudents_ids).order("next_lessons.date_time ASC").page(params[:user_page]).per(6)
+  
+		# @coming_users = User.joins(:next_lesson).where(id: comingstudents_ids).order("date_time ASC").page(params[:user_page]).per(6)
 	end
 
 	def search
@@ -14,5 +18,3 @@ class AdminsController < ApplicationController
 	end
 
 end
-
-

@@ -1,45 +1,49 @@
-<section class='section'>
-	<div class='container'>
+<section class="hero is-fullheight">
+<div class='container'>
+  <div class="hero-body">
+    
+      <div class="column is-4 is-offset-4">
+	      <h3 class="subtitle"><strong>検索結果</strong></h3>
+				
+				<% @users.each do |user| %>
+					生徒名：
+					<%= link_to "#{user.name}", admins_user_path(user.id) %><br/>
+					<%= image_tag user.avatar.url(:medium) %><br>
 
-	<h4>検索結果</h4>
-  <P>
-  <% @users.each do |user| %>
-  	生徒名：
-  	<%= user.name %><br/>
-  	<%= image_tag user.avatar.url(:medium) %><br>
+					電話番号：
+					<%= user.tel %><br/>
 
-  	電話番号：
-  	<%= user.tel %><br/>
+					次回授業時間：
+					<% if user.next_lesson.present? %>
+						<%= user.next_lesson.datetime %><br/>
+					<% else %>
+						未決定<br/>
+					<% end %>
 
-  	次回授業時間：
-	  <% if user.next_lesson.present? %>
-	    <%= user.next_lesson.date_time.strftime("%Y-%m-%d %H:%M:%S") %><br/>
-		<% else %>
-		  未決定<br/>
-		<% end %>
+					前回授業：
+					<% if user.users_lessons.present? %>
+						<%= user.users_lessons.latest_name %><br/>
+					<% else %>
+						未受講<br/>
+					<% end %>
 
-		前回授業：
-	  <% if user.users_lessons.present? %>
-	  	<%= user.users_lessons.order("updated_at DESC").first.lesson.name %><br/>
-	  <% else %>
-	  	未受講<br/>
-	  <% end %>
+					10ケースマラソン：
+					<% if user.users_interviews.present? %>
+						<%= user.users_interviews.latest_name %><br/>
+					<% else %>
+						未開始<br/>
+					<% end %>
 
-		10ケースマラソン：
-		<% if user.users_interviews.present? %>
-			<%= user.users_interviews.order("updated_at DESC").first.interview.name %><br/>
-		<% else %>
-		  未開始<br/>
-		<% end %>
-
-	  12示唆マラソン：
-	  <% if user.users_insights.present? %>
-	    <%= user.users_insights.order("updated_at DESC").first.insight.name %><br/>
-	  <% else %>
-	    未開始<br/>
-	  <% end %>
-  <% end %>
-  </P>
-
+					12示唆マラソン：
+					<% if user.users_insights.present? %>
+						<%= user.users_insights.latest_name %><br/>
+					<% else %>
+						未開始<br/>
+					<% end %>
+					<br>
+				<% end %>
+			</div>
+    
+  </div>
 </div>
 </section>

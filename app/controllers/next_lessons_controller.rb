@@ -8,7 +8,6 @@ class NextLessonsController < ApplicationController
 		else
 			redirect_to admins_user_path(params[:user_id])
 		end
-
 	end
 
 	def edit
@@ -32,7 +31,7 @@ class NextLessonsController < ApplicationController
 	end
 
 	def update_params
-		params.require(:next_lesson).permit(:date_time).merge(user_id: params[:user_id])
+		params.require(:next_lesson).permit(:date_time).merge(user_id: params[:user_id])	
 	end
 
 end

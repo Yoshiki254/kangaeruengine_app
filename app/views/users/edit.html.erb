@@ -1,32 +1,51 @@
 
-<% unless current_user.full_profile? %>
-  <header class="header_top panel panel-default col-lg-12 no-profile">
-    <h2>まずは、あなたの基本プロフィールを登録しましょう！</h2>
-  </header>
-<% else %>
-<% end %>
+<section class="section">
+  <div class="hero-body">
+    <div class='container'>
 
-<div class="field">
-	<%= form_for current_user do |f| %>
-	  <div class='profile_photo'>
- 		  <h3>プロフィール画像（必須）</h3>
-		    <%= image_tag @user.avatar.url(:medium) %>
-		    <div class="form-group file">
-		      <%= f.file_field :avatar, class: "form-control floating-label", placeholder: "画像アップロード" %>
- 	      </div>
-	  </div>
-	  <div class='profile_info'>
-		  <h3>登録情報</h3>
-		  <div class="form-group">
-				<%= f.text_field :name, placeholder: "お名前（漢字）", :class => 'input is-success'%><br>
-				<%= f.text_field :name_kana, placeholder: "お名前（フリガナ）", :class => 'input is-success' %><br>
-				<%= f.date_field :birthday, placeholder: "生年月日", :class => 'input is-success' %><br>
-				<%= f.text_field :tel, placeholder: "電話番号", :class => 'input is-success' %><br>
-				<%= f.text_field :job, placeholder: "ご職業", :class => 'input is-success' %><br>
-			  <%= f.submit "登録", :class => 'button is-link'%>
+			<% unless current_user.full_profile? %>
+				<h2 class="subtitle">まずは、あなたの基本プロフィールを登録しましょう！</h2>
+			<% else %>
+			<% end %>
+
+			<div class="column is-4 is-offset-4 has-text-centered">				
+				<div class="field">
+					<%= form_for current_user do |f| %>
+						<h3 class="subtitle">プロフィール画像（必須）</h3>
+						  <p class="subtitle is-size-6">登録済みのお写真</p>
+							<%= image_tag @user.avatar.url(:medium) %>
+							  <div class='block'></div>
+							  <div class="form-group file">
+									<%= f.file_field :avatar, class: "form-control floating-label", placeholder: "画像アップロード" %>
+								</div>
+							<figure class="image is-256x256">            
+							</figure>
+				</div>
 			</div>
 		</div>
-	<% end %>
+	</div>
 
+
+  <div class="hero-body">
+    <div class='container'>
+		  <div class="column is-4 is-offset-4 has-text-centered">
+					<h3 class="subtitle">登録情報</h3>
+								<div class="form-group">
+									<%= f.text_field :name, placeholder: "お名前（漢字）", :class => 'input is-success'%><br>
+									<%= f.text_field :name_kana, placeholder: "お名前（フリガナ）", :class => 'input is-success' %><br>
+									<%= f.date_field :birthday, placeholder: "生年月日", :class => 'input is-success' %><br>
+									<%= f.text_field :tel, placeholder: "電話番号", :class => 'input is-success' %><br>
+									<%= f.text_field :job, placeholder: "ご職業", :class => 'input is-success' %>
+									<div class='block'></div>
+									<%= f.submit "登録", :class => 'button is-link'%>
+								</div>
+							</div>
+						<% end %>
+				  </div>
+				</div>
+			</div>
+	  </div>
+	</div>
+</section>
 
 

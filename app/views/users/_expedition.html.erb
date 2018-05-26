@@ -1,0 +1,46 @@
+
+		<div class="column is-fullwidth-mobile is-one-thirds-tablet is-4-desktop is-offset-1-desktop box">
+			<div class='title is-size-5-mobile is-size-4-desktop has-text-centered'>続・考えるエンジン講座</div>
+			<% expeditions.each_with_index do |expedition, i| %>
+			  <ul>
+				  <div class='subtitle is-size-5 has-text-centered'><%= expedition.name %></div>
+				  	<% if expedition.done?(user) %>
+						 	<div class='subtitle is-size-5 has-text-link has-text-centered'><%= expedition.date(user) %></div>
+						 	<div class='block'></div>
+				  	<% else %>
+							<p class='has-text-centered'>
+		 					  <a class="button is-danger modal-button 06" id="modal-btn<%= i %>" data-index=<%= i %>>受講日登録</a>
+		 					  <div class='block'></div>
+		          </p>
+								  <div id="users-expedition-modal<%= i %>" class="modal">
+		  						  <div class="modal-background"></div>
+		  							<div class="modal-content box has-text-centered">
+      							  <p class="subtitle"><%= expedition.name %></p>
+										  	<%= form_for [@user, @users_expedition], remote: true do |f| %>
+													<% if @users_expedition.errors.any? %>
+								    				<div id="error_explanation">
+								      				<ul>
+									      				<% @users_expedition.errors.full_messages.each do |msg| %>
+									        				<li><%= msg %></li>
+									      				<% end %>
+								      				</ul>
+								    				</div>
+								  				<% end %>
+								  					<div class="field has-addons">
+														  <div class="control is-expanded">
+										    		    <%= f.date_field :date, :class => "input is-success", value: Time.now.strftime("%Y-%m-%d") %>
+										    	    </div>
+										          <span class="help-block"></span>
+										          <%= f.hidden_field :expedition_id, :value => expedition.id %>
+										          <div class="control">
+										            <%= f.submit '受講日登録', :class => 'button is-link'%>
+										          </div>
+										        </div>
+								          <% end %>
+							 			</div>
+							 			<button class="modal-close is-large" aria-label="close" data-dismiss="modal"></button>
+					 			  </div>
+						<% end %>
+				</ul>
+		  <% end %>
+	  </div>

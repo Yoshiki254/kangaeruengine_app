@@ -5125,7 +5125,7 @@ a.tag:hover {
 }
 
 .subtitle {
-  color: #fffff;
+  color: #4a4a4a;
   font-size: 1.25rem;
   font-weight: 400;
   line-height: 1.25;
@@ -9665,7 +9665,7 @@ label.panel-block:hover {
 }
 
 .footer {
-  background-color: black;
-  padding: 1rem 1.5rem 1rem;
+  background-color: #fafafa;
+  padding: 3rem 1.5rem 6rem;
 }
 /*# sourceMappingURL=bulma.css.map */

@@ -1,22 +1,25 @@
-<% if user_signed_in? %>
 
-<nav class='navbar is-black' role="navigation" aria-label="main navigation">
+<nav class='navbar is-black'>
   <div class='container'>
     <div class='navber-brand'>
       <a class="navbar-item" href="http://www.251media.jp/?utm_source=kanataw&utm_medium=banner">
-        <%= image_tag("251_logo.jpeg", size: "", alt: "251 media") %>
+        <img src="https://pbs.twimg.com/profile_images/925583780252753920/ny_dUqtG_400x400.jpg" alt: "251 media">
       </a>
+      <div class="navbar-burger burger" data-target="navbar-menu-id">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </div>
     </div>
-      <span class='navbar-burger burger' data-target="navbarMenu">
-      </span>
-    <div class="navbar-menu is-active">
+
+    <div id="navbar-menu-id"  class="navbar-menu">
+
       <div class="navbar-end">
-        <a><%= link_to 'HOME', user_path(current_user), class: "navbar-item is-active"%></a>
-        <a><%= link_to 'Your Profile', edit_user_path(current_user), class: "navbar-item is-active"%></a>
-        <a><%= link_to "Sign Out", destroy_user_session_path, method: :delete, class: "navbar-item is-active"%></a>
+        <a><%= link_to 'HOME', user_path(current_user), class: "navbar-item" %></a>
+        <a><%= link_to "#{current_user.name}", edit_user_path(current_user), class: "navbar-item" %></a>
+        <a><%= link_to "Sign Out", destroy_user_session_path, method: :delete, class: "navbar-item" %></a>
       </div>
     </div>
   </div>
 </nav>
 
-<% end %>

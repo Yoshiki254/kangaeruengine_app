@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
 	before_action :authenticate_user!
+	before_action :move_to_session
 
 	def show
 		unless current_user.full_profile?
@@ -8,9 +9,9 @@ class UsersController < ApplicationController
 			user_path(current_user)
 		end
 
-		@progress = ProgressBar.table_records(current_user)
+		# @user = User.find(params[:id])
 
-		@user = User.find(params[:id])
+		@progress = ProgressBar.table_records(@user)
 
 		@lessons = Lesson.includes(:users_lessons)
 		@users_lesson = UsersLesson.new
@@ -34,10 +35,11 @@ class UsersController < ApplicationController
 	end
 
   def edit
-  	@user = User.find(params[:id])
+		# @user = User.find(params[:id])
   end
 
-  def update
+	def update
+		# @user = User.find(params[:id])
   	respond_to do |format|
       if current_user.update(update_params)
         format.html { redirect_to user_path(current_user), notice: 'ユーザー情報が正しく登録されました' }
@@ -47,11 +49,17 @@ class UsersController < ApplicationController
     end
   end
 
-  private
-  def update_params
-  	params.require(:user).permit(:name, :name_kana, :birthday, :tel, :job, :avatar)
-  end
+  private	
+	def move_to_session
+		@user = User.find(params[:id])
+		unless current_user.id == @user.id
+			redirect_to action: 'show', status: 404
+		end
+	end
 
+	def update_params
+  	params.require(:user).permit(:name, :name_kana, :birthday, :tel, :job, :avatar)
+	end
 end
 
 

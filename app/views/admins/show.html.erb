@@ -1,12 +1,16 @@
+
 <section class="hero is-medium">
 	<div class='container'>
 		<div class='block'>
 		</div>
-		<div class="field is-grouped">
-		  <div class='control is-expanded'>
-		  	<%= form_tag('/admins/search', method: :get) do %>
-		    <%= text_field_tag :search, params[:search], :class => 'input is-clearfix', placeholder: "フリガナで生徒検索" %>
-		    <%= submit_tag "Search", :name => nil, :class => 'button is-invisible' %>
+		<div class="field has-addons box">
+		    <div class='control is-expanded'>
+		    <%= form_tag('/admins/search', method: :get) do %>
+		    <%= text_field_tag :search, params[:search], :class => 'input is-success', placeholder: "フリガナで生徒検索" %>
+		    </div>
+		    <div class="control">
+		    <%= submit_tag "Search", :name => nil, :class => 'button is-link' %>
+		    </div>
 		    <% end %>
 			</div>
 		</div>
@@ -15,74 +19,85 @@
 
 <section class="section is-clearfix">
   <div class='container'>
-  		<div class='tile is-ancestor has-text-centered'>
-			<% @users.each do |user| %>
-			  <div class="tile is-3 is-parent box">
-				<ul>
-					<div class='tile is-child'>
-				  <p class='subtitle'><%=link_to "#{user.name}", admins_user_path(user.id) %></p>
-					</div>
-					<div class='block'></div>
-					<div class='tile is-child'>
-					  <p>プロフィール写真</p>
-					  <figure class="image is-256x256">
+  	<p class='subtitle has-text-danger has-text-centered '>次回予約未定の生徒</p>
+  	  <div class='level'>
+  	  	<div class='level-item'>
+			  <% @forgotten_users.each do |forgotten_user| %>
+				  <p class='subtitle has-text-centered '><%=link_to "#{forgotten_user.name}", admins_user_path(forgotten_user.id) %>/</p>
+			  <% end %>
+			  </div>
+		  </div>
+	  <nav class="pagination" role="navigation" aria-label="pagination">
+		  <%= paginate @forgotten_users, :param_name => 'forgotten_page' %>
+	  </nav>
+	</div>
+</section>
+
+<section class="section is-clearfix">
+<p class='subtitle has-text-danger has-text-centered '>生徒情報</p>
+  <div class='row columns'>
+  	<% @coming_users.each do |user| %>
+  	  <div class='column is-2'>
+  	  	<div class='card large'>
+  	  		<div class='card-image'>
+  	  			<figure class="image">
 				      <%= image_tag user.avatar.url(:medium) %>
 				    </figure>
 				  </div>
-				  <div class='block'></div>
-				  <div class='tile is-child'>
-				    <p>電話番号：<%= user.tel %></p><br>
-				    <p>Emailアドレス
-				    <p><%= user.email%></p><br>
-	 				  <p>次回授業時間</p>
+				  <div class='card-content'>
+  				  <p class='subtitle has-text-centered'><%=link_to "#{user.name}", admins_user_path(user.id) %></p>
+				    <p>電話番号:</p>
+				    <p><%= user.tel %></p><br>
+				   <!--  <p>Emailアドレス
+				    <p><%= user.email%></p><br> -->
+	 				  <p>次回授業時間:</p>
 						<% if user.next_lesson.present? %>
-						  <p><%= user.next_lesson.date_time.strftime("%Y-%m-%d %H:%M:%S") %></p>
+						  <p><%= user.next_lesson.datetime %></p>
 						<% else %>
 						  <p>未決定</p>
 						<% end %>
 				    <br>
 
-				    <p>前回授業</p>
+				    <p>前回授業:</p>
 					  <% if user.users_lessons.present? %>
-					  	<p><%= user.users_lessons.order("updated_at DESC").first.lesson.name %></p>
+					  	<p><%= user.users_lessons.latest_name %></p>
 					  <% else %>
 					  	<p>未受講</p>
 					  <% end %>
 				    <br>
 
-					<p>10ケースマラソン</p>
+					  <p>10ケースマラソン:</p>
 						<% if user.users_interviews.present? %>
-							<p><%= user.users_interviews.order("updated_at DESC").first.interview.name %></p>
+							<p><%= user.users_interviews.latest_name %></p>
 						<% else %>
 						  <p>未開始</p>
 						<% end %>
 				    <br>
 
-				  <p>12示唆マラソン</p>
+				    <p>12示唆マラソン:</p>
 					  <% if user.users_insights.present? %>
-					    <p><%= user.users_insights.order("updated_at DESC").first.insight.name %></p>
+					    <p><%= user.users_insights.latest_name %></p>
 					  <% else %>
 					    <p>未開始</p>
 					  <% end %>
-				  <br>
+				    <br>
 
-				  <p>考えるエンジン検定</p>
+				    <p>考えるエンジン検定:</p>
 					  <% if user.users_exams.present? %>
-					  <p><%= user.users_exams.order("updated_at DESC").first.exam.name %></p>
+					  <p><%= user.users_exams.latest_name %></p>
 					  <% else %>
 					  <p>未受験</p>
 					  <% end %>
 					  <br>
-					</p>
-				</ul>
+					</div>
 		    </div>
-		  <% end %>
 		  </div>
-		<%= paginate(@users) %>
-  </div>
+		  <% end %>
+		</div>
+	<nav class="pagination" role="navigation" aria-label="pagination">
+    <%= paginate @coming_users, :param_name => 'user_page' %>
+  </nav>
 </section>
-
-
 
 
 
