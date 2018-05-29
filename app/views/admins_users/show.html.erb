@@ -1,43 +1,43 @@
 
-<section class="hero is-medium is-black">
-	  <div class="hero-body">
-		  <div class="container has-text-centered">
-	      <%= render :partial => "users/lastLesson", locals: { user: @user } %>
-				<%= render :partial => "users/progressbar", locals: { progress: @progress } %>
-				<%= render :partial => "users/nextLesson", locals: { user: @user, next_lesson: @next_lesson } %>
-			</div>
+<section class="hero is-medium has-bg-image">
+	<div class="hero-body">
+	  <div class="container has-text-centered">
+      <%= render :partial => "users/lastLesson", locals: { user: @user } %>
+			<%= render :partial => "users/progressbar", locals: { progress: @progress } %>
+			<%= render :partial => "users/nextLesson", locals: { user: @user, next_lesson: @next_lesson } %>
 		</div>
+	</div>
 </section>
 
 <section class="section is-clearfix">
-<div class='container'>
-  <div class='columns'>
-  	<%= render :partial => "users/lesson", locals: {lessons: @lessons, user: @user} %>
-  	<%= render :partial => "users/interview", locals: {interviews: @interviews, user: @user} %>
-  	<%= render :partial => "users/insight", locals: {insights: @insights, user: @user} %>
-  	<div class='column'>
+	<div class='container'>
+		<div class='columns'>
+			<%= render :partial => "users/lesson", locals: { lessons: @lessons, user: @user, users_lesson: @users_lesson } %>
+			<%= render :partial => "users/interview", locals: { interviews: @interviews, user: @user, users_interview: @users_interview } %>
+			<%= render :partial => "users/insight", locals: { insights: @insights, user: @user, users_insight: @users_insight } %>
+			<div class='column'>
+			</div>
 		</div>
-  </div>
-</div>
+	</div>
 </section>
 
 <section class="section is-clearfix has-background-white-bis">
-<div class='container'>
-	<div class='columns'>
-		<%= render :partial => "users/exam", locals: {exams: @exams, user: @user} %>
-		<%= render :partial => "users/practice", locals: {practices: @practices, user: @user} %>
-		<div class='column'>
+	<div class='container'>
+		<div class='columns'>
+			<%= render :partial => "users/exam", locals: { exams: @exams, user: @user, users_exam: @users_exam } %>
+			<%= render :partial => "users/practice", locals: { practices: @practices, user: @user, users_practice: @users_practice } %>
+			<div class='column'>
+			</div>
 		</div>
 	</div>
-</div>
 </section>
 
 <section class="section is-clearfix has-background-white-ter">
-<div class='container'>
-	<div class='columns'>
-	<%= render :partial => "users/expedition", locals: {expeditions: @expeditions, user: @user} %>
+	<div class='container'>
+		<div class='columns'>
+		<%= render :partial => "users/expedition", locals: { expeditions: @expeditions, user: @user, users_expedition: @users_expedition } %>
+		</div>
 	</div>
-</div>
 </section>
 
 

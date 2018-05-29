@@ -4,8 +4,8 @@
 			<% expeditions.each_with_index do |expedition, i| %>
 			  <ul>
 				  <div class='subtitle is-size-5 has-text-centered'><%= expedition.name %></div>
-				  	<% if expedition.done?(user) %>
-						 	<div class='subtitle is-size-5 has-text-link has-text-centered'><%= expedition.date(user) %></div>
+				  	<% if expedition.users_expeditions.exists?(user_id: user.id) %>
+						 	<div class='subtitle is-size-5 has-text-link has-text-centered'><%= expedition.expedition_date(user) %></div>
 						 	<div class='block'></div>
 				  	<% else %>
 							<p class='has-text-centered'>
@@ -16,11 +16,11 @@
 		  						  <div class="modal-background"></div>
 		  							<div class="modal-content box has-text-centered">
       							  <p class="subtitle"><%= expedition.name %></p>
-										  	<%= form_for [@user, @users_expedition], remote: true do |f| %>
-													<% if @users_expedition.errors.any? %>
+										  	<%= form_for [user, users_expedition], remote: true do |f| %>
+													<% if users_expedition.errors.any? %>
 								    				<div id="error_explanation">
 								      				<ul>
-									      				<% @users_expedition.errors.full_messages.each do |msg| %>
+									      				<% users_expedition.errors.full_messages.each do |msg| %>
 									        				<li><%= msg %></li>
 									      				<% end %>
 								      				</ul>

@@ -1,8 +1,6 @@
 		  <div class='columns is-mobile'>
-		    <div class='column is-half is-offset-one-quarter'>
+		    <div class='column is-half-desktop is-offset-one-quarter-desktop is-fullwidth-mobile'>
 		      <h2 class='subtitle has-text-white  has-text-weight-bold'>前回授業</h2>
-					<% if user.users_lessons.present? %>
-						<h3 class='subtitle has-text-white-bis is-italic has-text-weight-bold'><%= user.users_lessons.latest_name %></h3>
-					<% end %>
+					<%= user.your_last_lesson(user) %>
 				</div>
 			</div>

@@ -1,0 +1,23 @@
+<section class="hero is-fullheight has-text-centered">
+ 
+    <div class='block'></div>
+    <h3 class="title has-text-grey">Photo Album</h3>
+   
+    <h2 class="subtitle">講義写真や読了本を記録しましょう。</h2>
+    <h4><%= link_to "Add your photo here",  new_user_picture_path(@user.id), class: "subtitle is-italic has-text-danger" %></h4>
+    <div class='block'></div>
+
+    <div class='column is-12'>
+    <div class="slider-pro" id="slider1">
+      <div class="sp-slides">
+      <% @pictures.each do |picture| %>   
+        <div class="sp-slide">
+          <%= image_tag picture.image.url %>
+          <p class="sp-caption"><%= "#{picture.caption}" %></p>
+        </div>
+      <% end %>
+      </div>
+    </div>
+    </div>
+	
+</section>

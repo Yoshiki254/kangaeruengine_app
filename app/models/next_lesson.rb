@@ -3,10 +3,6 @@ class NextLesson < ActiveRecord::Base
 	belongs_to :user
 	validates_presence_of :user_id, :date_time
 
-  def datetime
-    self.date_time.strftime("%Y-%m-%d %H:%M")
-  end
-
   def self.students(next_lessons)
     no_appointments = []
     

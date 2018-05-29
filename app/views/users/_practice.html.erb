@@ -4,8 +4,8 @@
 			<% practices.each_with_index do |practice, i| %>
 			  <ul>
 				  <div class='subtitle is-size-5 has-text-centered'><%= practice.name %></div>
-				  	<% if practice.done?(user) %>
-						 	<div class='subtitle is-size-5 has-text-link has-text-centered'><%= practice.date(user) %></div>
+				  	<% if practice.users_practices.exists?(user_id: user.id) %>
+						 	<div class='subtitle is-size-5 has-text-link has-text-centered'><%= practice.practice_date(user) %></div>
 						 	<div class='block'></div>
 				  	<% else %>
 							<p class='has-text-centered'>
@@ -16,11 +16,11 @@
 		  						  <div class="modal-background"></div>
 		  							<div class="modal-content box has-text-centered">
       							  <p class="subtitle">実践講義：<%= practice.name %></p>
-										  	<%= form_for [@user, @users_practice], remote: true do |f| %>
-													<% if @users_practice.errors.any? %>
+										  	<%= form_for [user, users_practice], remote: true do |f| %>
+													<% if users_practice.errors.any? %>
 								    				<div id="error_explanation">
 								      				<ul>
-									      				<% @users_practice.errors.full_messages.each do |msg| %>
+									      				<% users_practice.errors.full_messages.each do |msg| %>
 									        				<li><%= msg %></li>
 									      				<% end %>
 								      				</ul>

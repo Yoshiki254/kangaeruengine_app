@@ -12,9 +12,9 @@
 <section class="section is-clearfix">
 <div class='container'>
   <div class='columns'>
-  	<%= render :partial => "lesson", locals: {lessons: @lessons, user: @user} %>
-  	<%= render :partial => "interview", locals: {interviews: @interviews, user: @user} %>
-  	<%= render :partial => "insight", locals: {insights: @insights, user: @user} %>
+  	<%= render :partial => "lesson", locals: { lessons: @lessons, user: @user, users_lesson: @users_lesson } %>
+  	<%= render :partial => "interview", locals: { interviews: @interviews, user: @user, users_interview: @users_interview } %>
+  	<%= render :partial => "insight", locals: { insights: @insights, user: @user, users_insight: @users_insight } %>
   	<div class='column'>
 		</div>
 	</div>
@@ -24,8 +24,8 @@
 <section class="section is-clearfix has-background-white-bis">
 <div class='container'>
 	<div class='columns'>
-		<%= render :partial => "exam", locals: {exams: @exams, user: @user} %>
-		<%= render :partial => "practice", locals: {practices: @practices, user: @user} %>
+		<%= render :partial => "exam", locals: { exams: @exams, user: @user, users_exam: @users_exam } %>
+		<%= render :partial => "practice", locals: { practices: @practices, user: @user, users_practice: @users_practice } %>
 		<div class='column'>
 		</div>
 	</div>
@@ -35,7 +35,7 @@
 <section class="section is-clearfix has-background-white-ter">
 <div class='container'>
 	<div class='columns'>
-	<%= render :partial => "expedition", locals: {expeditions: @expeditions, user: @user} %>
+	<%= render :partial => "expedition", locals: { expeditions: @expeditions, user: @user, users_expedition: @users_expedition } %>
 	</div>
 </div>
 </section>

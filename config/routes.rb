@@ -57,6 +57,7 @@ Rails.application.routes.draw do
     resources :users_exams, only: [:create]
     resources :users_practices, only: [:create]
     resources :users_expeditions, only: [:create]
+    resources :pictures, only: [:index, :new, :create]
   end
 
 end

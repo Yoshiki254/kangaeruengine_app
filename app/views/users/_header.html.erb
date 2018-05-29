@@ -1,8 +1,8 @@
 
-<nav class='navbar is-black'>
+<nav class='navbar is-black is-mobile'>
   <div class='container'>
     <div class='navber-brand'>
-      <a class="navbar-item" href="http://www.251media.jp/?utm_source=kanataw&utm_medium=banner">
+      <a class="navbar-item" href="http://www.251media.jp/">
         <img src="https://pbs.twimg.com/profile_images/925583780252753920/ny_dUqtG_400x400.jpg" alt: "251 media">
       </a>
       <div class="navbar-burger burger" data-target="navbar-menu-id">
@@ -16,7 +16,13 @@
 
       <div class="navbar-end">
         <a><%= link_to 'HOME', user_path(current_user), class: "navbar-item" %></a>
-        <a><%= link_to "#{current_user.name}", edit_user_path(current_user), class: "navbar-item" %></a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <div class="navbar-link"><%= "#{current_user.name}" %></div>
+          <div class="navbar-dropdown">
+            <a><%= link_to "Profile", edit_user_path(current_user), class: "navbar-item" %></a>
+            <a><%= link_to "Photo Album", user_pictures_path(current_user), class: "navbar-item" %></a>
+          </div>
+        </div>
         <a><%= link_to "Sign Out", destroy_user_session_path, method: :delete, class: "navbar-item" %></a>
       </div>
     </div>

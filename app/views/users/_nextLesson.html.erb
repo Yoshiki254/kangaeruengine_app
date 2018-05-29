@@ -4,28 +4,28 @@
 						<% unless user.next_lesson.present? %>
 							<h3 class='subtitle has-text-white is-italic has-text-weight-bold'>次回未定</h3>
 							<div class="field">
-								<%= form_for [@user, @next_lesson] do |f| %>
+								<%= form_for [user, next_lesson] do |f| %>
 									<div class='field-body'>
-									<div class="container has-text-centered">
-									<div class="control">
-									<%= f.datetime_field :date_time, :class => 'input is-danger', value: Date.today.strftime("%Y-%m-%d %H:%M") %>
-									</div>
-									<div class='block'></div>
-									<div class="control has-text-centered">
-									<%= f.submit "次回予約", :class => 'button is-danger' %>
-									</div>
-									</div>
+								  	<div class="container has-text-centered">
+									    <div class="control">
+								    	<%= f.datetime_field :date_time, :class => 'input is-danger has-text-centered', value: Date.today.strftime("%Y-%m-%d %H:%M") %>
+								    	</div>
+								  	  <div class='block'></div>
+										  <div class="control has-text-centered">
+											<%= f.submit "次回予約", :class => 'button is-danger' %>
+										  </div>
+										</div>
 									</div>
 								<% end %>
 						  </div>
 						<% else %>
 							<h3 class='subtitle has-text-white is-italic has-text-weight-bold'><%= user.next_lesson.datetime %></h3>
 							<div class="field">
-								<%= form_for [@user, @user.next_lesson] do |f| %>
+								<%= form_for [user, user.next_lesson] do |f| %>
 									<div class='field-body'>
 									<div class="container has-text-centered">
 									<div class="control">
-									<%= f.datetime_field :date_time, :class => "input is-danger", value: Date.today.strftime("%Y-%m-%d %H:%M") %>
+									<%= f.datetime_field :date_time, :class => "input is-danger has-text-centered", value: Date.today.strftime("%Y-%m-%d %H:%M") %>
 									</div>
 									<div class='block'></div>
 									<div class="control has-text-centered">

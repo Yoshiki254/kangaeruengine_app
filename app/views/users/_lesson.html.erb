@@ -3,12 +3,10 @@
 			<div class='title is-size-5-mobile is-size-4-desktop has-text-centered'>考えるエンジン講座</div>
 			  <% lessons.each_with_index do |lesson, i| %>
 			    <ul>
-						<% if lesson.id == 5 %>
-				  		<p class='subtitle is-size-5 has-text-centered'>4. 論点ロード</p>
-						<% end %>
+					  <%= lesson.display_title %>
 							<p class='subtitle is-size-5 has-text-centered'><%= lesson.name %></p>
-						  <% if lesson.done?(user) %>
-								<p class='subtitle is-size-5 has-text-link has-text-centered'><%= lesson.date(user) %></p>
+						  <% if lesson.user_id(user) %>
+								<p class='subtitle is-size-5 has-text-link has-text-centered'><%= lesson.lesson_date(user) %></p>
 								<p class='block'></p>
 						  <% else %>
 								<%= render partial: "users/lessonModal", locals: {lesson: lesson, i: i} %> 

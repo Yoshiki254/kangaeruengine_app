@@ -54,3 +54,8 @@ gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'kaminari'
 
+gem 'carrierwave'
+gem 'rmagick'
+
+gem "active_decorator"
+

@@ -32,6 +32,7 @@ class UsersController < ApplicationController
 
 		@expeditions = Expedition.includes(:users_expeditions)
 		@users_expedition = UsersExpedition.new
+
 	end
 
   def edit

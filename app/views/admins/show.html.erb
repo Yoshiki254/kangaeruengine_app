@@ -48,8 +48,7 @@
   				  <p class='subtitle has-text-centered'><%=link_to "#{user.name}", admins_user_path(user.id) %></p>
 				    <p>電話番号:</p>
 				    <p><%= user.tel %></p><br>
-				   <!--  <p>Emailアドレス
-				    <p><%= user.email%></p><br> -->
+				   
 	 				  <p>次回授業時間:</p>
 						<% if user.next_lesson.present? %>
 						  <p><%= user.next_lesson.datetime %></p>
@@ -59,35 +58,20 @@
 				    <br>
 
 				    <p>前回授業:</p>
-					  <% if user.users_lessons.present? %>
-					  	<p><%= user.users_lessons.latest_name %></p>
-					  <% else %>
-					  	<p>未受講</p>
-					  <% end %>
+					  <%= user.has_lessons(user) %>
 				    <br>
 
 					  <p>10ケースマラソン:</p>
-						<% if user.users_interviews.present? %>
-							<p><%= user.users_interviews.latest_name %></p>
-						<% else %>
-						  <p>未開始</p>
-						<% end %>
+					  <%= user.has_interviews(user) %>
 				    <br>
 
 				    <p>12示唆マラソン:</p>
-					  <% if user.users_insights.present? %>
-					    <p><%= user.users_insights.latest_name %></p>
-					  <% else %>
-					    <p>未開始</p>
-					  <% end %>
+					  <%= user.has_insights(user) %>
 				    <br>
 
 				    <p>考えるエンジン検定:</p>
-					  <% if user.users_exams.present? %>
-					  <p><%= user.users_exams.latest_name %></p>
-					  <% else %>
-					  <p>未受験</p>
-					  <% end %>
+						<%= user.has_exams(user) %>
+	
 					  <br>
 					</div>
 		    </div>

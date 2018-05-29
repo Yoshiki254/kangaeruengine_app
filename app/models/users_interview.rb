@@ -8,8 +8,4 @@ class UsersInterview < ActiveRecord::Base
 	delegate :name, to: :interview
 	scope :accomplished, ->(user) { where(user_id: user.id).length }
 
-	def self.latest_name
-	  self.order("created_at DESC").first.name
-	end
-
 end
