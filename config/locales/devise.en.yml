@@ -46,7 +46,7 @@ en:
       updated: "Your account has been updated successfully."
     sessions:
       user:
-        signed_in: 'Welcome user, you are signed in.'
+        signed_in: 'Welcome, you are signed in.'
       admin:
         signed_in: 'Hello admin!'
       signed_out: "Signed out successfully."

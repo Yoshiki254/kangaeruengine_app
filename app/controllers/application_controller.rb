@@ -11,14 +11,17 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def after_sign_in_path_for(resource)
-  	case resource.class
-	  when User
-	    authenticated_user_root
-	  when Admin
-	  	authenticated_admin_root
-	  end
-	end
 
+  # def after_sign_up_path_for(resource)
+  #   credit_path 
+  #   return request.env['omniauth.origin'] || session[:return_to] 
+  # end 
+  
+  def after_sign_in_path_for(resource)
+    if @user
+    user_path(current_user.id) 
+    end
+  end
+  
 end
 

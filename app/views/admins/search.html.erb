@@ -16,19 +16,19 @@
 						<p><%= user.email%></p>
 						<br>
 						次回授業時間：
-						<%= user.has_next_lesson(user) %>
+						<%= user.has_next_lesson %>
 						<br>
 						前回授業：
-						<%= user.has_lessons(user) %>
+						<%= user.has_lessons %>
 						<br>
 						10ケースマラソン：
-						<%= user.has_interviews(user) %>
+						<%= user.has_interviews %>
 						<br>
 						12示唆マラソン：
-						<%= user.has_insights(user) %>
+						<%= user.has_insights %>
 						<br>
 						考えるエンジン検定：
-						<%= user.has_exams(user) %>
+						<%= user.has_exams %>
 						<br>
 					<% end %>
 			</div>

@@ -4,43 +4,7 @@
 				<% exams.each_with_index do |exam, i| %>
 				  <ul>
 					  <div class='subtitle is-size-5 has-text-centered'><%= exam.name %></div>
-					  	<% if exam.users_exams.exists?(user_id: user.id) %>
-							 	<div class='subtitle is-size-5 has-text-link has-text-centered'><%= exam.exam_date(user) %></div>
-							 	<div class='block'></div>
-					  	<% else %>
-					  		<p class='has-text-centered'>
-		 					    <a class="button is-danger modal-button 04" id="modal-btn<%= i %>" data-index=<%= i %>>実施日登録</a>
-		 					    <div class='block'></div>
-		            </p>
-								  <div id="users-exam-modal<%= i %>" class="modal">
-		  						  <div class="modal-background"></div>
-		  							<div class="modal-content box has-text-centered">
-      							  <p class="subtitle">考えるエンジン検定：<%= exam.name %></p>
-										  	<%= form_for [user, users_exam], remote: true do |f| %>
-													<% if users_exam.errors.any? %>
-								    				<div id="error_explanation">
-								      				<ul>
-									      				<% users_exam.errors.full_messages.each do |msg| %>
-									        				<li><%= msg %></li>
-									      				<% end %>
-								      				</ul>
-								    				</div>
-								  				<% end %>
-								  				<div class="field has-addons">
-														<div class="control is-expanded">
-										    		<%= f.date_field :date, :class => "input is-success", value: Time.now.strftime("%Y-%m-%d") %>
-										    	  </div>
-										        <span class="help-block"></span>
-										        <%= f.hidden_field :exam_id, :value => exam.id %>
-										        <div class="control">
-										        <%= f.submit '受検日登録', :class => 'button is-link' %>
-										        </div>
-										      </div>
-								          <% end %>
-							 			</div>
-							 			<button class="modal-close is-large"></button>
-					 			    </div>
-					 		<% end %>
+						<%= exam.has_exam(user, users_exam, exam, i) %>
 					</ul>
 			  <% end %>
 		</div>

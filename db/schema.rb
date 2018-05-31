@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180527081113) do
+ActiveRecord::Schema.define(version: 20180531025403) do
 
   create_table "admins", force: :cascade do |t|
     t.string   "email",                  limit: 255, default: "", null: false
@@ -57,7 +57,6 @@ ActiveRecord::Schema.define(version: 20180527081113) do
 
   create_table "lessons", force: :cascade do |t|
     t.string   "name",       limit: 255
-    t.integer  "user_id",    limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -120,9 +119,8 @@ ActiveRecord::Schema.define(version: 20180527081113) do
     t.integer  "user_id",    limit: 4
     t.integer  "exam_id",    limit: 4
     t.date     "date"
-    t.string   "check",      limit: 255
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
   end
 
   create_table "users_expeditions", force: :cascade do |t|
@@ -137,27 +135,24 @@ ActiveRecord::Schema.define(version: 20180527081113) do
     t.integer  "user_id",    limit: 4
     t.integer  "insight_id", limit: 4
     t.date     "date"
-    t.string   "check",      limit: 255
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
   end
 
   create_table "users_interviews", force: :cascade do |t|
     t.integer  "user_id",      limit: 4
     t.integer  "interview_id", limit: 4
     t.date     "date"
-    t.string   "check",        limit: 255
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
   create_table "users_lessons", force: :cascade do |t|
     t.integer  "user_id",    limit: 4
     t.integer  "lesson_id",  limit: 4
     t.date     "date"
-    t.string   "check",      limit: 255
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
   end
 
   create_table "users_practices", force: :cascade do |t|

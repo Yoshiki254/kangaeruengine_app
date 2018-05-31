@@ -29,26 +29,40 @@ class User < ActiveRecord::Base
   has_attached_file :avatar, styles: { medium: "300x300>", thumb: "100x100>"}
   validates_attachment_content_type :avatar, content_type: ["image/jpg","image/jpeg","image/png"]
 
-  def self.from_omniauth(auth)
-    user = User.where(email: auth.info.email).first
-    if user
-      return user
-    else
-      where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
-        # userモデルが持っているカラムをそれぞれ定義していく
-        user.email = auth.info.email
-        user.password = Devise.friendly_token[0,20]
-        user.name = auth.info.name
-        user.avatar = auth.info.image
-        user.uid = auth.uid
-        user.provider = auth.provider
 
-        # If you are using confirmable and the provider(s) you use validate emails,
-        # uncomment the line below to skip the confirmation emails.
-        user.skip_confirmation!
-      end
+  def self.from_omniauth(auth)
+    User.find_or_create_by(provider: auth["provider"], uid: auth["uid"]) do |user|
+      user.provider = auth["provider"]
+      user.uid = auth["uid"]
+      user.name = auth["info"]["nickname"] || auth["info"]["name"]
+      user.birthday = auth["info"]["birthday"]
+      user.avatar_file_name = auth["info"]["image"]
+      auth["info"]["email"] ? user.email = auth["info"]["email"] : user.email = User.dummy_email(auth)
+      user.password   = Devise.friendly_token[0, 20]
+      user.skip_confirmation!
     end
   end
+
+  # def self.from_omniauth(auth)
+  #   user = User.where(email: auth.info.email).first
+  #   if user
+  #     return user
+  #   else
+  #     where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
+  #       # userモデルが持っているカラムをそれぞれ定義していく
+  #       user.email = auth.info.email
+  #       user.password = Devise.friendly_token[0,20]
+  #       user.name = auth.info.name
+  #       user.avatar = auth.info.image
+  #       user.uid = auth.uid
+  #       user.provider = auth.provider
+
+  #       # If you are using confirmable and the provider(s) you use validate emails,
+  #       # uncomment the line below to skip the confirmation emails.
+  #       user.skip_confirmation!
+  #     end
+  #   end
+  # end
 
   def full_profile?
     avatar? && name? && name_kana? && tel?
@@ -63,3 +77,10 @@ class User < ActiveRecord::Base
   end
 
 end
+
+
+private
+
+  def self.dummy_email(auth)
+    "#{auth.uid}-#{auth.provider}@example.com"
+  end

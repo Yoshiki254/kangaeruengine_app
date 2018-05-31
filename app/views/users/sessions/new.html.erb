@@ -6,12 +6,12 @@
         <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
           <div class="field">
             <%= f.label :email %><br>
-            <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+            <%= f.email_field :email, autofocus: true, autocomplete: "email", :class => "input is-link" %>
           </div>
 
           <div class="field">
             <%= f.label :password %><br>
-            <%= f.password_field :password, autocomplete: "off" %>
+            <%= f.password_field :password, autocomplete: "off", :class => "input is-link" %>
           </div>
 
           <% if devise_mapping.rememberable? -%>
@@ -23,9 +23,6 @@
             <%= f.submit "Log in", :class => 'button is-link' %>
         <% end %>
         <%= render "users/shared/links" %>
-
-        <%= link_to "Sign up with Facebook", user_facebook_omniauth_authorize_path %>
-
       </div>
     </div>
   </div>
