@@ -79,3 +79,5 @@ group :development do
   gem 'spring'
 end
 gem 'fog'
+
+gem 'rails_12factor', group: :production
