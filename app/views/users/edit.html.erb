@@ -9,14 +9,10 @@
 					  <%= form_for current_user do |f| %>
 						<h3 class="subtitle">プロフィール画像（必須）</h3>
 						  <p class="subtitle is-size-6">登録済みのお写真</p>
-						  <% unless @user.avatar_file_size.present? %>
-							  <%= image_tag @user.avatar_file_name + "?type=large" %>
-							<% else %>
-							  <%= image_tag @user.avatar.url %>
-							<% end %>
+								<%= @user.image_select %>
 							<div class='block'></div>
 							<div class="form-group file">
-								<%= f.file_field :avatar, class: "form-control floating-label", placeholder: "画像アップロード" %>
+								<%= f.file_field :image, class: "form-control floating-label", placeholder: "画像アップロード" %>
 							</div>
 							<figure class="image is-256x256">            
 							</figure>

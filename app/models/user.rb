@@ -26,8 +26,10 @@ class User < ActiveRecord::Base
 
   has_many :pictures
 
-  has_attached_file :avatar, styles: { medium: "300x300>", thumb: "100x100>"}
-  validates_attachment_content_type :avatar, content_type: ["image/jpg","image/jpeg","image/png"]
+  # has_attached_file :avatar, styles: { medium: "300x300>", thumb: "100x100>"}
+  # validates_attachment_content_type :avatar, content_type: ["image/jpg","image/jpeg","image/png"]
+
+  mount_uploader :image, ImageUploader
 
 
   def self.from_omniauth(auth)
@@ -36,7 +38,7 @@ class User < ActiveRecord::Base
       user.uid = auth["uid"]
       user.name = auth["info"]["nickname"] || auth["info"]["name"]
       user.birthday = auth["info"]["birthday"]
-      user.avatar_file_name = auth["info"]["image"]
+      user.image = auth["info"]["image"]
       auth["info"]["email"] ? user.email = auth["info"]["email"] : user.email = User.dummy_email(auth)
       user.password   = Devise.friendly_token[0, 20]
       user.skip_confirmation!
@@ -65,7 +67,7 @@ class User < ActiveRecord::Base
   # end
 
   def full_profile?
-    avatar? && name? && name_kana? && tel?
+    image? && name? && name_kana? && tel?
   end
 
   def self.search(search) #self.でクラスメソッドとしている

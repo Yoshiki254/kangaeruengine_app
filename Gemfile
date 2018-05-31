@@ -47,7 +47,6 @@ end
 
 gem 'pry-rails'
 gem 'devise'
-gem 'paperclip'
 gem 'config'
 
 gem 'omniauth'

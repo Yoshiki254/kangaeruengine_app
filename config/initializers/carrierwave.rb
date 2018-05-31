@@ -11,12 +11,13 @@ CarrierWave.configure do |config|
     region: 'ap-northeast-1'
   }
 
+
     case Rails.env
     when 'development'
         config.fog_directory  = 'upload-pics-kangaeru'
-        config.asset_host = 'https://s3.amazonaws.com/upload-pics-kangaeru'
+        config.asset_host = 'https://s3-ap-northeast-1.amazonaws.com/upload-pics-kangaeru'
     when 'production'
         config.fog_directory  = 'upload-pics-kangaeru'
-        config.asset_host = 'https://s3.amazonaws.com/upload-pics-kangaeru'
+        config.asset_host = 'https://s3-ap-northeast-1.amazonaws.com/upload-pics-kangaeru'
     end
 end

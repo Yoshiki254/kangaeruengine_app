@@ -6,12 +6,12 @@ module UserDecorator
     end
   end
 
-  def avatar_select
-    unless self.avatar_file_size.present?
-      image_tag "#{self.avatar_file_name} + ?type=large" 
-    else 
-      image_tag "#{self.avatar.url}"
-    end
+  def image_select
+    # unless self.image.present?
+    #   image_tag "#{self.image.url} + ?type=large" 
+    # else 
+      image_tag "#{self.image.url}"
+    # end
   end
 
   def has_next_lesson
