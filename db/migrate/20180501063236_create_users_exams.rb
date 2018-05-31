@@ -4,7 +4,7 @@ class CreateUsersExams < ActiveRecord::Migration
     	t.integer  :user_id
     	t.integer  :exam_id
     	t.date     :date
-    	t.string   :check
+
 
       t.timestamps null: false
     end

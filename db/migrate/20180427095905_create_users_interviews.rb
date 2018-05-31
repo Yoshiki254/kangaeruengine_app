@@ -4,7 +4,7 @@ class CreateUsersInterviews < ActiveRecord::Migration
     	t.integer  :user_id
     	t.integer  :interview_id
     	t.date     :date
-    	t.string   :check
+
 
       t.timestamps null: false
     end

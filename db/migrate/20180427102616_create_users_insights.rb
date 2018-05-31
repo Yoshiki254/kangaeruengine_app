@@ -4,7 +4,7 @@ class CreateUsersInsights < ActiveRecord::Migration
     	t.integer  :user_id
     	t.integer  :insight_id
     	t.date     :date
-    	t.string   :check
+
 
       t.timestamps null: false
     end
