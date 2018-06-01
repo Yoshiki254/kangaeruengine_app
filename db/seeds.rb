@@ -9,8 +9,8 @@
 require "csv"
 
 interviews_csv = CSV.readlines("db/interviews.csv")
-insights_csv.shift
-insights_csv.each do |row|
+interviews_csv.shift
+interviews_csv.each do |row|
   Interview.create(name: row[1], url: row[2], map: row[3])
 end
 
