@@ -5,3 +5,11 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
+require "csv"
+
+companies_csv = CSV.readlines("db/insights.csv")
+companies_csv.shift
+companies_csv.each do |row|
+  Company.create(name: row[1], url: row[2], map: row[3])
+end

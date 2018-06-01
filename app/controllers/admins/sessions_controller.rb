@@ -24,4 +24,12 @@ class Admins::SessionsController < Devise::SessionsController
   # def configure_sign_in_params
   #   devise_parameter_sanitizer.permit(:sign_in, keys: [:attribute])
   # end
+  
+  # def after_sign_in_path_for(resource)
+  #   if (session[:previous_url] == root_path)
+  #     super
+  #   else
+  #     session[:previous_url] || root_path
+  #   end
+  # end
 end
