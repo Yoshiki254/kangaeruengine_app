@@ -9,7 +9,7 @@ module LessonDecorator
   end
 
   def display_title
-    if self.id == 5
+    if self.id == 32
       content_tag :p, "4. 論点ロード", class: "subtitle is-size-5 has-text-centered"
     end
   end
