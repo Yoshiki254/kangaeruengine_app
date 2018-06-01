@@ -8,8 +8,26 @@
 
 require "csv"
 
-companies_csv = CSV.readlines("db/insights.csv")
-companies_csv.shift
-companies_csv.each do |row|
-  Insights.create(name: row[1], url: row[2], map: row[3])
+interviews_csv = CSV.readlines("db/interviews.csv")
+insights_csv.shift
+insights_csv.each do |row|
+  Interview.create(name: row[1], url: row[2], map: row[3])
+end
+
+insights_csv = CSV.readlines("db/insights.csv")
+insights_csv.shift
+insights_csv.each do |row|
+  Insight.create(name: row[1], url: row[2], map: row[3])
+end
+
+exams_csv = CSV.readlines("db/exams.csv")
+exams_csv.shift
+exams_csv.each do |row|
+  Exam.create(name: row[1], url: row[2], map: row[3])
+end
+
+practices_csv = CSV.readlines("db/practices.csv")
+practices_csv.shift
+practices_csv.each do |row|
+  Practice.create(name: row[1], url: row[2], map: row[3])
 end
