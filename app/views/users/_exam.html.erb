@@ -4,7 +4,35 @@
 				<% exams.each_with_index do |exam, i| %>
 				  <ul>
 					  <div class='subtitle is-size-5 has-text-centered'><%= exam.name %></div>
-						<%= exam.has_exam(user, users_exam, exam, i) %>
+						<%# <%= exam.has_exam(user, users_exam, exam, i) %> 
+				  	<% if exam.users_exams.exists?(user_id: user.id) %>
+						 	<div class='subtitle is-size-5 has-text-link has-text-centered'><%= exam.exam_date(user) %></div>
+							<p class='has-text-centered'>
+							  <a class="button is-link modal-button 04" id="modal-btn<%= i %>" data-index=<%= i %>>受検日変更</a>	
+							</p>
+						 	<div class='block'></div>
+
+							<div id="users-exam-modal<%= i %>" class="modal">
+							<div class="modal-background"></div>
+							<div class="modal-content box has-text-centered">
+								<p class="subtitle">考えるエンジン検定：<%= exam.name %></p>
+									<%# form_forのurlでcontrollerとactionを指定する %>
+									<%= form_for exam.exam_of_user(user), url: user_users_exam_path(user_id: user.id, id: exam.users_exam_id(user)), html: {method: 'PATCH'}, remote: true do |f| %>  
+										<div class="field has-addons">  				
+												<%= f.date_field :date, :class => "input is-info", value: Time.now.strftime("%Y-%m-%d") %>								
+												<%= f.hidden_field :exam_id, :value => exam.id %>
+											<div class="control">
+												<%= f.submit '受検日変更', :class => 'button is-link'%>
+											</div>
+										</div>
+									<% end %>
+							</div>
+							<button class="modal-close is-large" aria-label="close" data-dismiss="modal"></button>
+							</div>
+							
+				  	<% else %>
+			        <%= render partial: "users/examModal", locals: { user: user, users_exam: users_exam, exam: exam, i: i } %>
+						<% end %>
 					</ul>
 			  <% end %>
 		</div>

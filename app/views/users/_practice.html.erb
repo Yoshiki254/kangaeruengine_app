@@ -6,10 +6,32 @@
 				  <div class='subtitle is-size-5 has-text-centered'><%= practice.name %></div>
 				  	<% if practice.users_practices.exists?(user_id: user.id) %>
 						 	<div class='subtitle is-size-5 has-text-link has-text-centered'><%= practice.practice_date(user) %></div>
-						 	<div class='block'></div>
+						 	<p class='has-text-centered'>
+							  <a class="button is-link modal-button 05" id="modal-btn<%= i %>" data-index=<%= i %>>受講日変更</a>	
+							</p>
+							<div class='block'></div>
+
+							<div id="users-practice-modal<%= i %>" class="modal">
+							<div class="modal-background"></div>
+							<div class="modal-content box has-text-centered">
+								<p class="subtitle">実践講義：<%= practice.name %></p>
+									<%# form_forのurlでcontrollerとactionを指定する %>
+									<%= form_for practice.practice_of_user(user), url: user_users_practice_path(user_id: user.id, id: practice.users_practice_id(user)), html: {method: 'PATCH'}, remote: true do |f| %>  
+										<div class="field has-addons">  				
+												<%= f.date_field :date, :class => "input is-info", value: Time.now.strftime("%Y-%m-%d") %>								
+												<%= f.hidden_field :practice_id, :value => practice.id %>
+											<div class="control">
+												<%= f.submit '受講日変更', :class => 'button is-link'%>
+											</div>
+										</div>
+									<% end %>
+							</div>
+							<button class="modal-close is-large" aria-label="close" data-dismiss="modal"></button>
+							</div>
+					
 				  	<% else %>
 							<p class='has-text-centered'>
-		 					  <a class="button is-danger modal-button 05" id="modal-btn<%= i %>" data-index=<%= i %>>実施日登録</a>
+		 					  <a class="button is-danger modal-button 05" id="modal-btn<%= i %>" data-index=<%= i %>>受講日登録</a>
 		 					  <div class='block'></div>
 		          </p>
 								  <div id="users-practice-modal<%= i %>" class="modal">
@@ -17,26 +39,14 @@
 		  							<div class="modal-content box has-text-centered">
       							  <p class="subtitle">実践講義：<%= practice.name %></p>
 										  	<%= form_for [user, users_practice], remote: true do |f| %>
-													<% if users_practice.errors.any? %>
-								    				<div id="error_explanation">
-								      				<ul>
-									      				<% users_practice.errors.full_messages.each do |msg| %>
-									        				<li><%= msg %></li>
-									      				<% end %>
-								      				</ul>
-								    				</div>
-								  				<% end %>
-								  					<div class="field has-addons">
-														  <div class="control is-expanded">
-										    		    <%= f.date_field :date, :class => "input is-success", value: Time.now.strftime("%Y-%m-%d") %>
-										    	    </div>
-										          <span class="help-block"></span>
-										          <%= f.hidden_field :practice_id, :value => practice.id %>
-										          <div class="control">
-										            <%= f.submit '受講日登録', :class => 'button is-link'%>
-										          </div>
-										        </div>
-								          <% end %>
+								  				<div class="field has-addons">												
+														<%= f.date_field :date, :class => "input is-info", value: Time.now.strftime("%Y-%m-%d") %>										    	
+														<%= f.hidden_field :practice_id, :value => practice.id %>
+														<div class="control">
+															<%= f.submit '受講日登録', :class => 'button is-danger'%>
+														</div>
+													</div>
+								        <% end %>
 							 			</div>
 							 			<button class="modal-close is-large"></button>
 					 			    </div>

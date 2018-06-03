@@ -7,9 +7,31 @@
 							<p class='subtitle is-size-5 has-text-centered'><%= lesson.name %></p>
 						  <% if lesson.user_id(user) %>
 								<p class='subtitle is-size-5 has-text-link has-text-centered'><%= lesson.lesson_date(user) %></p>
+						  	<p class='has-text-centered'>
+							    <a class="button is-link modal-button 01" id="modal-btn<%= i %>" data-index=<%= i %>>受講日変更</a>	
+							  </p>								
 								<p class='block'></p>
+																
+								<div id="users-lesson-modal<%= i %>" class="modal">
+								<div class="modal-background"></div>
+								<div class="modal-content box has-text-centered">
+									<p class="subtitle"><%= lesson.name %></p>
+										<%# form_forのurlでcontrollerとactionを指定する %>
+										<%= form_for lesson.lesson_of_user(user), url: user_users_lesson_path(user_id: user.id, id: lesson.users_lesson_id(user)), html: {method: 'PATCH'}, remote: true do |f| %>  
+											<div class="field has-addons">  				
+													<%= f.date_field :date, :class => "input is-info", value: Time.now.strftime("%Y-%m-%d") %>								
+													<%= f.hidden_field :lesson_id, :value => lesson.id %>
+												<div class="control">
+													<%= f.submit '受講日変更', :class => 'button is-link'%>
+												</div>
+											</div>
+										<% end %>
+								</div>
+								<button class="modal-close is-large" aria-label="close" data-dismiss="modal"></button>
+								</div>
+
 						  <% else %>
-								<%= render partial: "users/lessonModal", locals: {lesson: lesson, i: i} %> 
+								<%= render partial: "users/lessonModal", locals: {user: user, users_lesson: users_lesson, lesson: lesson, i: i} %> 
 							<% end %>
 					</ul>
 				<% end %> 

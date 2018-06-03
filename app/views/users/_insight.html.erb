@@ -2,11 +2,33 @@
 	  <div class='column is-2-tablet is-offset-1-tablet is-2-desktop is-offset-1-desktop is-fullwidth-mobile box'>
 		  <div class='title is-size-5-mobile is-size-6-tablet is-size-4-desktop has-text-centered'>12示唆マラソン</div>
 		  <% insights.each_with_index do |insight, i| %>
-		    <ul>
+		    <div>
 			    <div class='subtitle is-size-5 has-text-centered'><%= insight.name %></div>
 				  	<% if insight.users_insights.exists?(user_id: user.id) %>
 				  	  <div class='subtitle is-size-5 has-text-link has-text-centered'><%= insight.insight_date(user) %></div>
+							<p class='has-text-centered'>
+							  <a class="button is-link modal-button 03" id="modal-btn<%= i %>" data-index=<%= i %>>実施日変更</a>	
+							</p>
 				  	  <div class='block'></div>
+
+							<div id="users-insight-modal<%= i %>" class="modal">
+							<div class="modal-background"></div>
+							<div class="modal-content box has-text-centered">
+								<p class="subtitle">12示唆マラソン：<%= insight.name %></p>
+									<%# form_forのurlでcontrollerとactionを指定する %>
+									<%= form_for insight.insight_of_user(user), url: user_users_insight_path(user_id: user.id, id: insight.users_insight_id(user)), html: {method: 'PATCH'}, remote: true do |f| %>  
+										<div class="field has-addons">  				
+												<%= f.date_field :date, :class => "input is-info", value: Time.now.strftime("%Y-%m-%d") %>								
+												<%= f.hidden_field :insight_id, :value => insight.id %>
+											<div class="control">
+												<%= f.submit '実施日変更', :class => 'button is-link'%>
+											</div>
+										</div>
+									<% end %>
+							</div>
+							<button class="modal-close is-large" aria-label="close" data-dismiss="modal"></button>
+							</div>
+
 				  	<% else %>
 							<p class='has-text-centered'>
 		 					  <a class="button is-danger modal-button 03" id="modal-btn<%= i %>" data-index=<%= i %>>実施日登録</a>
@@ -17,29 +39,17 @@
 		  							<div class="modal-content box has-text-centered">
       							  <p class="subtitle">12示唆マラソン：<%= insight.name %></p>
 										  	<%= form_for [user, users_insight], remote: true do |f| %>
-													<% if @users_insight.errors.any? %>
-								    				<div id="error_explanation">
-								      				<ul>
-									      				<% users_insight.errors.full_messages.each do |msg| %>
-									        				<li><%= msg %></li>
-									      				<% end %>
-								      				</ul>
-								    				</div>
-								  				<% end %>
 								  				<div class="field has-addons">
-														<div class="control is-expanded">
-										    		<%= f.date_field :date, :class => "input is-success", value: Time.now.strftime("%Y-%m-%d") %>
-										    	  </div>
-										        <span class="help-block"></span>
-										        <%= f.hidden_field :insight_id, :value => insight.id %>
+										    		  <%= f.date_field :date, :class => "input is-info", value: Time.now.strftime("%Y-%m-%d") %>
+										          <%= f.hidden_field :insight_id, :value => insight.id %>
 										        <div class="control">
-										        <%= f.submit 'Submit', :class => 'button is-link'%>
+										          <%= f.submit '実施日登録', :class => 'button is-danger'%>
 										        </div>
 										      </div>
-								          <% end %>
+								        <% end %>
 							 			</div>
 							 			<button class="modal-close is-large" aria-label="close" data-dismiss="modal"></button>
-					 			    </div>
+					 			  </div>									
 					  <% end %>
 			  </ul>
 		  <% end %>

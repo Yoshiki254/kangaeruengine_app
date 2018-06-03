@@ -14,4 +14,15 @@ module LessonDecorator
     end
   end
 
+  def lesson_of_user(user)
+    lesson_of_user = self.users_lessons.find_by(user_id: user.id) 
+    return lesson_of_user
+  end
+
+  def users_lesson_id(user)
+    users_lesson_id = self.users_lessons.find_by(user_id: user.id).id
+    return users_lesson_id
+  end
+  
+
 end

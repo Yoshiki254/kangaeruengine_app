@@ -6,37 +6,47 @@
 				  <div class='subtitle is-size-5 has-text-centered'><%= interview.name %></div>
 				  	<% if interview.users_interviews.exists?(user_id: user.id) %>
 						 	<div class='subtitle is-size-5 has-text-link has-text-centered'><%= interview.interview_date(user) %></div>
-						 	<div class='block'></div>
+						 	<p class='has-text-centered'>
+							  <a class="button is-link modal-button 02" id="modal-btn<%= i %>" data-index=<%= i %>>実施日変更</a>	
+							</p>
+							<div class='block'></div>
+
+							<div id="users-interview-modal<%= i %>" class="modal">
+							<div class="modal-background"></div>
+							<div class="modal-content box has-text-centered">
+								<p class="subtitle">10ケースマラソン：<%= interview.name %></p>
+									<%# form_forのurlでcontrollerとactionを指定する %>
+									<%= form_for interview.interview_of_user(user), url: user_users_interview_path(user_id: user.id, id: interview.users_interview_id(user)), html: {method: 'PATCH'}, remote: true do |f| %>  
+										<div class="field has-addons">  				
+												<%= f.date_field :date, :class => "input is-info", value: Time.now.strftime("%Y-%m-%d") %>								
+												<%= f.hidden_field :interview_id, :value => interview.id %>
+											<div class="control">
+												<%= f.submit '実施日変更', :class => 'button is-link'%>
+											</div>
+										</div>
+									<% end %>
+							</div>
+							<button class="modal-close is-large" aria-label="close" data-dismiss="modal"></button>
+							</div>
+
 					  <% else %>
-							<p class='has-text-centered'>
-		 					  <a class="button is-danger modal-button 02" id="modal-btn<%= i %>" data-index=<%= i %>>実施日登録</a>
+		 					<p class='has-text-centered'>
+							  <a class="button is-danger modal-button 02" id="modal-btn<%= i %>" data-index=<%= i %>>実施日登録</a>
 		 					  <div class='block'></div>
 		          </p>
 								  <div id="users-interview-modal<%= i %>" class="modal">
 		  						  <div class="modal-background"></div>
 		  							<div class="modal-content box has-text-centered">
       							  <p class="subtitle">10ケースマラソン：<%= interview.name %></p>
-										  	<%= form_for [user, users_interview], remote: true, html: {role: :form, 'data-model' => 'users_lesson'} do |f| %>
-													<% if users_interview.errors.any? %>
-								    				<div id="error_explanation">
-								      				<ul>
-									      				<% users_interview.errors.full_messages.each do |msg| %>
-									        				<li><%= msg %></li>
-									      				<% end %>
-								      				</ul>
-								    				</div>
-								  				<% end %>
+										  	<%= form_for [user, users_interview], remote: true do |f| %>
 								  				<div class="field has-addons">
-													  <div class="control is-expanded">
-										    	    <%= f.date_field :date, :class => "input is-success", value: Time.now.strftime("%Y-%m-%d")%>
-										    	  </div>
-										        <span class="help-block"></span>
-										        <%= f.hidden_field :interview_id, :value => interview.id %>
+										    	    <%= f.date_field :date, :class => "input is-info", value: Time.now.strftime("%Y-%m-%d")%>
+										          <%= f.hidden_field :interview_id, :value => interview.id %>
 										        <div class="control">
-										        <%= f.submit '実施日登録', :class => 'button is-link'%>
+										          <%= f.submit '実施日登録', :class => 'button is-danger'%>
 										        </div>
 										      </div>
-								          <% end %>
+								        <% end %>
 							 			</div>
 							 			<button class="modal-close is-large" aria-label="close" data-dismiss="modal"></button>
 					 			    </div>

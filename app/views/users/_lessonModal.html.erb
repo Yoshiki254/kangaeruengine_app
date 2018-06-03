@@ -6,24 +6,12 @@
 		  								<div class="modal-background"></div>
 		  								<div class="modal-content box has-text-centered">
       									<p class="subtitle"><%= lesson.name %></p>
-										  		<%= form_for [@user, @users_lesson], remote: true do |f| %>
-														<% if @users_lesson.errors.any? %>
-								    					<div id="error_explanation">
-								      					<ul>
-									      					<% @users_lesson.errors.full_messages.each do |msg| %>
-									        				  <li><%= msg %></li>
-									      					<% end %>
-								      					</ul>
-								    					</div>
-								  					<% end %>
+										  		<%= form_for [user, users_lesson], remote: true do |f| %>
 								  				<div class="field has-addons">
-														<div class="control is-expanded">
-										    		<%= f.date_field :date, :class => "input is-success", value: Time.now.strftime("%Y-%m-%d") %>
-										        <span class="help-block"></span>
-										        </div>
+										    		<%= f.date_field :date, :class => "input is-info", value: Time.now.strftime("%Y-%m-%d") %>
 										        <%= f.hidden_field :lesson_id, :value => lesson.id %>
 										        <div class="control">
-										        <%= f.submit '受講日登録', :class => 'button is-link'%>
+										          <%= f.submit '受講日登録', :class => 'button is-danger'%>
 										        </div>
 										      </div>
 								          <% end %>

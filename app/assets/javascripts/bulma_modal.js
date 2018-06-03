@@ -1,7 +1,7 @@
 
 $(document).on("ready turbolinks:load", function(){
 
-	$(".button.is-danger.modal-button.01").on("click", function(){
+	$(".button.modal-button.01").on("click", function(){
 
     var index = $(this).data("index");
 
@@ -20,7 +20,7 @@ $(document).on("ready turbolinks:load", function(){
 
 $(document).on("ready turbolinks:load", function(){
 
-  $(".button.is-danger.modal-button.02").on("click", function(){
+  $(".button.modal-button.02").on("click", function(){
 
     var index = $(this).data("index");
 
@@ -39,7 +39,7 @@ $(document).on("ready turbolinks:load", function(){
 
 $(document).on("ready turbolinks:load", function(){
 
-  $(".button.is-danger.modal-button.03").on("click", function(){
+  $(".button.modal-button.03").on("click", function(){
 
     var index = $(this).data("index");
 
@@ -58,7 +58,7 @@ $(document).on("ready turbolinks:load", function(){
 
 $(document).on("ready turbolinks:load", function(){
 
-  $(".button.is-danger.modal-button.04").on("click", function(){
+  $(".button.modal-button.04").on("click", function(){
 
     var index = $(this).data("index");
 
@@ -77,7 +77,7 @@ $(document).on("ready turbolinks:load", function(){
 
 $(document).on("ready turbolinks:load", function(){
 
-  $(".button.is-danger.modal-button.05").on("click", function(){
+  $(".button.modal-button.05").on("click", function(){
 
     var index = $(this).data("index");
 
@@ -96,7 +96,7 @@ $(document).on("ready turbolinks:load", function(){
 
 $(document).on("ready turbolinks:load", function(){
 
-  $(".button.is-danger.modal-button.06").on("click", function(){
+  $(".button.modal-button.06").on("click", function(){
 
     var index = $(this).data("index");
 
