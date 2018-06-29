@@ -19,7 +19,7 @@ Things you may want to cover:
 * Services (job queues, cache servers, search engines, etc.)
 
 * Deployment instructions
-  * AWS S3 を使って、carrierwaveを実装。carrierwave.rb にてAWS S3のアクセスキーを指定しください。
+  * AWS S3 を使って、carrierwaveを実装。carrierwave.rb にてAWS S3のアクセスキーを指定してください。
   * ユーザー登録は、メール認証です。development.rb でメール設定を行って下さい。
   * 現状、admin の新規登録はできません。データベースに直打ちして下さい。
   * facebook login はローカル環境では動きますが、herokuの本番環境では動きませんでした。大変恐縮ですが、もし可能であれば、解決をお願い致します。
