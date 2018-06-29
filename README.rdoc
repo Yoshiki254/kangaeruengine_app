@@ -5,11 +5,10 @@ application up and running.
 
 Things you may want to cover:
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
+* Basic Specification
+  *ruby 2.3.1
+  *rails 4.2.6
+  *adapter: mysql2 0.3.18 
 
 * Database creation
 
@@ -20,6 +19,11 @@ Things you may want to cover:
 * Services (job queues, cache servers, search engines, etc.)
 
 * Deployment instructions
+  * AWS S3 を使って、carrierwaveを実装。carrierwave.rb にてAWS S3のアクセスキーを指定しください。
+  * ユーザー登録は、メール認証です。development.rb でメール設定を行って下さい。
+  * 現状、admin の新規登録はできません。データベースに直打ちして下さい。
+  * facebook login はローカル環境では動きますが、herokuの本番環境では動きませんでした。大変恐縮ですが、もし可能であれば、解決をお願い致します。
+  * 
 
 * ...
 
