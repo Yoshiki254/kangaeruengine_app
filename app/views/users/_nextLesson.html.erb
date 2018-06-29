@@ -1,6 +1,6 @@
 			<div class='columns is-mobile'>
 				<div class='column is-4-desktop is-offset-4-desktop is-fullwidth-mobile'>
-				  <h2 class='subtitle has-text-white has-text-weight-bold'>次回授業日時</h2>
+				  <h2 class='subtitle has-text-white is-size-4 has-text-weight-bold'>-次回授業日時-</h2>
 						<% unless user.next_lesson.present? %>
 							<h3 class='subtitle has-text-white is-italic has-text-weight-bold'>次回未定</h3>
 							<div class="field">
@@ -19,7 +19,7 @@
 								<% end %>
 						  </div>
 						<% else %>
-							<h3 class='subtitle has-text-white is-italic has-text-weight-bold'><%= user.next_lesson.datetime %></h3>
+							<h3 class='subtitle has-text-white is-italic is-size-4 has-text-weight-bold'><%= user.next_lesson.datetime %></h3>
 							<div class="field">
 								<%= form_for [user, user.next_lesson] do |f| %>
 									<div class='field-body'>

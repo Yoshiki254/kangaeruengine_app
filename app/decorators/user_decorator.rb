@@ -32,7 +32,7 @@ module UserDecorator
 
   def your_last_lesson
     if self.users_lessons.present? 
-      content_tag :h3, self.last_lesson_name, class: "subtitle has-text-white is-italic has-text-weight-bold"
+      content_tag :h3, self.last_lesson_name, class: "subtitle has-text-white is-italic has-text-weight-bold is-size-4"
     else
       content_tag :h3, "未開始", class: "subtitle has-text-white is-italic has-text-weight-bold"
     end
